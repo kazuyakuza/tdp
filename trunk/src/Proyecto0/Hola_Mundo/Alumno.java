@@ -5,6 +5,7 @@ package Proyecto0.Hola_Mundo;
  * Clase Alumno que representa a los alumnos de la comisión del proyecto.
  * 
  * @author Javier Eduardo Barrocal LU:87158
+ * @author Pablo Isaias Chacar LU:67704
  */
 public class Alumno
 {
