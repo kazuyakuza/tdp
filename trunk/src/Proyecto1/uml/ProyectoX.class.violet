@@ -177,8 +177,8 @@ Enemigo</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>754.0279770951443</double> 
-     <double>1043.8067541299856</double> 
+     <double>729.0546276800872</double> 
+     <double>1041.42833989998</double> 
     </void> 
    </object> 
   </void> 
@@ -316,13 +316,18 @@ En Caparazón</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>597.7647875212191</double> 
-     <double>1826.112735084385</double> 
+     <double>553.7641242661183</double> 
+     <double>1849.8968773844392</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
    <object id="InterfaceNode6" class="com.horstmann.violet.InterfaceNode"> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>+ efecto (A: Actor);</string> 
+     </void> 
+    </void> 
     <void property="name"> 
      <void property="text"> 
       <string>«interface»
@@ -332,7 +337,7 @@ Item</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>442.62622855569924</double> 
+     <double>415.27446491063665</double> 
      <double>1768.7076702694426</double> 
     </void> 
    </object> 
@@ -347,8 +352,8 @@ Item</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>820.5755804062163</double> 
-     <double>1901.870890054603</double> 
+     <double>769.4396744610992</double> 
+     <double>1929.2226536996654</double> 
     </void> 
    </object> 
   </void> 
@@ -362,8 +367,8 @@ Item</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>712.9286705614802</double> 
-     <double>1863.3019421993872</double> 
+     <double>661.7927646163631</double> 
+     <double>1891.8429129594524</double> 
     </void> 
    </object> 
   </void> 
@@ -377,8 +382,8 @@ Item</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>927.7394634464773</double> 
-     <double>1943.7356473645868</double> 
+     <double>883.7388001913765</double> 
+     <double>1973.4658252396548</double> 
     </void> 
    </object> 
   </void> 
@@ -392,8 +397,8 @@ Item</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1035.9846247517685</double> 
-     <double>1984.2213271894643</double> 
+     <double>991.9839614966672</double> 
+     <double>2012.7622979495293</double> 
     </void> 
    </object> 
   </void> 
@@ -747,8 +752,8 @@ sonido del juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>577.2477710865219</double> 
-     <double>1418.2976957858596</double> 
+     <double>516.5982082213832</double> 
+     <double>1417.1084886708568</double> 
     </void> 
    </object> 
   </void> 
@@ -770,6 +775,11 @@ Plataforma</string>
   </void> 
   <void method="addNode"> 
    <object id="ClassNode31" class="com.horstmann.violet.ClassNode"> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>+ romper ();</string> 
+     </void> 
+    </void> 
     <void property="name"> 
      <void property="text"> 
       <string>Rompible</string> 
@@ -793,8 +803,8 @@ Plataforma</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1020.219310645259</double> 
-     <double>1575.1009068585045</double> 
+     <double>964.3265762401312</double> 
+     <double>1484.7211661182978</double> 
     </void> 
    </object> 
   </void> 
@@ -809,13 +819,18 @@ Item (?)</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1018.8408964152537</double> 
-     <double>1684.8310847335724</double> 
+     <double>964.1373691251287</double> 
+     <double>1569.4779945783087</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
    <object id="ClassNode34" class="com.horstmann.violet.ClassNode"> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>+ sacarMoneda (): Moneda;</string> 
+     </void> 
+    </void> 
     <void property="name"> 
      <void property="text"> 
       <string>Especial
@@ -893,8 +908,8 @@ inicializar el juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1287.1372324553188</double> 
-     <double>1366.3130810376565</double> 
+     <double>1322.8134459054006</double> 
+     <double>1365.1238739226537</double> 
     </void> 
    </object> 
   </void> 
@@ -1607,7 +1622,7 @@ Actor</string>
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
     <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
+     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
     </void> 
     <void property="startArrowHead"> 
      <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
