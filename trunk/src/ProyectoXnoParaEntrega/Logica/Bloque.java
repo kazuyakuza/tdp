@@ -53,6 +53,9 @@ public class Bloque
 		return ABD[0].length;
 	}
 	
+	/**
+	 * 
+	 */
 	public PositionList<Actor> celda (int x, int y)
 	{
 		return ABD[x][y];
