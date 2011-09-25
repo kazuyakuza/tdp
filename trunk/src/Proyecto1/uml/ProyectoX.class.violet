@@ -3,6 +3,12 @@
  <object class="com.horstmann.violet.ClassDiagramGraph"> 
   <void method="addNode"> 
    <object id="ClassNode0" class="com.horstmann.violet.ClassNode"> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>+ crecer() ++;
++ serDañado() ++;</string> 
+     </void> 
+    </void> 
     <void property="name"> 
      <void property="text"> 
       <string>Mario Chico</string> 
@@ -11,31 +17,8 @@
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>552.1714060169057</double> 
-     <double>707.2510160419926</double> 
-    </void> 
-   </object> 
-  </void> 
-  <void method="addNode"> 
-   <object id="InterfaceNode0" class="com.horstmann.violet.InterfaceNode"> 
-    <void property="methods"> 
-     <void property="text"> 
-      <string>+ saltar ();
-+ izquierda ();
-+ derecha ();</string> 
-     </void> 
-    </void> 
-    <void property="name"> 
-     <void property="text"> 
-      <string>«interface»
-Mario</string> 
-     </void> 
-    </void> 
-   </object> 
-   <object class="java.awt.geom.Point2D$Double"> 
-    <void method="setLocation"> 
-     <double>667.0061964664432</double> 
-     <double>679.7693157477189</double> 
+     <double>784.1005631694889</double> 
+     <double>1304.0644825163722</double> 
     </void> 
    </object> 
   </void> 
@@ -100,6 +83,12 @@ del juego.</string>
   </void> 
   <void method="addNode"> 
    <object id="ClassNode2" class="com.horstmann.violet.ClassNode"> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>+ crecer() ++;
++ serDañado() ++;</string> 
+     </void> 
+    </void> 
     <void property="name"> 
      <void property="text"> 
       <string>Mario Grande</string> 
@@ -108,8 +97,8 @@ del juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>428.19673009165</double> 
-     <double>705.6307567821991</double> 
+     <double>654.1258872442332</double> 
+     <double>1302.4442232565784</double> 
     </void> 
    </object> 
   </void> 
@@ -117,7 +106,10 @@ del juego.</string>
    <object id="ClassNode3" class="com.horstmann.violet.ClassNode"> 
     <void property="methods"> 
      <void property="text"> 
-      <string>+ disparar ();</string> 
+      <string>+ disparar ();
++ crecer() ++;
++ serDañado() ++;
+</string> 
      </void> 
     </void> 
     <void property="name"> 
@@ -128,13 +120,13 @@ del juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>311.57514432165556</double> 
-     <double>706.6840579520849</double> 
+     <double>517.4834861940676</double> 
+     <double>1300.4975244264642</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="InterfaceNode1" class="com.horstmann.violet.InterfaceNode"> 
+   <object id="InterfaceNode0" class="com.horstmann.violet.InterfaceNode"> 
     <void property="name"> 
      <void property="text"> 
       <string>«interface»
@@ -144,8 +136,24 @@ Personaje</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>892.5735118667559</double> 
-     <double>607.5214846714691</double> 
+     <double>1317.1469875597652</double> 
+     <double>1081.6832618455992</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="InterfaceNode1" class="com.horstmann.violet.InterfaceNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>«interface»
+PjSeleccionable </string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1045.394827743267</double> 
+     <double>1084.3712805305108</double> 
     </void> 
    </object> 
   </void> 
@@ -153,31 +161,14 @@ Personaje</string>
    <object id="InterfaceNode2" class="com.horstmann.violet.InterfaceNode"> 
     <void property="name"> 
      <void property="text"> 
-      <string>«interface»
-Seleccionable</string> 
+      <string>* Enemigo</string> 
      </void> 
     </void> 
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>768.4656705906829</double> 
-     <double>613.5578140561298</double> 
-    </void> 
-   </object> 
-  </void> 
-  <void method="addNode"> 
-   <object id="InterfaceNode3" class="com.horstmann.violet.InterfaceNode"> 
-    <void property="name"> 
-     <void property="text"> 
-      <string>«interface»
-Enemigo</string> 
-     </void> 
-    </void> 
-   </object> 
-   <object class="java.awt.geom.Point2D$Double"> 
-    <void method="setLocation"> 
-     <double>1014.2733875438588</double> 
-     <double>609.1034880849493</double> 
+     <double>1528.846863236867</double> 
+     <double>1081.2652652590791</double> 
     </void> 
    </object> 
   </void> 
@@ -191,8 +182,8 @@ Enemigo</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1121.7483129333245</double> 
-     <double>672.953589306506</double> 
+     <double>1627.321788626333</double> 
+     <double>1157.1153664806357</double> 
     </void> 
    </object> 
   </void> 
@@ -206,13 +197,13 @@ Enemigo</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1238.9128592286906</double> 
-     <double>737.991045119666</double> 
+     <double>1750.4863349216992</double> 
+     <double>1222.152822293794</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="InterfaceNode4" class="com.horstmann.violet.InterfaceNode"> 
+   <object id="InterfaceNode3" class="com.horstmann.violet.InterfaceNode"> 
     <void property="name"> 
      <void property="text"> 
       <string>«interface»
@@ -222,8 +213,8 @@ Koopa Troopa</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1118.369898703319</double> 
-     <double>738.5593297197746</double> 
+     <double>1632.9433743963275</double> 
+     <double>1221.7211068939027</double> 
     </void> 
    </object> 
   </void> 
@@ -237,13 +228,19 @@ Koopa Troopa</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1238.534444998685</double> 
-     <double>806.9650577898204</double> 
+     <double>1635.1079206916936</double> 
+     <double>1330.1268349639486</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="InterfaceNode5" class="com.horstmann.violet.InterfaceNode"> 
+   <object id="InterfaceNode4" class="com.horstmann.violet.InterfaceNode"> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>+ movePlay ();
++ moveStop ();</string> 
+     </void> 
+    </void> 
     <void property="name"> 
      <void property="text"> 
       <string>«interface»
@@ -253,13 +250,19 @@ IA</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1508.972247033469</double> 
-     <double>516.4966611684293</double> 
+     <double>1812.5457227264776</double> 
+     <double>1032.6584383425597</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
    <object id="ClassNode7" class="com.horstmann.violet.ClassNode"> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>+ movePlay (); +
++ moveStop (); +</string> 
+     </void> 
+    </void> 
     <void property="name"> 
      <void property="text"> 
       <string>IA_Goomba</string> 
@@ -268,13 +271,19 @@ IA</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1399.3871250948887</double> 
-     <double>665.725964296191</double> 
+     <double>1908.9606007878972</double> 
+     <double>1150.3730228445597</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
    <object id="ClassNode8" class="com.horstmann.violet.ClassNode"> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>+ movePlay (); +
++ moveStop (); +</string> 
+     </void> 
+    </void> 
     <void property="name"> 
      <void property="text"> 
       <string>IA_KT
@@ -284,13 +293,19 @@ Normal</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1510.8468175899243</double> 
-     <double>736.9615228802811</double> 
+     <double>2057.4202932829317</double> 
+     <double>1142.1233000544112</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
    <object id="ClassNode9" class="com.horstmann.violet.ClassNode"> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>+ movePlay (); +
++ moveStop (); +</string> 
+     </void> 
+    </void> 
     <void property="name"> 
      <void property="text"> 
       <string>IA_KT
@@ -300,8 +315,8 @@ En Caparazón</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1623.2826491902297</double> 
-     <double>805.7962568530281</double> 
+     <double>2196.856124883235</double> 
+     <double>1143.9580340271582</double> 
     </void> 
    </object> 
   </void> 
@@ -315,13 +330,13 @@ En Caparazón</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2426.6050206813716</double> 
-     <double>948.8044472148845</double> 
+     <double>2588.4959637071</double> 
+     <double>1614.2182915849307</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="InterfaceNode6" class="com.horstmann.violet.InterfaceNode"> 
+   <object id="InterfaceNode5" class="com.horstmann.violet.InterfaceNode"> 
     <void property="methods"> 
      <void property="text"> 
       <string>+ efecto ();</string> 
@@ -330,14 +345,14 @@ En Caparazón</string>
     <void property="name"> 
      <void property="text"> 
       <string>«interface»
-Item</string> 
+PowerUp</string> 
      </void> 
     </void> 
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2332.1153613258903</double> 
-     <double>1018.6152400998876</double> 
+     <double>2494.006304351619</double> 
+     <double>1684.0290844699348</double> 
     </void> 
    </object> 
   </void> 
@@ -351,8 +366,8 @@ Item</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2432.2805708763526</double> 
-     <double>1114.1302235301102</double> 
+     <double>2594.171513902081</double> 
+     <double>1779.5440679001572</double> 
     </void> 
    </object> 
   </void> 
@@ -366,8 +381,8 @@ Item</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2552.6336610316166</double> 
-     <double>949.7504827898974</double> 
+     <double>2714.524604057345</double> 
+     <double>1615.1643271599437</double> 
     </void> 
    </object> 
   </void> 
@@ -381,8 +396,8 @@ Item</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2552.57969660663</double> 
-     <double>1113.3733950700996</double> 
+     <double>2714.4706396323586</double> 
+     <double>1778.7872394401465</double> 
     </void> 
    </object> 
   </void> 
@@ -396,8 +411,8 @@ Item</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2664.824857911921</double> 
-     <double>1025.6698677799745</double> 
+     <double>2826.7158009376494</double> 
+     <double>1691.0837121500217</double> 
     </void> 
    </object> 
   </void> 
@@ -411,6 +426,24 @@ Item</string>
 # Nombre: String;</string> 
      </void> 
     </void> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>&lt;&lt;Constructor&gt;&gt;
++ Jugador (Nom: String, P: PjSeleccionable);
+&lt;&lt;Comandos&gt;&gt;
++ agregarMonedas (Mon: int);
++ agregarPuntos (Pts: int);
++ agregarVida ();
++ quitarVida ();
++ actuar ();
+&lt;&lt;Consultas&gt;&gt;
++ getMonedas (): int;
++ getPuntos (): int;
++ getVidas (): int;
++ getNombre (): String;
++ getPj (): PjSeleccionable;</string> 
+     </void> 
+    </void> 
     <void property="name"> 
      <void property="text"> 
       <string>Jugador</string> 
@@ -419,38 +452,23 @@ Item</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>763.7000120577194</double> 
-     <double>305.46712497095297</double> 
+     <double>973.6514903433484</double> 
+     <double>585.4753779407633</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="ClassNode16" class="com.horstmann.violet.ClassNode"> 
-    <void property="name"> 
-     <void property="text"> 
-      <string>Teclado</string> 
-     </void> 
-    </void> 
-   </object> 
-   <object class="java.awt.geom.Point2D$Double"> 
-    <void method="setLocation"> 
-     <double>1104.9034393463794</double> 
-     <double>334.15237074677395</double> 
-    </void> 
-   </object> 
-  </void> 
-  <void method="addNode"> 
-   <object id="InterfaceNode7" class="com.horstmann.violet.InterfaceNode"> 
+   <object id="InterfaceNode6" class="com.horstmann.violet.InterfaceNode"> 
     <void property="methods"> 
      <void property="text"> 
-      <string>+ arriba ();
-+ abajo ();
-+ izquierda ();
-+ derecha ();
-+ A ();
-+ B ();
-+ ESC ();
-+ aceptar ();</string> 
+      <string>+ arriba (): boolean;
++ abajo (): boolean;
++ izquierda (): boolean;
++ derecha (): boolean;
++ A (): boolean;
++ B (): boolean;
++ ESC (): boolean;
++ aceptar (): boolean;</string> 
      </void> 
     </void> 
     <void property="name"> 
@@ -462,22 +480,36 @@ Control</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>975.7126888583488</double> 
-     <double>269.90295657125836</double> 
+     <double>1367.3417071042606</double> 
+     <double>667.6420506712373</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="ClassNode17" class="com.horstmann.violet.ClassNode"> 
+   <object id="ClassNode16" class="com.horstmann.violet.ClassNode"> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>&lt;&lt;Constructor&gt;&gt;
++ crearControl ();
+&lt;&lt;Comandos&gt;&gt;
++ pausa ();
++ reiniciar ();
++ salir ();
++ establecerJugador (NombreJugador: String);
++ crearNivel ();
+&lt;&lt;Consultas&gt;&gt;
++ getJugador (): Jugador;</string> 
+     </void> 
+    </void> 
     <void property="name"> 
      <void property="text"> 
-      <string>Main Control</string> 
+      <string>Control Central</string> 
      </void> 
     </void> 
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>397.1951764109088</double> 
+     <double>359.19517641090874</double> 
      <double>266.5163099404245</double> 
     </void> 
    </object> 
@@ -496,8 +528,34 @@ gráfica del juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2782.5516780748767</double> 
-     <double>82.13677612976343</double> 
+     <double>3102.5516780748767</double> 
+     <double>81.13677612976343</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ClassNode17" class="com.horstmann.violet.ClassNode"> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>&lt;&lt;Constructor&gt;&gt;
++ Ventana ();
+&lt;&lt;Comandos&gt;&gt;
++ mostrarMenu ();
++ pedirNombreJugador ();
++ mostrarInfo ();
++ cerrar ();</string> 
+     </void> 
+    </void> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>Ventana Principal</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>2894.9300923048822</double> 
+     <double>166.13677612976346</double> 
     </void> 
    </object> 
   </void> 
@@ -506,30 +564,7 @@ gráfica del juego.</string>
     <void property="methods"> 
      <void property="text"> 
       <string>&lt;&lt;Constructor&gt;&gt;
-+ Ventana ();
-&lt;&lt;Comandos&gt;&gt;
-+ mostrarMenu (v: Boolean);</string> 
-     </void> 
-    </void> 
-    <void property="name"> 
-     <void property="text"> 
-      <string>Ventana</string> 
-     </void> 
-    </void> 
-   </object> 
-   <object class="java.awt.geom.Point2D$Double"> 
-    <void method="setLocation"> 
-     <double>2890.9300923048822</double> 
-     <double>129.13677612976346</double> 
-    </void> 
-   </object> 
-  </void> 
-  <void method="addNode"> 
-   <object id="ClassNode19" class="com.horstmann.violet.ClassNode"> 
-    <void property="methods"> 
-     <void property="text"> 
-      <string>&lt;&lt;Constructor&gt;&gt;
-+ Menú ();
++ Menu ();
 &lt;&lt;Consultas&gt;&gt;
 + nuevoJuego ();
 + info ();
@@ -544,16 +579,25 @@ gráfica del juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>3089.9300923048777</double> 
-     <double>113.1634267147063</double> 
+     <double>3258.9300923048777</double> 
+     <double>168.1634267147063</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="ClassNode20" class="com.horstmann.violet.ClassNode"> 
+   <object class="com.horstmann.violet.ClassNode"> 
+    <void property="attributes"> 
+     <void property="text"> 
+      <string>&lt;&lt;Atributos de Clase&gt;&gt;
+- direccionRecursosGraficos: String;</string> 
+     </void> 
+    </void> 
     <void property="methods"> 
      <void property="text"> 
-      <string>Carga Imagenes</string> 
+      <string>&lt;&lt;Constructor&gt;&gt;
++ crearCache ();
+&lt;&lt;Consultar&gt;&gt;
++ cargarSprite (Nombre: String): BufferedImage;</string> 
      </void> 
     </void> 
     <void property="name"> 
@@ -564,18 +608,29 @@ gráfica del juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>3017.310496300185</double> 
-     <double>352.38061092485304</double> 
+     <double>3136.310496300185</double> 
+     <double>429.38061092485304</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="ClassNode21" class="com.horstmann.violet.ClassNode"> 
+   <object id="ClassNode19" class="com.horstmann.violet.ClassNode"> 
+    <void property="attributes"> 
+     <void property="text"> 
+      <string># sprite: BufferedImage;
+# posX, posY: int;</string> 
+     </void> 
+    </void> 
     <void property="methods"> 
      <void property="text"> 
-      <string>+ imprime Sprite en la posición deseada.
-+ &quot;mueve&quot; el Sprite a la posición deseada.
-+ elimina el Sprite.</string> 
+      <string>&lt;&lt;Constructor&gt;&gt;
++ crearManager (NombreSprite: String);
+&lt;&lt;Comandos&gt;&gt;
++ imprimirSprite (x, y: int);
++ moverA (x,y int);
++ eliminar ();
+&lt;&lt;Consultas&gt;&gt;
++ getPos (): Arreglo de dos int [x,y];</string> 
      </void> 
     </void> 
     <void property="name"> 
@@ -586,13 +641,13 @@ gráfica del juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2705.010044059711</double> 
-     <double>413.59514211459737</double> 
+     <double>2888.012697080114</double> 
+     <double>425.1087990346191</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="ClassNode22" class="com.horstmann.violet.ClassNode"> 
+   <object class="com.horstmann.violet.ClassNode"> 
     <void property="name"> 
      <void property="text"> 
       <string>Mapa</string> 
@@ -601,29 +656,8 @@ gráfica del juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2890.5209275784136</double> 
-     <double>263.81564260024766</double> 
-    </void> 
-   </object> 
-  </void> 
-  <void method="addNode"> 
-   <object id="ClassNode23" class="com.horstmann.violet.ClassNode"> 
-    <void property="methods"> 
-     <void property="text"> 
-      <string>Contiene un arreglo
-bidimensional</string> 
-     </void> 
-    </void> 
-    <void property="name"> 
-     <void property="text"> 
-      <string>Bloque</string> 
-     </void> 
-    </void> 
-   </object> 
-   <object class="java.awt.geom.Point2D$Double"> 
-    <void method="setLocation"> 
-     <double>3019.4149884937397</double> 
-     <double>262.2480212552395</double> 
+     <double>3099.5209275784136</double> 
+     <double>347.81564260024766</double> 
     </void> 
    </object> 
   </void> 
@@ -641,16 +675,25 @@ sonido del juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>3375.9208111552225</double> 
+     <double>3687.9208111552225</double> 
      <double>13.99305610101618</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="ClassNode24" class="com.horstmann.violet.ClassNode"> 
+   <object class="com.horstmann.violet.ClassNode"> 
+    <void property="attributes"> 
+     <void property="text"> 
+      <string>&lt;&lt;Atributos de Clase&gt;&gt;
+- direccionRecursosSonido: String;</string> 
+     </void> 
+    </void> 
     <void property="methods"> 
      <void property="text"> 
-      <string>Carga Sonido</string> 
+      <string>&lt;&lt;Constructor&gt;&gt;
++ crearCache ();
+&lt;&lt;Consultar&gt;&gt;
++ cargarSonido (Nombre: String): AudioClip;</string> 
      </void> 
     </void> 
     <void property="name"> 
@@ -661,13 +704,33 @@ sonido del juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>3509.959938784409</double> 
-     <double>100.51651686997025</double> 
+     <double>3760.959938784409</double> 
+     <double>109.51651686997025</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="ClassNode25" class="com.horstmann.violet.ClassNode"> 
+   <object id="ClassNode20" class="com.horstmann.violet.ClassNode"> 
+    <void property="attributes"> 
+     <void property="text"> 
+      <string># sound: AudioClip;
+# reproduciendo: boolean;</string> 
+     </void> 
+    </void> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>&lt;&lt;Constructor&gt;&gt;
++ crearManager (NombreSonido: String);
+&lt;&lt;Comandos&gt;&gt;
++ reproducir ();
++ reproducir (veces: int);
++ repInfinita ();
++ pausa ();
++ detener ();
+&lt;&lt;Consultas&gt;&gt;
++ sonidoTocando (): boolean;</string> 
+     </void> 
+    </void> 
     <void property="name"> 
      <void property="text"> 
       <string>Sound Manager</string> 
@@ -676,13 +739,24 @@ sonido del juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>3394.1205055491664</double> 
-     <double>164.05815088513623</double> 
+     <double>3507.1205055491664</double> 
+     <double>105.05815088513623</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="ClassNode26" class="com.horstmann.violet.ClassNode"> 
+   <object id="ClassNode21" class="com.horstmann.violet.ClassNode"> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>&lt;&lt;Constructor&gt;&gt;
++ Nivel (int nivel);
+&lt;&lt;Comandos&gt;&gt;
+- crearNivel1();
+- crearNivel2();
+...
+- crearNivelX();</string> 
+     </void> 
+    </void> 
     <void property="name"> 
      <void property="text"> 
       <string>Nivel</string> 
@@ -691,13 +765,23 @@ sonido del juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>833.7948910514755</double> 
-     <double>1521.5941188752665</double> 
+     <double>450.5578254772025</double> 
+     <double>1813.1713197002837</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="ClassNode27" class="com.horstmann.violet.ClassNode"> 
+   <object id="ClassNode22" class="com.horstmann.violet.ClassNode"> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>&lt;&lt;Constructor&gt;&gt;
++ Mapa (cantBloques: int):
+&lt;&lt;Consultas&gt;&gt;
++ getBloque (n: int): Bloque;
++ getSiguiente (B: Bloque): Bloque;
++ getAnterior (B: Bloque): Bloque;</string> 
+     </void> 
+    </void> 
     <void property="name"> 
      <void property="text"> 
       <string>Mapa</string> 
@@ -706,17 +790,28 @@ sonido del juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>830.6437412886387</double> 
-     <double>1650.0624980657628</double> 
+     <double>673.1102030044909</double> 
+     <double>1828.9348450904536</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="ClassNode28" class="com.horstmann.violet.ClassNode"> 
+   <object id="ClassNode23" class="com.horstmann.violet.ClassNode"> 
     <void property="attributes"> 
      <void property="text"> 
-      <string># ABD: Arreglo Bidimensional
-de PositionList de Actores</string> 
+      <string># filas: int;
+# columnas: int;</string> 
+     </void> 
+    </void> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>&lt;&lt;Constructor&gt;&gt;
++ Bloque (CantFilas, CantColumnas: int);
+&lt;&lt;Comandos&gt;&gt;
++ insertar (f, c: int):
+&lt;&lt;Consultas&gt;&gt;
++ getFilas (): int;
++ getColumnas (): int;</string> 
      </void> 
     </void> 
     <void property="name"> 
@@ -727,28 +822,13 @@ de PositionList de Actores</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1103.8622520089875</double> 
-     <double>1524.1404600552896</double> 
+     <double>897.9516260050356</double> 
+     <double>2026.9348450904536</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="ClassNode29" class="com.horstmann.violet.ClassNode"> 
-    <void property="name"> 
-     <void property="text"> 
-      <string>Fondo</string> 
-     </void> 
-    </void> 
-   </object> 
-   <object class="java.awt.geom.Point2D$Double"> 
-    <void method="setLocation"> 
-     <double>1325.2384031340703</double> 
-     <double>1527.438613854031</double> 
-    </void> 
-   </object> 
-  </void> 
-  <void method="addNode"> 
-   <object id="ClassNode30" class="com.horstmann.violet.ClassNode"> 
+   <object id="ClassNode24" class="com.horstmann.violet.ClassNode"> 
     <void property="name"> 
      <void property="text"> 
       <string>Tubo</string> 
@@ -757,13 +837,13 @@ de PositionList de Actores</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1088.9812652370933</double> 
-     <double>1037.772750291503</double> 
+     <double>1408.466480192774</double> 
+     <double>1525.6163202961384</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="InterfaceNode8" class="com.horstmann.violet.InterfaceNode"> 
+   <object id="InterfaceNode7" class="com.horstmann.violet.InterfaceNode"> 
     <void property="name"> 
      <void property="text"> 
       <string>«interface»
@@ -773,13 +853,13 @@ Plataforma</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1450.5718742152326</double> 
-     <double>1041.8738972540348</double> 
+     <double>1633.0570891709133</double> 
+     <double>1526.7174672586702</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="ClassNode31" class="com.horstmann.violet.ClassNode"> 
+   <object id="ClassNode25" class="com.horstmann.violet.ClassNode"> 
     <void property="methods"> 
      <void property="text"> 
       <string>+ romper ();</string> 
@@ -793,13 +873,13 @@ Plataforma</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1557.9262908806977</double> 
-     <double>1082.4441716194453</double> 
+     <double>1739.4115058363784</double> 
+     <double>1589.2877416240808</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="ClassNode32" class="com.horstmann.violet.ClassNode"> 
+   <object id="ClassNode26" class="com.horstmann.violet.ClassNode"> 
     <void property="name"> 
      <void property="text"> 
       <string>Irrompible</string> 
@@ -808,29 +888,29 @@ Plataforma</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1669.7624078404365</double> 
-     <double>1084.442181854143</double> 
+     <double>1852.2476227961172</double> 
+     <double>1587.2857518587784</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="ClassNode33" class="com.horstmann.violet.ClassNode"> 
+   <object id="ClassNode27" class="com.horstmann.violet.ClassNode"> 
     <void property="name"> 
      <void property="text"> 
       <string>Especial
-Item (?)</string> 
+PowerUp (?)</string> 
      </void> 
     </void> 
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1988.5732007254335</double> 
-     <double>1094.1990103141536</double> 
+     <double>2351.4641437511614</double> 
+     <double>1588.6128546842006</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="ClassNode34" class="com.horstmann.violet.ClassNode"> 
+   <object id="ClassNode28" class="com.horstmann.violet.ClassNode"> 
     <void property="methods"> 
      <void property="text"> 
       <string>+ sacarMoneda (): Moneda;</string> 
@@ -845,8 +925,8 @@ Monedas</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1820.359996045891</double> 
-     <double>1021.8225858494507</double> 
+     <double>1990.2509390716207</double> 
+     <double>1632.236430219497</double> 
     </void> 
    </object> 
   </void> 
@@ -867,24 +947,7 @@ Grafico.Ventana</string>
    </object> 
   </void> 
   <void method="addNode"> 
-   <object class="com.horstmann.violet.NoteNode"> 
-    <void property="text"> 
-     <void property="text"> 
-      <string>-&gt; nuevoJuego ();
-Crea lo necesario para
-inicializar el juego.</string> 
-     </void> 
-    </void> 
-   </object> 
-   <object class="java.awt.geom.Point2D$Double"> 
-    <void method="setLocation"> 
-     <double>3199.577665404715</double> 
-     <double>192.70373421967093</double> 
-    </void> 
-   </object> 
-  </void> 
-  <void method="addNode"> 
-   <object id="ClassNode35" class="com.horstmann.violet.ClassNode"> 
+   <object id="ClassNode29" class="com.horstmann.violet.ClassNode"> 
     <void property="name"> 
      <void property="text"> 
       <string>Moneda</string> 
@@ -893,13 +956,13 @@ inicializar el juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2100.488996100381</double> 
-     <double>1041.896064393273</double> 
+     <double>2244.3799391261095</double> 
+     <double>1649.30990876332</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="ClassNode36" class="com.horstmann.violet.ClassNode"> 
+   <object id="ClassNode30" class="com.horstmann.violet.ClassNode"> 
     <void property="name"> 
      <void property="text"> 
       <string>Bola de Fuego</string> 
@@ -908,19 +971,13 @@ inicializar el juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1199.5058236963537</double> 
-     <double>1043.5047986929667</double> 
+     <double>1521.8194657767806</double> 
+     <double>1530.0052229470948</double> 
     </void> 
    </object> 
   </void> 
   <void method="addNode"> 
-   <object id="InterfaceNode9" class="com.horstmann.violet.InterfaceNode"> 
-    <void property="methods"> 
-     <void property="text"> 
-      <string>+ movePlay ();
-+ moveStop ();</string> 
-     </void> 
-    </void> 
+   <object id="InterfaceNode8" class="com.horstmann.violet.InterfaceNode"> 
     <void property="name"> 
      <void property="text"> 
       <string>«interface»
@@ -930,8 +987,8 @@ Actor</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>889.7951832708541</double> 
-     <double>1266.038460124798</double> 
+     <double>1316.8299295868153</double> 
+     <double>1867.1299811249373</double> 
     </void> 
    </object> 
   </void> 
@@ -951,8 +1008,8 @@ del juego, y la IA.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>872.1740590373082</double> 
-     <double>492.9685625322164</double> 
+     <double>1300.915611250225</double> 
+     <double>977.3857766309311</double> 
     </void> 
    </object> 
   </void> 
@@ -971,8 +1028,117 @@ juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1297.2123915078614</double> 
-     <double>919.2812958383992</double> 
+     <double>1500.6976064635421</double> 
+     <double>1430.124865843035</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ClassNode31" class="com.horstmann.violet.ClassNode"> 
+    <void property="attributes"> 
+     <void property="text"> 
+      <string># invulnerable: boolean
+# destructor: boolean</string> 
+     </void> 
+    </void> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>+ saltar();
++ moverIzq();
++ moverDer();
++ crecer() *;
++ serDañado() *;</string> 
+     </void> 
+    </void> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>* Mario</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>900.9291571525832</double> 
+     <double>1153.8134664743807</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ClassNode32" class="com.horstmann.violet.ClassNode"> 
+    <void property="attributes"> 
+     <void property="text"> 
+      <string># totalmenteOcupada: boolean; 
+# posFila: int;
+# posColumna: int;</string> 
+     </void> 
+    </void> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>&lt;&lt;Constructor&gt;&gt;
++ Celda (Ocupada: boolean);
+&lt;&lt;Comandos&gt;&gt;
++ setOcupada (O: boolean);
+&lt;&lt;Consultas&gt;&gt;
++ estaOcupada(): boolean;</string> 
+     </void> 
+    </void> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>Celda</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1274.785686461966</double> 
+     <double>2022.749289489901</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.NoteNode"> 
+    <void property="text"> 
+     <void property="text"> 
+      <string>Arreglo
+Bidimensional
+de Celdas</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1150.8574777927706</double> 
+     <double>2025.3292661184073</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.NoteNode"> 
+    <void property="text"> 
+     <void property="text"> 
+      <string>Arreglo de bloques</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>889.4211196071744</double> 
+     <double>1835.0021632929852</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.NoteNode"> 
+    <void property="text"> 
+     <void property="text"> 
+      <string>Lista de Actores</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1439.8348067384352</double> 
+     <double>1958.7336676782552</double> 
     </void> 
    </object> 
   </void> 
@@ -1003,21 +1169,6 @@ juego.</string>
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
     <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
-    </void> 
-    <void property="lineStyle"> 
-     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
-    </void> 
-   </object> 
-   <object idref="ClassNode0"/> 
-   <object idref="InterfaceNode0"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
      <object class="com.horstmann.violet.BentStyle" field="HV"/> 
     </void> 
     <void property="endArrowHead"> 
@@ -1027,7 +1178,7 @@ juego.</string>
      <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
     </void> 
    </object> 
-   <object idref="InterfaceNode0"/> 
+   <object idref="ClassNode4"/> 
    <object idref="InterfaceNode2"/> 
   </void> 
   <void method="connect"> 
@@ -1042,23 +1193,8 @@ juego.</string>
      <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
     </void> 
    </object> 
-   <object idref="ClassNode4"/> 
    <object idref="InterfaceNode3"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HV"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
-    </void> 
-    <void property="lineStyle"> 
-     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
-    </void> 
-   </object> 
-   <object idref="InterfaceNode4"/> 
-   <object idref="InterfaceNode3"/> 
+   <object idref="InterfaceNode2"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
@@ -1073,7 +1209,7 @@ juego.</string>
     </void> 
    </object> 
    <object idref="ClassNode5"/> 
-   <object idref="InterfaceNode4"/> 
+   <object idref="InterfaceNode3"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
@@ -1088,12 +1224,12 @@ juego.</string>
     </void> 
    </object> 
    <object idref="ClassNode6"/> 
-   <object idref="InterfaceNode4"/> 
+   <object idref="InterfaceNode3"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
     <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
+     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
     </void> 
     <void property="endArrowHead"> 
      <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
@@ -1103,12 +1239,12 @@ juego.</string>
     </void> 
    </object> 
    <object idref="ClassNode9"/> 
-   <object idref="InterfaceNode5"/> 
+   <object idref="InterfaceNode4"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
     <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HV"/> 
+     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
     </void> 
     <void property="endArrowHead"> 
      <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
@@ -1118,12 +1254,12 @@ juego.</string>
     </void> 
    </object> 
    <object idref="ClassNode8"/> 
-   <object idref="InterfaceNode5"/> 
+   <object idref="InterfaceNode4"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
     <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HV"/> 
+     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
     </void> 
     <void property="endArrowHead"> 
      <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
@@ -1133,7 +1269,7 @@ juego.</string>
     </void> 
    </object> 
    <object idref="ClassNode7"/> 
-   <object idref="InterfaceNode5"/> 
+   <object idref="InterfaceNode4"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
@@ -1150,7 +1286,7 @@ juego.</string>
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
     <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
+     <object class="com.horstmann.violet.BentStyle" field="HV"/> 
     </void> 
     <void property="startArrowHead"> 
      <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
@@ -1184,7 +1320,7 @@ juego.</string>
     </void> 
    </object> 
    <object idref="ClassNode11"/> 
-   <object idref="InterfaceNode6"/> 
+   <object idref="InterfaceNode5"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
@@ -1199,7 +1335,7 @@ juego.</string>
     </void> 
    </object> 
    <object idref="ClassNode13"/> 
-   <object idref="InterfaceNode6"/> 
+   <object idref="InterfaceNode5"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
@@ -1214,7 +1350,7 @@ juego.</string>
     </void> 
    </object> 
    <object idref="ClassNode10"/> 
-   <object idref="InterfaceNode6"/> 
+   <object idref="InterfaceNode5"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
@@ -1229,7 +1365,7 @@ juego.</string>
     </void> 
    </object> 
    <object idref="ClassNode12"/> 
-   <object idref="InterfaceNode6"/> 
+   <object idref="InterfaceNode5"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
@@ -1244,34 +1380,25 @@ juego.</string>
     </void> 
    </object> 
    <object idref="ClassNode14"/> 
-   <object idref="InterfaceNode6"/> 
+   <object idref="InterfaceNode5"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
     <void property="bentStyle"> 
      <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
     </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
-    </void> 
-    <void property="lineStyle"> 
-     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
-    </void> 
-   </object> 
-   <object idref="ClassNode16"/> 
-   <object idref="InterfaceNode7"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
+    <void property="endLabel"> 
+     <string>1</string> 
     </void> 
     <void property="startArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
+     <object class="com.horstmann.violet.ArrowHead" field="BLACK_DIAMOND"/> 
+    </void> 
+    <void property="startLabel"> 
+     <string># pj</string> 
     </void> 
    </object> 
    <object idref="ClassNode15"/> 
-   <object idref="InterfaceNode2"/> 
+   <object idref="InterfaceNode1"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
@@ -1288,13 +1415,16 @@ juego.</string>
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
     <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
+     <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
     </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    <void property="endLabel"> 
+     <string># ventanaPrincipal</string> 
+    </void> 
+    <void property="startLabel"> 
+     <string># menu</string> 
     </void> 
    </object> 
-   <object idref="PackageNode2"/> 
+   <object idref="ClassNode17"/> 
    <object idref="ClassNode18"/> 
   </void> 
   <void method="connect"> 
@@ -1302,56 +1432,26 @@ juego.</string>
     <void property="bentStyle"> 
      <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
     </void> 
-    <void property="startArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
-    </void> 
-   </object> 
-   <object idref="ClassNode18"/> 
-   <object idref="ClassNode19"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
-    </void> 
     <void property="endArrowHead"> 
      <object class="com.horstmann.violet.ArrowHead" field="V"/> 
     </void> 
    </object> 
-   <object idref="PackageNode2"/> 
-   <object idref="ClassNode20"/> 
+   <object idref="PackageNode1"/> 
+   <object idref="PackageNode3"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
     <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
+     <object class="com.horstmann.violet.BentStyle" field="HV"/> 
     </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    <void property="endLabel"> 
+     <string>1..*</string> 
     </void> 
-   </object> 
-   <object idref="PackageNode2"/> 
-   <object idref="ClassNode21"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
-    </void> 
-   </object> 
-   <object idref="PackageNode2"/> 
-   <object idref="ClassNode22"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
+    <void property="middleLabel"> 
+     <string># bloques</string> 
     </void> 
     <void property="startArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
+     <object class="com.horstmann.violet.ArrowHead" field="BLACK_DIAMOND"/> 
     </void> 
    </object> 
    <object idref="ClassNode22"/> 
@@ -1360,167 +1460,80 @@ juego.</string>
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
     <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
+     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
     </void> 
     <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
     </void> 
-   </object> 
-   <object idref="PackageNode1"/> 
-   <object idref="PackageNode3"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HV"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
-    </void> 
-   </object> 
-   <object idref="PackageNode3"/> 
-   <object idref="ClassNode24"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
-    </void> 
-   </object> 
-   <object idref="PackageNode3"/> 
-   <object idref="ClassNode25"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HV"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
-    </void> 
-    <void property="middleLabel"> 
-     <string>usa</string> 
+    <void property="lineStyle"> 
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
     </void> 
    </object> 
    <object idref="ClassNode25"/> 
-   <object idref="ClassNode24"/> 
+   <object idref="InterfaceNode7"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
     <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HV"/> 
+     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
     </void> 
-    <void property="startArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="BLACK_DIAMOND"/> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+    </void> 
+    <void property="lineStyle"> 
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
+    </void> 
+   </object> 
+   <object idref="ClassNode26"/> 
+   <object idref="InterfaceNode7"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
+    </void> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
     </void> 
    </object> 
    <object idref="ClassNode27"/> 
-   <object idref="ClassNode28"/> 
+   <object idref="ClassNode26"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
     <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
+     <object class="com.horstmann.violet.BentStyle" field="HV"/> 
     </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+    <void property="endLabel"> 
+     <string>0..1</string> 
     </void> 
-    <void property="lineStyle"> 
-     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
-    </void> 
-   </object> 
-   <object idref="ClassNode31"/> 
-   <object idref="InterfaceNode8"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
-    </void> 
-    <void property="lineStyle"> 
-     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
-    </void> 
-   </object> 
-   <object idref="ClassNode32"/> 
-   <object idref="InterfaceNode8"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
-    </void> 
-   </object> 
-   <object idref="ClassNode2"/> 
-   <object idref="ClassNode0"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
-    </void> 
-   </object> 
-   <object idref="ClassNode3"/> 
-   <object idref="ClassNode2"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
-    </void> 
-   </object> 
-   <object idref="ClassNode33"/> 
-   <object idref="ClassNode32"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
+    <void property="middleLabel"> 
+     <string>#item</string> 
     </void> 
     <void property="startArrowHead"> 
      <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
     </void> 
    </object> 
-   <object idref="ClassNode33"/> 
-   <object idref="InterfaceNode6"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HV"/> 
-    </void> 
-    <void property="startArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="BLACK_DIAMOND"/> 
-    </void> 
-   </object> 
-   <object idref="ClassNode28"/> 
-   <object idref="ClassNode29"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HV"/> 
-    </void> 
-    <void property="startArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="BLACK_DIAMOND"/> 
-    </void> 
-   </object> 
-   <object idref="ClassNode26"/> 
    <object idref="ClassNode27"/> 
+   <object idref="InterfaceNode5"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
+    </void> 
+    <void property="endLabel"> 
+     <string>1</string> 
+    </void> 
+    <void property="middleLabel"> 
+     <string># mapa</string> 
+    </void> 
+    <void property="startArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="BLACK_DIAMOND"/> 
+    </void> 
+   </object> 
+   <object idref="ClassNode21"/> 
+   <object idref="ClassNode22"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.NoteEdge"/> 
@@ -1533,11 +1546,11 @@ juego.</string>
      <object class="com.horstmann.violet.BentStyle" field="HV"/> 
     </void> 
     <void property="startArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
     </void> 
    </object> 
-   <object idref="InterfaceNode9"/> 
-   <object idref="ClassNode21"/> 
+   <object idref="InterfaceNode8"/> 
+   <object idref="ClassNode19"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
@@ -1551,8 +1564,53 @@ juego.</string>
      <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
     </void> 
    </object> 
-   <object idref="InterfaceNode1"/> 
-   <object idref="InterfaceNode9"/> 
+   <object idref="InterfaceNode0"/> 
+   <object idref="InterfaceNode8"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
+    </void> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+    </void> 
+    <void property="lineStyle"> 
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
+    </void> 
+   </object> 
+   <object idref="ClassNode24"/> 
+   <object idref="InterfaceNode8"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
+    </void> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+    </void> 
+    <void property="lineStyle"> 
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
+    </void> 
+   </object> 
+   <object idref="InterfaceNode7"/> 
+   <object idref="InterfaceNode8"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
+    </void> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+    </void> 
+    <void property="lineStyle"> 
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
+    </void> 
+   </object> 
+   <object idref="InterfaceNode5"/> 
+   <object idref="InterfaceNode8"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
@@ -1567,22 +1625,7 @@ juego.</string>
     </void> 
    </object> 
    <object idref="ClassNode30"/> 
-   <object idref="InterfaceNode9"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
-    </void> 
-    <void property="lineStyle"> 
-     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
-    </void> 
-   </object> 
    <object idref="InterfaceNode8"/> 
-   <object idref="InterfaceNode9"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
@@ -1596,50 +1639,8 @@ juego.</string>
      <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
     </void> 
    </object> 
-   <object idref="InterfaceNode6"/> 
-   <object idref="InterfaceNode9"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
-    </void> 
-    <void property="lineStyle"> 
-     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
-    </void> 
-   </object> 
-   <object idref="ClassNode36"/> 
-   <object idref="InterfaceNode9"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
-    </void> 
-    <void property="lineStyle"> 
-     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
-    </void> 
-   </object> 
-   <object idref="ClassNode35"/> 
-   <object idref="InterfaceNode9"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
-    </void> 
-    <void property="startArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
-    </void> 
-   </object> 
-   <object idref="ClassNode26"/> 
-   <object idref="InterfaceNode9"/> 
+   <object idref="ClassNode29"/> 
+   <object idref="InterfaceNode8"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
@@ -1647,70 +1648,10 @@ juego.</string>
      <object class="com.horstmann.violet.BentStyle" field="VH"/> 
     </void> 
     <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
-    </void> 
-   </object> 
-   <object idref="PackageNode4"/> 
-   <object idref="InterfaceNode1"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
-    </void> 
-   </object> 
-   <object idref="PackageNode4"/> 
-   <object idref="InterfaceNode5"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
-    </void> 
-    <void property="endArrowHead"> 
      <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
     </void> 
    </object> 
-   <object idref="ClassNode34"/> 
-   <object idref="ClassNode32"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
-    </void> 
-   </object> 
-   <object idref="PackageNode0"/> 
-   <object idref="ClassNode17"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
-    </void> 
-   </object> 
-   <object idref="PackageNode0"/> 
-   <object idref="ClassNode15"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
-    </void> 
-   </object> 
-   <object idref="PackageNode0"/> 
+   <object idref="ClassNode28"/> 
    <object idref="ClassNode26"/> 
   </void> 
   <void method="connect"> 
@@ -1730,12 +1671,18 @@ juego.</string>
     <void property="bentStyle"> 
      <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
     </void> 
+    <void property="endLabel"> 
+     <string>0..*</string> 
+    </void> 
+    <void property="middleLabel"> 
+     <string>#monedas</string> 
+    </void> 
     <void property="startArrowHead"> 
      <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
     </void> 
    </object> 
-   <object idref="ClassNode34"/> 
-   <object idref="ClassNode35"/> 
+   <object idref="ClassNode28"/> 
+   <object idref="ClassNode29"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
@@ -1752,38 +1699,26 @@ juego.</string>
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
     <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
-    </void> 
-    <void property="startArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
-    </void> 
-   </object> 
-   <object idref="ClassNode28"/> 
-   <object idref="InterfaceNode9"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
      <object class="com.horstmann.violet.BentStyle" field="HV"/> 
     </void> 
     <void property="startArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
     </void> 
    </object> 
-   <object idref="InterfaceNode9"/> 
-   <object idref="ClassNode25"/> 
+   <object idref="InterfaceNode8"/> 
+   <object idref="ClassNode20"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
     <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
+     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
     </void> 
     <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
     </void> 
    </object> 
-   <object idref="PackageNode0"/> 
-   <object idref="InterfaceNode9"/> 
+   <object idref="InterfaceNode1"/> 
+   <object idref="InterfaceNode0"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
@@ -1795,19 +1730,7 @@ juego.</string>
     </void> 
    </object> 
    <object idref="InterfaceNode2"/> 
-   <object idref="InterfaceNode1"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
-    </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
-    </void> 
-   </object> 
-   <object idref="InterfaceNode3"/> 
-   <object idref="InterfaceNode1"/> 
+   <object idref="InterfaceNode0"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
@@ -1817,8 +1740,11 @@ juego.</string>
     <void property="endArrowHead"> 
      <object class="com.horstmann.violet.ArrowHead" field="V"/> 
     </void> 
+    <void property="middleLabel"> 
+     <string># control</string> 
+    </void> 
    </object> 
-   <object idref="InterfaceNode7"/> 
+   <object idref="InterfaceNode6"/> 
    <object idref="ClassNode15"/> 
   </void> 
   <void method="connect"> 
@@ -1827,47 +1753,86 @@ juego.</string>
      <object class="com.horstmann.violet.BentStyle" field="HV"/> 
     </void> 
     <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+    </void> 
+    <void property="lineStyle"> 
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
     </void> 
    </object> 
-   <object idref="PackageNode5"/> 
-   <object idref="InterfaceNode6"/> 
+   <object idref="ClassNode31"/> 
+   <object idref="InterfaceNode1"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
+    </void> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+    </void> 
+   </object> 
+   <object idref="ClassNode0"/> 
+   <object idref="ClassNode31"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
+    </void> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+    </void> 
+   </object> 
+   <object idref="ClassNode2"/> 
+   <object idref="ClassNode31"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
+    </void> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+    </void> 
+   </object> 
+   <object idref="ClassNode3"/> 
+   <object idref="ClassNode31"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
     <void property="bentStyle"> 
      <object class="com.horstmann.violet.BentStyle" field="HV"/> 
     </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    <void property="endLabel"> 
+     <string>0..*</string> 
+    </void> 
+    <void property="middleLabel"> 
+     <string># actores</string> 
+    </void> 
+    <void property="startArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
     </void> 
    </object> 
-   <object idref="PackageNode5"/> 
-   <object idref="ClassNode35"/> 
+   <object idref="ClassNode32"/> 
+   <object idref="InterfaceNode8"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
     <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
+     <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
     </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    <void property="endLabel"> 
+     <string>0..*</string> 
     </void> 
-   </object> 
-   <object idref="PackageNode5"/> 
-   <object idref="ClassNode30"/> 
-  </void> 
-  <void method="connect"> 
-   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
-    <void property="bentStyle"> 
-     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
+    <void property="middleLabel"> 
+     <string># ABD</string> 
     </void> 
-    <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    <void property="startArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
     </void> 
    </object> 
-   <object idref="PackageNode5"/> 
-   <object idref="ClassNode36"/> 
+   <object idref="ClassNode23"/> 
+   <object idref="ClassNode32"/> 
   </void> 
   <void method="connect"> 
    <object class="com.horstmann.violet.ClassRelationshipEdge"> 
@@ -1875,11 +1840,35 @@ juego.</string>
      <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
     </void> 
     <void property="endArrowHead"> 
-     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+     <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
+    </void> 
+    <void property="endLabel"> 
+     <string># ControlCentral</string> 
+    </void> 
+    <void property="startArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
+    </void> 
+    <void property="startLabel"> 
+     <string># jugador</string> 
     </void> 
    </object> 
-   <object idref="PackageNode5"/> 
-   <object idref="InterfaceNode8"/> 
+   <object idref="ClassNode16"/> 
+   <object idref="ClassNode15"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
+    </void> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+    <void property="startLabel"> 
+     <string># nivel</string> 
+    </void> 
+   </object> 
+   <object idref="ClassNode16"/> 
+   <object idref="ClassNode21"/> 
   </void> 
  </object> 
 </java> 
