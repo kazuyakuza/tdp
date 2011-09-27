@@ -185,7 +185,8 @@ PjSeleccionable </string>
 + colisionar (obj: Bola de Fuego);
 + moverIzq ();
 + moverDer ();
-+ serDañado ();
++ serDañado (); *
++ morir();
 + caer (); +</string> 
      </void> 
     </void> 
@@ -209,9 +210,8 @@ PjSeleccionable </string>
       <string>&lt;&lt;Constructores&gt;&gt;
 + Goomba();
 &lt;&lt;Comandos&gt;&gt;
-+ moverIzq ();
-+ moverDer ();
-+ serDañado ();</string> 
++ serDañado(); +
+</string> 
      </void> 
     </void> 
     <void property="name"> 
@@ -222,8 +222,8 @@ PjSeleccionable </string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1789.187872446518</double> 
-     <double>1176.2232953306086</double> 
+     <double>1807.187872446518</double> 
+     <double>1116.2232953306086</double> 
     </void> 
    </object> 
   </void> 
@@ -234,7 +234,7 @@ PjSeleccionable </string>
       <string>&lt;&lt;Constructores&gt;&gt;
 + KTNormal ();
 &lt;&lt;Comandos&gt;&gt;
-+ serDañado (); +</string> 
++ serDañado (); ++</string> 
      </void> 
     </void> 
     <void property="name"> 
@@ -245,8 +245,8 @@ PjSeleccionable </string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1960.7308329718894</double> 
-     <double>1350.7744080637888</double> 
+     <double>1939.7308329718894</double> 
+     <double>1257.7744080637888</double> 
     </void> 
    </object> 
   </void> 
@@ -255,9 +255,8 @@ PjSeleccionable </string>
     <void property="methods"> 
      <void property="text"> 
       <string>&lt;&lt;Comandos&gt;&gt;
-+ moverIzq ();
-+ moverDer ();
-+ serDañado (); *</string> 
++ serDañado(); *
+</string> 
      </void> 
     </void> 
     <void property="name"> 
@@ -268,8 +267,8 @@ PjSeleccionable </string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1789.8094582165124</double> 
-     <double>1346.045556698922</double> 
+     <double>1773.8094582165124</double> 
+     <double>1278.045556698922</double> 
     </void> 
    </object> 
   </void> 
@@ -282,7 +281,7 @@ PjSeleccionable </string>
 &lt;&lt;Comandos&gt;&gt;
 + moverIzq (); ++
 + moverDer (); ++
-+ serDañado (); +
++ serDañado (); ++
 + recuperarse ();</string> 
      </void> 
     </void> 
@@ -294,8 +293,8 @@ PjSeleccionable </string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2118.4603475918566</double> 
-     <double>1438.694456308957</double> 
+     <double>2084.4603475918566</double> 
+     <double>1338.694456308957</double> 
     </void> 
    </object> 
   </void> 
@@ -341,8 +340,8 @@ PjSeleccionable </string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2038.9619272980985</double> 
-     <double>1049.9946086145544</double> 
+     <double>2037.9619272980985</double> 
+     <double>1034.9946086145544</double> 
     </void> 
    </object> 
   </void> 
@@ -366,8 +365,8 @@ Normal</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2232.0971699881143</double> 
-     <double>1080.555678709403</double> 
+     <double>2234.0971699881143</double> 
+     <double>1094.555678709403</double> 
     </void> 
    </object> 
   </void> 
@@ -391,8 +390,8 @@ Caparazón</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2421.722208703421</double> 
-     <double>1052.7688269121556</double> 
+     <double>2423.722208703421</double> 
+     <double>1030.7688269121556</double> 
     </void> 
    </object> 
   </void> 
@@ -415,8 +414,8 @@ Caparazón</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>3062.2587614630174</double> 
-     <double>1681.1909777448868</double> 
+     <double>3079.2587614630174</double> 
+     <double>1800.1909777448868</double> 
     </void> 
    </object> 
   </void> 
@@ -439,8 +438,8 @@ Caparazón</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2826.4153486971713</double> 
-     <double>1804.0017706298909</double> 
+     <double>2825.4153486971713</double> 
+     <double>1924.0017706298909</double> 
     </void> 
    </object> 
   </void> 
@@ -463,8 +462,8 @@ Caparazón</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>3076.2854120479606</double> 
-     <double>1904.705961175116</double> 
+     <double>3099.2854120479606</double> 
+     <double>2042.705961175116</double> 
     </void> 
    </object> 
   </void> 
@@ -486,8 +485,8 @@ Caparazón</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>3251.5299100981506</double> 
-     <double>1681.3262204349026</double> 
+     <double>3268.5299100981506</double> 
+     <double>1800.3262204349026</double> 
     </void> 
    </object> 
   </void> 
@@ -510,8 +509,8 @@ Caparazón</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>3249.475945673164</double> 
-     <double>1901.9491327151054</double> 
+     <double>3266.475945673164</double> 
+     <double>2039.9491327151054</double> 
     </void> 
    </object> 
   </void> 
@@ -533,8 +532,8 @@ Caparazón</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>3428.828372573327</double> 
-     <double>1799.9484694600048</double> 
+     <double>3445.828372573327</double> 
+     <double>1918.9484694600048</double> 
     </void> 
    </object> 
   </void> 
@@ -921,8 +920,8 @@ sonido del juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>356.2860135869686</double> 
-     <double>2165.201949815831</double> 
+     <double>355.2860135869686</double> 
+     <double>2285.201949815831</double> 
     </void> 
    </object> 
   </void> 
@@ -952,8 +951,8 @@ sonido del juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>799.0842156746488</double> 
-     <double>2204.04675347103</double> 
+     <double>798.0842156746488</double> 
+     <double>2324.04675347103</double> 
     </void> 
    </object> 
   </void> 
@@ -985,8 +984,8 @@ sonido del juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>780.9516260050353</double> 
-     <double>2447.371203276048</double> 
+     <double>779.9516260050353</double> 
+     <double>2567.371203276048</double> 
     </void> 
    </object> 
   </void> 
@@ -1009,8 +1008,8 @@ sonido del juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1469.1160430579127</double> 
-     <double>1638.8055274111412</double> 
+     <double>1477.1160430579127</double> 
+     <double>1760.8055274111412</double> 
     </void> 
    </object> 
   </void> 
@@ -1030,8 +1029,8 @@ Plataforma</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1793.706652036052</double> 
-     <double>1640.906674373673</double> 
+     <double>1891.706652036052</double> 
+     <double>1743.906674373673</double> 
     </void> 
    </object> 
   </void> 
@@ -1056,8 +1055,8 @@ Plataforma</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1998.765259246743</double> 
-     <double>1722.5042625791268</double> 
+     <double>2016.765259246743</double> 
+     <double>1892.5042625791268</double> 
     </void> 
    </object> 
   </void> 
@@ -1069,7 +1068,7 @@ Plataforma</string>
 + Irrompible(C: Celda);
 &lt;&lt;Comandos&gt;&gt;
 + colisionar (a: Actor);
-+ colisionar (pj: Seleccionable); +
++ colisionar (pj: PjSeleccionable); +
 + caer (); +</string> 
      </void> 
     </void> 
@@ -1081,8 +1080,8 @@ Plataforma</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2238.792573086787</double> 
-     <double>1609.419668038593</double> 
+     <double>2255.792573086787</double> 
+     <double>1708.419668038593</double> 
     </void> 
    </object> 
   </void> 
@@ -1094,7 +1093,7 @@ Plataforma</string>
 + EspecialPowerUp(C: Celda);
 &lt;&lt;Comandos&gt;&gt;
 + colisionar (a: Actor); +
-+ colisionar (pj: Seleccionable); +
++ colisionar (pj: PjSeleccionable); +
 + caer (); +</string> 
      </void> 
     </void> 
@@ -1107,8 +1106,8 @@ PowerUp (?)</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2611.628690046524</double> 
-     <double>1600.5575637490126</double> 
+     <double>2612.628690046524</double> 
+     <double>1705.5575637490126</double> 
     </void> 
    </object> 
   </void> 
@@ -1120,7 +1119,7 @@ PowerUp (?)</string>
 + EspecialMonedas(C: Celda);
 &lt;&lt;Comandos&gt;&gt;
 + sacarMoneda (): Moneda;
-+ colisionar (pj: Seleccionable); ++
++ colisionar (pj: PjSeleccionable); ++
 + caer (); +</string> 
      </void> 
     </void> 
@@ -1133,8 +1132,8 @@ Monedas</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2243.658656906971</double> 
-     <double>1767.8313654045485</double> 
+     <double>2251.658656906971</double> 
+     <double>1886.8313654045485</double> 
     </void> 
    </object> 
   </void> 
@@ -1146,7 +1145,7 @@ Monedas</string>
 + Moneda(C: Celda);
 &lt;&lt;Comandos&gt;&gt;
 + colisionar (a: Actor); +
-+ colisionar (pj: Seleccionable); +
++ colisionar (pj: PjSeleccionable); +
 + caer (); +</string> 
      </void> 
     </void> 
@@ -1158,8 +1157,8 @@ Monedas</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2614.3299542317277</double> 
-     <double>1783.7156368333688</double> 
+     <double>2613.3299542317277</double> 
+     <double>1903.7156368333688</double> 
     </void> 
    </object> 
   </void> 
@@ -1182,8 +1181,8 @@ Monedas</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1623.4690286419193</double> 
-     <double>1638.1944300620976</double> 
+     <double>1683.4690286419193</double> 
+     <double>1764.1944300620976</double> 
     </void> 
    </object> 
   </void> 
@@ -1213,7 +1212,7 @@ Monedas</string>
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
      <double>1302.2902853369512</double> 
-     <double>1996.1299811249376</double> 
+     <double>2132.1299811249373</double> 
     </void> 
    </object> 
   </void> 
@@ -1253,8 +1252,8 @@ juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1561.3471693286808</double> 
-     <double>1543.3140729580377</double> 
+     <double>1560.3471693286808</double> 
+     <double>1663.3140729580377</double> 
     </void> 
    </object> 
   </void> 
@@ -1328,8 +1327,8 @@ juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1313.246042212102</double> 
-     <double>2421.861197870477</double> 
+     <double>1312.246042212102</double> 
+     <double>2541.861197870477</double> 
     </void> 
    </object> 
   </void> 
@@ -1343,8 +1342,8 @@ juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1059.3178335429066</double> 
-     <double>2486.5224527640135</double> 
+     <double>1058.3178335429066</double> 
+     <double>2606.5224527640135</double> 
     </void> 
    </object> 
   </void> 
@@ -1358,8 +1357,8 @@ juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1010.6383038173212</double> 
-     <double>2222.0601072485756</double> 
+     <double>959.6383038173212</double> 
+     <double>2503.0601072485756</double> 
     </void> 
    </object> 
   </void> 
@@ -1373,8 +1372,8 @@ juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1510.7815055685496</double> 
-     <double>2230.0874210886195</double> 
+     <double>1509.7815055685496</double> 
+     <double>2356.0874210886195</double> 
     </void> 
    </object> 
   </void> 
@@ -1429,8 +1428,8 @@ sus efectos y le computan los puntos que corresponda al jugador.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2593.0279770951443</double> 
-     <double>1974.08127826503</double> 
+     <double>2574.0279770951443</double> 
+     <double>2103.08127826503</double> 
     </void> 
    </object> 
   </void> 
@@ -1446,8 +1445,8 @@ No puede haber mas Actores.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1556.460355750136</double> 
-     <double>2448.1119083805756</double> 
+     <double>1555.460355750136</double> 
+     <double>2568.1119083805756</double> 
     </void> 
    </object> 
   </void> 
@@ -1571,8 +1570,8 @@ mostrando en el momento.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>52.32511306011966</double> 
-     <double>2196.6800725997705</double> 
+     <double>51.32511306011966</double> 
+     <double>2316.6800725997705</double> 
     </void> 
    </object> 
   </void> 
@@ -1686,8 +1685,8 @@ no hacen nada.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>2247.0</double> 
-     <double>1528.0</double> 
+     <double>2210.0</double> 
+     <double>1428.0</double> 
     </void> 
    </object> 
   </void> 
@@ -1702,8 +1701,8 @@ Vuelve al KT Normal.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1994.0</double> 
-     <double>1563.0</double> 
+     <double>1953.0</double> 
+     <double>1473.0</double> 
     </void> 
    </object> 
   </void> 
@@ -1719,8 +1718,8 @@ a su lugar inicial en el nivel.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>52.0</double> 
-     <double>2368.0</double> 
+     <double>51.0</double> 
+     <double>2488.0</double> 
     </void> 
    </object> 
   </void> 
@@ -1737,8 +1736,8 @@ como el piso del nivel.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1029.0</double> 
-     <double>2571.0</double> 
+     <double>1028.0</double> 
+     <double>2691.0</double> 
     </void> 
    </object> 
   </void> 
@@ -1753,8 +1752,90 @@ el Jugador.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>521.0</double> 
-     <double>2409.0</double> 
+     <double>520.0</double> 
+     <double>2529.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ClassNode35" class="com.horstmann.violet.ClassNode"> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>&lt;&lt;Constructor&gt;&gt;
++ crearIA (obj: Bola de Fuego);
+&lt;&lt;Comandos&gt;&gt;
++ movePlay (); +
++ moveStop (); +</string> 
+     </void> 
+    </void> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>IA_Bola
+Fuego</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>2621.0</double> 
+     <double>1140.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.NoteNode"> 
+    <void property="text"> 
+     <void property="text"> 
+      <string>caer() no 
+hace nada</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1458.0</double> 
+     <double>1888.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.NoteNode"> 
+    <void property="text"> 
+     <void property="text"> 
+      <string>caer() no hace nada</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>2937.0</double> 
+     <double>2054.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.NoteNode"> 
+    <void property="color"> 
+     <object class="java.awt.Color"> 
+      <int>255</int> 
+      <int>222</int> 
+      <int>173</int> 
+      <int>255</int> 
+     </object> 
+    </void> 
+    <void property="text"> 
+     <void property="text"> 
+      <string>caer() para 
+plataformas
+no hace nada
+</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>2139.0</double> 
+     <double>1812.0</double> 
     </void> 
    </object> 
   </void> 
@@ -2552,6 +2633,36 @@ el Jugador.</string>
    </object> 
    <object idref="ClassNode20"/> 
    <object idref="ClassNode17"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
+    </void> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+    </void> 
+    <void property="lineStyle"> 
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
+    </void> 
+   </object> 
+   <object idref="ClassNode35"/> 
+   <object idref="InterfaceNode4"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
+    </void> 
+    <void property="startArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="BLACK_DIAMOND"/> 
+    </void> 
+    <void property="startLabel"> 
+     <string>#bolaFuego</string> 
+    </void> 
+   </object> 
+   <object idref="ClassNode35"/> 
+   <object idref="ClassNode31"/> 
   </void> 
  </object> 
 </java> 
