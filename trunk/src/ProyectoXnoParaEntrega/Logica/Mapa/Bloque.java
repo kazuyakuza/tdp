@@ -1,10 +1,14 @@
-package ProyectoXnoParaEntrega.Logica;
+package ProyectoXnoParaEntrega.Logica.Mapa;
 
+import ProyectoXnoParaEntrega.Logica.Actor;
 import TDALista.ListaPositionSimple;
 import TDALista.PositionList;
 
 /**
+ * Proyecto X
  * 
+ * @author Javier Eduardo Barrocal LU:87158
+ * @author Pablo Isaias Chacar LU:67704
  */
 public class Bloque
 {
