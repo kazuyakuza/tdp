@@ -6,7 +6,6 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import ProyectoXnoParaEntrega.Logica.ControlCentral;
 
@@ -43,6 +42,7 @@ public class VentanaPrincipal extends JFrame
 	public VentanaPrincipal ()
 	{
 		initGUI();
+		inicializacionVariables();
 		
 		//Posicionar VentanaPrincipal en el centro de la pantalla.
 		Toolkit tk = Toolkit.getDefaultToolkit();
@@ -75,9 +75,13 @@ public class VentanaPrincipal extends JFrame
 		}
 		catch (Exception e)
 		{
-		    mensajeError(this, "ERROR", e.getMessage());
+		    mensajeError("ERROR", e.getMessage(), true);
 		}
 	}
+	
+	/**
+	 * 
+	 */
 	
 	/**
 	 * Crea un Menú y lo agrega a la Ventana.
@@ -137,8 +141,10 @@ public class VentanaPrincipal extends JFrame
 	{
 		Escenario e = new Escenario(this);
 		Thread t1 = new Thread (e);
-		ControlCentral c = new ControlCentral(nombreJugador, e);
-		Thread t2 = new Thread (c);
+		ControlCentral cC = new ControlCentral(nombreJugador, e);
+		Thread t2 = new Thread (cC);
+		t2.start();
+		t1.start();
 	}
 	
 	/**
@@ -166,9 +172,11 @@ public class VentanaPrincipal extends JFrame
 	 * @param titulo Título del Mensaje de Error.
 	 * @param mensaje Mensaje del Error.
 	 */
-	public void mensajeError (Component ventana, String titulo, String mensaje)
+	public void mensajeError (String titulo, String mensaje, boolean cerrar)
 	{
-		JOptionPane.showMessageDialog(ventana,mensaje, titulo, JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.PLAIN_MESSAGE);
+//		if (cerrar)
+//			salir();
 	}
 	
 	/**

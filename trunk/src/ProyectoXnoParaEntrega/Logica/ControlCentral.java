@@ -1,9 +1,13 @@
 package ProyectoXnoParaEntrega.Logica;
 
 import ProyectoXnoParaEntrega.Grafico.Escenario;
+import ProyectoXnoParaEntrega.Logica.Personajes.MarioChico;
+import ProyectoXnoParaEntrega.Logica.Personajes.PjSeleccionable;
 
 /**
- * Representación gráfica del lugar donde acontecen todas las situaciones del juego.
+ * Representa al Control Central del Juego.
+ * 
+ * Controla las situaciones que suceden en el Juego.
  * 
  * Proyecto X
  * 
@@ -15,15 +19,21 @@ public class ControlCentral implements Runnable
 	
 	//Variables de Instancia
 	private Escenario escenario;
+	private Jugador jugador;
 	
 	/*CONSTRUCTOR*/
 	
 	/**
+	 * Crea un Control Central con el Escenario e.
 	 * 
+	 * @param nJ Nombre Jugador.
+	 * @param e Escenario donde llevar a cabo el juego.
 	 */
-	public ControlCentral (String nB, Escenario e)
+	public ControlCentral (String nJ, Escenario e)
 	{
 		escenario = e;
+		PjSeleccionable pjS = new MarioChico ();
+		jugador = new Jugador (nJ, pjS);
 	}
 	
 	/*COMANDOS*/

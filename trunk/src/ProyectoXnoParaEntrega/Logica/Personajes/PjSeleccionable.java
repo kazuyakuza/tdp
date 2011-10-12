@@ -6,7 +6,7 @@ package ProyectoXnoParaEntrega.Logica.Personajes;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public interface Seleccionable extends Personaje
+public interface PjSeleccionable extends Personaje
 {
 
 }

@@ -6,7 +6,7 @@ package ProyectoXnoParaEntrega.Logica.Personajes;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class MarioBlanco extends MarioGrande
+public class MarioBlanco extends Mario
 {
 
 }

@@ -3,6 +3,8 @@ package ProyectoXnoParaEntrega.Grafico;
 import java.awt.Canvas;
 import java.awt.image.BufferedImage;
 
+import ProyectoXnoParaEntrega.Logica.Controles.Control;
+
 /**
  * Representación gráfica del lugar donde acontecen todas las situaciones del juego.
  * 
@@ -34,6 +36,14 @@ public class Escenario extends Canvas implements Runnable
 	}
 	
 	/*COMANDOS*/
+	
+	/**
+	 * 
+	 */
+	public void agregarControl (Control c)
+	{
+		this.addComponentListener(c);
+	}
 	
 	/**
 	 * 
