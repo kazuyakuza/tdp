@@ -1,6 +1,5 @@
 package ProyectoXnoParaEntrega.Grafico;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -33,6 +32,7 @@ public class VentanaPrincipal extends JFrame
 	//Variables de Instancia
 	private Menu menu;
 	private PedirDatosJugador pnj;
+	private Escenario escenario;
 	
 	/*CONSTRUCTORES*/
 	
@@ -80,8 +80,14 @@ public class VentanaPrincipal extends JFrame
 	}
 	
 	/**
-	 * 
+	 * Inicializa las Varaibles de la Ventana Principal.
 	 */
+	private void inicializacionVariables ()
+	{
+		menu = null;
+		pnj = null;
+		escenario = null;
+	}
 	
 	/**
 	 * Crea un Menú y lo agrega a la Ventana.
@@ -130,6 +136,31 @@ public class VentanaPrincipal extends JFrame
 	}
 	
 	/**
+	 * Agrega el Escenario del juego a la Ventana Principal.
+	 * 
+	 * @param e Escenario a agregar.
+	 */
+	public void agregarEscenario (Escenario e)
+	{
+		escenario = e;
+		this.add(e);
+	}
+	
+	/**
+	 * Elimina de la Ventana Principal el Escenario del Juego actual.
+	 */
+	public void quitarEscenarioActual ()
+	{
+		if (escenario != null)
+		{
+			this.remove(escenario);
+			escenario.limpiar();
+			escenario = null;
+			this.repaint();
+		}
+	}
+	
+	/**
 	 * Crea un Nuevo Juego.
 	 * 
 	 * Crea un Escenario en un nuevo Thread.
@@ -140,11 +171,9 @@ public class VentanaPrincipal extends JFrame
 	public void nuevoJuego (String nombreJugador)
 	{
 		Escenario e = new Escenario(this);
-		Thread t1 = new Thread (e);
-		ControlCentral cC = new ControlCentral(nombreJugador, e);
-		Thread t2 = new Thread (cC);
-		t2.start();
-		t1.start();
+		ControlCentral cC = new ControlCentral(this, nombreJugador, e);
+		Thread t = new Thread (cC);
+		t.start();
 	}
 	
 	/**

@@ -1,5 +1,7 @@
 package ProyectoXnoParaEntrega.Logica.Controles;
 
+import java.awt.event.KeyListener;
+
 /**
  * Representa las operaciones básicas que debe tener un Control.
  * 
@@ -10,7 +12,7 @@ package ProyectoXnoParaEntrega.Logica.Controles;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public interface Control extends Runnable
+public interface Control extends KeyListener
 {
 	
 	/*CONSULTAS*/

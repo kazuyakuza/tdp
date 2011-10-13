@@ -1,5 +1,6 @@
 package ProyectoXnoParaEntrega.Logica;
 
+import ProyectoXnoParaEntrega.Logica.Controles.Control;
 import ProyectoXnoParaEntrega.Logica.Personajes.PjSeleccionable;
 
 /**
@@ -10,7 +11,7 @@ import ProyectoXnoParaEntrega.Logica.Personajes.PjSeleccionable;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class Jugador
+public class Jugador implements Runnable
 {
 	
 	//Variables de Clase
@@ -18,9 +19,10 @@ public class Jugador
 	private static int maxMonedas = 100;
 	
 	//Variables de Instancia
+	protected Control control;
+	protected PjSeleccionable personaje;
 	protected int monedas, puntos, vidas;
 	protected String nombre;
-	protected PjSeleccionable personaje;
 	protected boolean muerto;
 	
 	/*CONSTRUCTOR*/
@@ -31,10 +33,11 @@ public class Jugador
 	 * @param nom Nombre del Jugador.
 	 * @param pj Personaje del Jugador.
 	 */
-	public Jugador (String nom, PjSeleccionable pj)
+	public Jugador (String nom, PjSeleccionable pj, Control c)
 	{
 		nombre = nom;
 		personaje = pj;
+		control = c;
 		monedas = puntos = 0;
 		vidas = vidasInicial;
 		muerto = false;
@@ -146,6 +149,42 @@ public class Jugador
 	public PjSeleccionable personaje ()
 	{
 		return personaje;
+	}
+	
+	/*Métodos en Ejecución*/
+	
+	/**
+	 * 
+	 */
+	public void run ()
+	{
+		while (!(muerto))
+			actuar();
+	}
+	
+	/**
+	 * Hace "actuar" al personaje del Jugador actual.
+	 * Para eso, primero verifica que acción está queriendo realizar el Jugador mediante su control,
+	 * y luego realiza la acción deseada.
+	 */
+	private void actuar ()
+	{
+		if (control.arriba())
+			personaje.arriba();
+		if (control.abajo())
+			personaje.abajo();
+		if (control.izquierda())
+			personaje.izquierda();
+		if (control.derecha())
+			personaje.derecha();
+		if (control.A())
+			personaje.A();
+		if (control.B())
+			personaje.B();
+//		if (control.ESC())
+//			control.
+//		if (control.aceptar())
+//			control.
 	}
 
 }

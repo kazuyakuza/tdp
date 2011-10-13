@@ -3,6 +3,8 @@ package ProyectoXnoParaEntrega.Grafico;
 import java.awt.Canvas;
 import java.awt.image.BufferedImage;
 
+import sun.awt.windows.ThemeReader;
+
 import ProyectoXnoParaEntrega.Logica.Controles.Control;
 
 /**
@@ -38,17 +40,29 @@ public class Escenario extends Canvas implements Runnable
 	/*COMANDOS*/
 	
 	/**
+	 * Agrega el Control c usado por el usuario al escenario.
 	 * 
+	 * @param c Control del usuario.
 	 */
 	public void agregarControl (Control c)
 	{
-		this.addComponentListener(c);
+		this.addKeyListener(c);
 	}
 	
 	/**
 	 * 
 	 */
-	public void run()
+	public void limpiar ()
+	{
+		
+	}
+	
+	/*Métodos en Ejecución*/
+	
+	/**
+	 * 
+	 */
+	public void run ()
 	{
 		
 	}

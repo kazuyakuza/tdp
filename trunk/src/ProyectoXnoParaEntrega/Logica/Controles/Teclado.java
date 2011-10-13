@@ -1,10 +1,6 @@
 package ProyectoXnoParaEntrega.Logica.Controles;
 
-import java.awt.Event;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.EventObject;
 
 /**
  * Representa al Control Teclado.
@@ -14,7 +10,7 @@ import java.util.EventObject;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class Teclado implements Control, KeyListener, ActionListener
+public class Teclado implements Control
 {
 	
 	//Variables de Instancia
@@ -32,6 +28,11 @@ public class Teclado implements Control, KeyListener, ActionListener
 
 	/*COMANDOS*/
 	
+	/**
+	 * Actualiza las acciones que se están realizando deacuerdo a la tecla que generó el evento.
+	 * 
+	 * @param e Evento generado por un tecla.
+	 */
 	public void keyPressed (KeyEvent e)
 	{
 		switch (e.getKeyCode())
@@ -55,6 +56,11 @@ public class Teclado implements Control, KeyListener, ActionListener
 		}
 	}
 
+	/**
+	 * Actualiza las acciones que se están realizando deacuerdo a la tecla que generó el evento.
+	 * 
+	 * @param e Evento generado por un tecla.
+	 */
 	public void keyReleased (KeyEvent e)
 	{
 		switch (e.getKeyCode())
@@ -78,11 +84,99 @@ public class Teclado implements Control, KeyListener, ActionListener
 		}
 	}
 
+	/**
+	 * Méteodo necesario para implementar la interface Control.
+	 */
 	public void keyTyped (KeyEvent e) {}
+
+	/*CONSULTAS*/
 	
-	public void run()
+	/**
+	 * Verifica si se esta realizando la acción "arriba", y devuelve el resultado.
+	 * 
+	 * @return True:  se esta realizando la acción.
+	 *         False: caso contrario.
+	 */
+	public boolean arriba ()
 	{
-		EventObject o = new EventObject(this);
+		return arriba;
+	}
+	
+	/**
+	 * Verifica si se esta realizando la acción "abajo", y devuelve el resultado.
+	 * 
+	 * @return True:  se esta realizando la acción.
+	 *         False: caso contrario.
+	 */
+	public boolean abajo ()
+	{
+		return abajo;
+	}
+	
+	/**
+	 * Verifica si se esta realizando la acción "izquierda", y devuelve el resultado.
+	 * 
+	 * @return True:  se esta realizando la acción.
+	 *         False: caso contrario.
+	 */
+	public boolean izquierda ()
+	{
+		return izquierda;
+	}
+	
+	/**
+	 * Verifica si se esta realizando la acción "derecha", y devuelve el resultado.
+	 * 
+	 * @return True:  se esta realizando la acción.
+	 *         False: caso contrario.
+	 */
+	public boolean derecha ()
+	{
+		return derecha;
+	}
+	
+	/**
+	 * Verifica si se esta realizando la acción "A", y devuelve el resultado.
+	 * 
+	 * @return True:  se esta realizando la acción.
+	 *         False: caso contrario.
+	 */
+	public boolean A ()
+	{
+		return A;
+	}
+	
+	/**
+	 * Verifica si se esta realizando la acción "B", y devuelve el resultado.
+	 * 
+	 * @return True:  se esta realizando la acción.
+	 *         False: caso contrario.
+	 */
+	public boolean B ()
+	{
+		return B;
+	}
+	
+	/**
+	 * Verifica si se esta realizando la acción "ESC", y devuelve el resultado.
+	 * 
+	 * @return True:  se esta realizando la acción.
+	 *         False: caso contrario.
+	 */
+	public boolean ESC ()
+	{
+		return ESC;
+	}
+	
+	/**
+	 * Verifica si se esta realizando la acción "aceptar", y devuelve el resultado.
+	 * 
+	 * @return True:  se esta realizando la acción.
+	 *         False: caso contrario.
+	 */
+	public boolean aceptar ()
+	{
+		return aceptar;
 	}
 
 }
