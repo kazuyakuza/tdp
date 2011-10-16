@@ -60,26 +60,26 @@ public class Menu extends JPanel
 				this.add(NuevoJuego);
 				NuevoJuego.setText("Nuevo Juego");
 				NuevoJuego.setBounds((largo/2-botonLargo/2), (alto/2-botonAlto/2-45), botonLargo, botonAlto);
-				NuevoJuego.addActionListener(listenerNuevoJuego(this));
+				NuevoJuego.addActionListener(listenerNuevoJuego());
 			}
 			{
 				Info = new JButton();
 				this.add(Info);
 				Info.setText("Info");
 				Info.setBounds((largo/2-botonLargo/2), (alto/2-botonAlto/2), botonLargo, botonAlto);
-				Info.addActionListener(listenerInfo(this));
+				Info.addActionListener(listenerInfo());
 			}
 			{
 				Salir = new JButton();
 				this.add(Salir);
 				Salir.setText("Salir");
 				Salir.setBounds((largo/2-botonLargo/2), (alto/2-botonAlto/2+45), botonLargo, botonAlto);
-				Salir.addActionListener(listenerSalir(this));
+				Salir.addActionListener(listenerSalir());
 			}
 		}
 		catch (Exception e)
 		{
-			ventanaPrincipal.mensajeError(this, "Error", e.getMessage());
+			ventanaPrincipal.mensajeError("Error", e.getMessage(), true);
 		}
 	}
 	
@@ -99,7 +99,7 @@ public class Menu extends JPanel
 	 * @menu Menú donde está el botón.
 	 * @return Action Listener para el botón Nuevo Juego.
 	 */
-	private ActionListener listenerNuevoJuego (final Menu menu)
+	private ActionListener listenerNuevoJuego ()
 	{
 		return new ActionListener()
         {
@@ -113,7 +113,7 @@ public class Menu extends JPanel
             	}
             	catch (Exception e)
             	{
-            		ventanaPrincipal.mensajeError(menu, "ERROR", e.getMessage());
+            		ventanaPrincipal.mensajeError("ERROR", e.getMessage(), true);
         		}
             	
             }
@@ -126,7 +126,7 @@ public class Menu extends JPanel
 	 * @menu Menú donde está el botón.
 	 * @return Action Listener para el botón Info
 	 */
-	private ActionListener listenerInfo (final Menu menu)
+	private ActionListener listenerInfo ()
 	{
 		return new ActionListener()
         {
@@ -139,7 +139,7 @@ public class Menu extends JPanel
             	}
             	catch (Exception e)
             	{
-            		ventanaPrincipal.mensajeError(menu, "ERROR", e.getMessage());
+            		ventanaPrincipal.mensajeError("ERROR", e.getMessage(), true);
         		}
             	
             }
@@ -152,7 +152,7 @@ public class Menu extends JPanel
 	 * @menu Menú donde está el botón.
 	 * @return Action Listener para el botón Salir.
 	 */
-	private ActionListener listenerSalir (final Menu menu)
+	private ActionListener listenerSalir ()
 	{
 		return new ActionListener()
         {
@@ -165,7 +165,7 @@ public class Menu extends JPanel
             	}
             	catch (Exception e)
             	{
-            		ventanaPrincipal.mensajeError(menu, "ERROR", e.getMessage());
+            		ventanaPrincipal.mensajeError("ERROR", e.getMessage(), true);
         		}
             	
             }

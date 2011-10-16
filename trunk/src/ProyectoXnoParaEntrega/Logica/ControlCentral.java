@@ -70,5 +70,23 @@ public class ControlCentral implements Runnable
 	{
 		
 	}
+	
+	/**
+	 * Acción ESC (escape) del Juego.
+	 * 
+	 * Abre un menú de salida del Juego.
+	 */
+	public void ESC ()
+	{
+		
+	}
+	
+	/**
+	 * Acción aceptar del Juego.
+	 */
+	public void aceptar ()
+	{
+		
+	}
 
 }

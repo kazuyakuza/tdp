@@ -204,6 +204,7 @@ public class VentanaPrincipal extends JFrame
 	public void mensajeError (String titulo, String mensaje, boolean cerrar)
 	{
 		JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.PLAIN_MESSAGE);
+//		Thread.currentThread().sleep(1000);
 //		if (cerrar)
 //			salir();
 	}

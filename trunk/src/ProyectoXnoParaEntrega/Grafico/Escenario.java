@@ -3,8 +3,6 @@ package ProyectoXnoParaEntrega.Grafico;
 import java.awt.Canvas;
 import java.awt.image.BufferedImage;
 
-import sun.awt.windows.ThemeReader;
-
 import ProyectoXnoParaEntrega.Logica.Controles.Control;
 
 /**

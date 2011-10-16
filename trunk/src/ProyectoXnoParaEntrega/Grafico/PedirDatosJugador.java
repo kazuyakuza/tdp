@@ -78,19 +78,19 @@ public class PedirDatosJugador extends JPanel
 				this.add(EmpezarJuego);
 				EmpezarJuego.setText("Empezar Juego");
 				EmpezarJuego.setBounds((largo/2-botonLargo-10), (alto/2-botonAlto+20), botonLargo, botonAlto);
-				EmpezarJuego.addActionListener(listenerEmpezarJuego(this));
+				EmpezarJuego.addActionListener(listenerEmpezarJuego());
 			}
 			{
 				Cancelar = new JButton();
 				this.add(Cancelar);
 				Cancelar.setText("Cancelar");
 				Cancelar.setBounds((largo/2+10), (alto/2-botonAlto+20), botonLargo, botonAlto);
-				Cancelar.addActionListener(listenerCancelar(this));
+				Cancelar.addActionListener(listenerCancelar());
 			}
 		}
 		catch (Exception e)
 		{
-			ventanaPrincipal.mensajeError(this, "Error", e.getMessage());
+			ventanaPrincipal.mensajeError("Error", e.getMessage(), true);
 		}
 	}
 	
@@ -110,7 +110,7 @@ public class PedirDatosJugador extends JPanel
 	 * @panel Panel donde está el botón.
 	 * @return Action Listener para el botón Empezar Juego.
 	 */
-	private ActionListener listenerEmpezarJuego (final PedirDatosJugador panel)
+	private ActionListener listenerEmpezarJuego ()
 	{
 		return new ActionListener()
         {
@@ -126,7 +126,7 @@ public class PedirDatosJugador extends JPanel
             	}
             	catch (Exception e)
             	{
-            		ventanaPrincipal.mensajeError(panel, "ERROR", e.getMessage());
+            		ventanaPrincipal.mensajeError("ERROR", e.getMessage(), true);
         		}
             	
             }
@@ -139,7 +139,7 @@ public class PedirDatosJugador extends JPanel
 	 * @panel Panel donde está el botón.
 	 * @return Action Listener para el botón Cancelar.
 	 */
-	private ActionListener listenerCancelar (final PedirDatosJugador panel)
+	private ActionListener listenerCancelar ()
 	{
 		return new ActionListener()
         {
@@ -153,7 +153,7 @@ public class PedirDatosJugador extends JPanel
             	}
             	catch (Exception e)
             	{
-            		ventanaPrincipal.mensajeError(panel, "ERROR", e.getMessage());
+            		ventanaPrincipal.mensajeError("ERROR", e.getMessage(), true);
         		}
             	
             }

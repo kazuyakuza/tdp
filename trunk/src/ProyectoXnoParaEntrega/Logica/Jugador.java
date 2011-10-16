@@ -154,7 +154,7 @@ public class Jugador implements Runnable
 	/*Métodos en Ejecución*/
 	
 	/**
-	 * 
+	 * Realiza las acciones del Jugador en el Juego.
 	 */
 	public void run ()
 	{
@@ -181,10 +181,10 @@ public class Jugador implements Runnable
 			personaje.A();
 		if (control.B())
 			personaje.B();
-//		if (control.ESC())
-//			control.
-//		if (control.aceptar())
-//			control.
+		if (control.ESC())
+			control.ESC();
+		if (control.aceptar())
+			control.aceptar();
 	}
 
 }
