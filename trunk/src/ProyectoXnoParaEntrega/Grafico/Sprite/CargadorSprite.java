@@ -1,7 +1,8 @@
 package ProyectoXnoParaEntrega.Grafico.Sprite;
 
 import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
@@ -23,22 +24,24 @@ public class CargadorSprite extends CargadorRecurso
 {
 	
 	//Variables de Clase
-	private String dirSprites = "Personajes";
+	private String dirSprites = "Personajes/";
 	
 	/*COMANDOS*/
 
 	/**
+	 * Carga un Sprite y lo devuelve.
 	 * 
-	 * @param nombre
-	 * @return
+	 * @param nombre Nombre del archivo del Sprite.
+	 * @param io ImageObserver para el Sprite a cargar.
+	 * @return Sprite cargado.
 	 */
-	public BufferedImage obtenerSprite (String nombre)
+	public BufferedImage obtenerSprite (String nombre, ImageObserver io)
 	{
-		BufferedImage loaded = (BufferedImage) obtenerRecurso(nombre);
-        BufferedImage compatible = createCompatible(loaded.getWidth(),loaded.getHeight(),Transparency.BITMASK); 
-        Graphics g = compatible.getGraphics();
-        g.drawImage(loaded,0,0,this);
-        return compatible;
+		BufferedImage imagenCargada = (BufferedImage) obtenerRecurso(nombre);
+        BufferedImage combatible = createCombatible(imagenCargada.getWidth(), imagenCargada.getHeight(), Transparency.BITMASK); 
+        Graphics g = combatible.getGraphics();
+        g.drawImage(imagenCargada, 0, 0, io);
+        return combatible;
 	}
 	
 	/**
@@ -49,7 +52,7 @@ public class CargadorSprite extends CargadorRecurso
 	 */
 	public Object obtenerRecurso (String nom) throws CargaRecursoException
 	{
-		Object res = super.obtenerRecurso("Personajes/" + nom);
+		Object res = super.obtenerRecurso(dirSprites + nom);
 		return res;
     }
 	
@@ -70,6 +73,21 @@ public class CargadorSprite extends CargadorRecurso
 		{
 			throw new CargaRecursoException ("Error al Carga un Recurso Imagen: " + e.getMessage());
 		}
+	}
+	
+	/**
+	 * Devuelve una imagen combatible con modo de vídeo nativo que se esté mostrando.
+	 * 
+	 * @param ancho Ancho de la imagen.
+	 * @param alto Alto de la imagen.
+	 * @param transparency Transpariencia de la imagen.
+	 * @return Imagen combatible.
+	 */
+	private BufferedImage createCombatible (int ancho, int alto, int transparency)
+	{
+		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+		BufferedImage combatible = gc.createCompatibleImage(ancho, alto, transparency);
+		return combatible;
 	}
 
 }
