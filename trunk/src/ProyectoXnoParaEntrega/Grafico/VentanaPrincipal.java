@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import ProyectoXnoParaEntrega.Logica.ControlCentral;
 
@@ -32,7 +33,7 @@ public class VentanaPrincipal extends JFrame
 	//Variables de Instancia
 	private Menu menu;
 	private PedirDatosJugador pnj;
-	private Escenario escenario;
+	private JPanel jPanelEscenario;
 	
 	/*CONSTRUCTORES*/
 	
@@ -86,7 +87,7 @@ public class VentanaPrincipal extends JFrame
 	{
 		menu = null;
 		pnj = null;
-		escenario = null;
+		jPanelEscenario = null;
 	}
 	
 	/**
@@ -140,10 +141,13 @@ public class VentanaPrincipal extends JFrame
 	 * 
 	 * @param e Escenario a agregar.
 	 */
-	public void agregarEscenario (Escenario e)
+	public void agregarEscenario (Escenario escenario)
 	{
-		escenario = e;
-		this.add(e);
+		jPanelEscenario = new JPanel();
+		jPanelEscenario.setPreferredSize(new Dimension(largo,alto));
+		jPanelEscenario.setLayout (null);
+		jPanelEscenario.add(escenario);
+		this.add(jPanelEscenario);
 	}
 	
 	/**
@@ -151,11 +155,10 @@ public class VentanaPrincipal extends JFrame
 	 */
 	public void quitarEscenarioActual ()
 	{
-		if (escenario != null)
+		if (jPanelEscenario != null)
 		{
-			this.remove(escenario);
-			escenario.limpiar();
-			escenario = null;
+			this.remove(jPanelEscenario);
+			jPanelEscenario = null;
 			this.repaint();
 		}
 	}

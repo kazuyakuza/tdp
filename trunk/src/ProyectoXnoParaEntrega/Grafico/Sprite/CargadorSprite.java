@@ -24,7 +24,7 @@ public class CargadorSprite extends CargadorRecurso
 {
 	
 	//Variables de Clase
-	private String dirSprites = "Personajes/";
+	private static String dirSprites = "Personajes/";
 	
 	/*COMANDOS*/
 
@@ -35,10 +35,10 @@ public class CargadorSprite extends CargadorRecurso
 	 * @param io ImageObserver para el Sprite a cargar.
 	 * @return Sprite cargado.
 	 */
-	public BufferedImage obtenerSprite (String nombre, ImageObserver io)
+	public BufferedImage obtenerSprite (String nombre, ImageObserver io) throws CargaRecursoException
 	{
 		BufferedImage imagenCargada = (BufferedImage) obtenerRecurso(nombre);
-        BufferedImage combatible = createCombatible(imagenCargada.getWidth(), imagenCargada.getHeight(), Transparency.BITMASK); 
+        BufferedImage combatible = crearCombatible(imagenCargada.getWidth(), imagenCargada.getHeight(), Transparency.BITMASK); 
         Graphics g = combatible.getGraphics();
         g.drawImage(imagenCargada, 0, 0, io);
         return combatible;
@@ -83,7 +83,7 @@ public class CargadorSprite extends CargadorRecurso
 	 * @param transparency Transpariencia de la imagen.
 	 * @return Imagen combatible.
 	 */
-	private BufferedImage createCombatible (int ancho, int alto, int transparency)
+	public BufferedImage crearCombatible (int ancho, int alto, int transparency)
 	{
 		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 		BufferedImage combatible = gc.createCompatibleImage(ancho, alto, transparency);
