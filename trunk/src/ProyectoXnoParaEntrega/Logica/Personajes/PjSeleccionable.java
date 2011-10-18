@@ -43,5 +43,10 @@ public interface PjSeleccionable extends Personaje
 	 * Realiza la acción "B".
 	 */
 	public void B ();
+	
+	/**
+	 * Realiza la acción de ser colisionado por un enemigo.
+	 */
+	public void serDañado ();
 
 }

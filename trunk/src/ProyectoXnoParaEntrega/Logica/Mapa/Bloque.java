@@ -16,7 +16,7 @@ public class Bloque
 	//Variables de Instancia
 	protected PositionList<Actor>[][] ABD;
 	
-	/*CONSTRUCTOR*/
+	//CONSTRUCTOR
 	
 	/**
 	 * 
@@ -27,7 +27,7 @@ public class Bloque
 		crearListas ();
 	}
 	
-	/*COMANDOS*/
+	//COMANDOS
 	
 	/**
 	 * 
@@ -39,7 +39,7 @@ public class Bloque
 				ABD[i][j] = new ListaPositionSimple<Actor> ();
 	}
 	
-	/*CONSULTAS*/
+	//CONSULTAS
 	
 	/**
 	 * 
