@@ -7,6 +7,8 @@ import ProyectoXnoParaEntrega.Logica.Controles.Control;
 import ProyectoXnoParaEntrega.Logica.Controles.Teclado;
 import ProyectoXnoParaEntrega.Logica.Personajes.MarioChico;
 import ProyectoXnoParaEntrega.Logica.Personajes.PjSeleccionable;
+import ProyectoXnoParaEntrega.Librerias.TDALista.ListaPositionSimple;
+import ProyectoXnoParaEntrega.Librerias.TDALista.PositionList;
 
 /**
  * Representa al Control Central del Juego.
@@ -25,6 +27,7 @@ public class ControlCentral implements Runnable
 	private VentanaPrincipal ventanaPrincipal;
 	private Escenario escenario;
 	private Jugador jugador;
+	private PositionList<Actor> actores;
 	
 	//Threads
 	private Thread Tactual, Tescenario, Tjugador; 
@@ -40,26 +43,35 @@ public class ControlCentral implements Runnable
 	 */
 	public ControlCentral (VentanaPrincipal ventana, String nJ, Escenario e)
 	{
-		Tactual = Thread.currentThread();
+		Tactual = null;
 		ventanaPrincipal = ventana;
 		escenario = e;
-		
-		Tescenario = new Thread(escenario);
 		
 		PjSeleccionable pjS = new MarioChico ();
 		Control c = new Teclado();
 		jugador = new Jugador (nJ, pjS, c);
-		Tjugador = new Thread (jugador);
-	
 		
+		actores = new ListaPositionSimple<Actor> ();
+		
+		actores.addLast(pjS);
+		
+		//Metodos Pre Inicialización ("de agregado")
 		ventanaPrincipal.agregarEscenario(e);
-		
-		//Start Thread
-		Tescenario.start();
-		Tjugador.start();
+		escenario.agregarControl(c);
 	}
 	
 	/*COMANDOS*/
+	
+	/**
+	 * Agrega el Thread que ejecutará el run de esta clase.
+	 * 
+	 * @param t Thread para esta clase.
+	 */
+	public void agregarThread (Thread t)
+	{
+		if (Tactual == null)
+			Tactual = t;
+	}
 	
 	/*Métodos en Ejecución*/
 	
@@ -68,7 +80,12 @@ public class ControlCentral implements Runnable
 	 */
 	public void run ()
 	{
+		Tescenario = new Thread(escenario);
+		Tjugador = new Thread (jugador);
 		
+		//Start Thread's
+		Tescenario.start();
+		Tjugador.start();
 	}
 	
 	/**
@@ -78,7 +95,7 @@ public class ControlCentral implements Runnable
 	 */
 	public void ESC ()
 	{
-		
+		//menú para salir de la partida
 	}
 	
 	/**
@@ -86,7 +103,7 @@ public class ControlCentral implements Runnable
 	 */
 	public void aceptar ()
 	{
-		
+		//pausa
 	}
 
 }

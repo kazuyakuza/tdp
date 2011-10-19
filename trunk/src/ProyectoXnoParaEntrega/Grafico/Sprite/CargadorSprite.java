@@ -24,7 +24,7 @@ public class CargadorSprite extends CargadorRecurso
 {
 	
 	//Variables de Clase
-	private static String dirSprites = "Personajes/";
+	private static String dirSprites = "Imagenes/";
 	
 	/*COMANDOS*/
 

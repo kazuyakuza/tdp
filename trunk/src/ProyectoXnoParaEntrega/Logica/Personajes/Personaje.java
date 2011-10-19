@@ -1,6 +1,5 @@
 package ProyectoXnoParaEntrega.Logica.Personajes;
 
-import ProyectoXnoParaEntrega.Logica.Actor;
 
 /**
  * Proyecto X
@@ -8,7 +7,7 @@ import ProyectoXnoParaEntrega.Logica.Actor;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public interface Personaje extends Actor
+public interface Personaje
 {
 
 }

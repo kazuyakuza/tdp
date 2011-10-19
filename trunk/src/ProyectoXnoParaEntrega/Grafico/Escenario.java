@@ -4,12 +4,15 @@ import java.awt.Canvas;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.TexturePaint;
 import java.awt.Toolkit;
 import java.awt.Transparency;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
-import ProyectoXnoParaEntrega.Excepciones.PosicionIncorrectaException;
+import ProyectoXnoParaEntrega.Excepciones.CargaRecursoException;
+import ProyectoXnoParaEntrega.Excepciones.EscenarioIncompletoException;
 import ProyectoXnoParaEntrega.Grafico.Sprite.CargadorSprite;
 import ProyectoXnoParaEntrega.Grafico.Sprite.SpriteManager;
 import ProyectoXnoParaEntrega.Logica.Controles.Control;
@@ -27,13 +30,15 @@ public class Escenario extends Canvas implements Runnable
 {
 	
 	//Variables de Clase
-	private final int medidaPixelCelda = 32;//Medida de un lado en pixeles de una celda del ABG.
+	private final int medidaPixelCelda = 32;//Medida de un lado en pixeles de una celda en el Escenario.
+	                                        //Celda = si se dividiera el Escenario usando una matriz, cada celda tendría una medida de lado en pixeles.
 	
 	//Variables de Instancia
 	private VentanaPrincipal ventanaPrincipal;
 	private BufferedImage fondo;
 	private BufferStrategy bufferStrategy;
 	private BloqueGrafico anterior, actual, siguiente;
+	private boolean actualizar;
 	
 	/*CONSTRUCTOR*/
 	
@@ -50,6 +55,7 @@ public class Escenario extends Canvas implements Runnable
 		anterior = null;
 		actual = null;
 		siguiente = null;
+		actualizar = true;
 		
 		metodosGraficos();
 	}
@@ -59,15 +65,22 @@ public class Escenario extends Canvas implements Runnable
 	 */
 	private void metodosGraficos ()
 	{
-		this.setIgnoreRepaint(true);
-		this.createBufferStrategy(2);
-		bufferStrategy = getBufferStrategy();
+		try
+		{
+			this.setIgnoreRepaint(true);
+			this.createBufferStrategy(2);
+			bufferStrategy = getBufferStrategy();
 		
-		//Pone transparente el cursor.
-		BufferedImage cursor = new CargadorSprite().crearCombatible(10, 10, Transparency.BITMASK);
-		Toolkit t = Toolkit.getDefaultToolkit();
-		Cursor c = t.createCustomCursor(cursor, new Point(5,5), "null");
-		this.setCursor(c);
+			//Pone transparente el cursor.
+			BufferedImage cursor = new CargadorSprite().crearCombatible(10, 10, Transparency.BITMASK);
+			Toolkit t = Toolkit.getDefaultToolkit();
+			Cursor c = t.createCustomCursor(cursor, new Point(5,5), "null");
+			this.setCursor(c);
+		}
+		catch (Exception e)
+		{
+			ventanaPrincipal.mensajeError("Error", e.getMessage(), true);
+		}
 	}
 	
 	/*COMANDOS*/
@@ -83,6 +96,25 @@ public class Escenario extends Canvas implements Runnable
 	}
 	
 	/**
+	 * Agrega el fondo al Escenario.
+	 * 
+	 * @param fondoNombre Nombre del archivo imagen del fondo.
+	 * @param cargadorSprite Cargador de Sprite para cargar la imagen.
+	 * @exception CargaRecursoException Error al cargar el Sprite.
+	 */
+	public void agregarFondo (String fondoNombre, CargadorSprite cargadorSprite) throws CargaRecursoException
+	{
+		try
+		{
+			fondo = cargadorSprite.obtenerSprite(fondoNombre, this);
+		}
+		catch (CargaRecursoException exception)
+		{
+			throw new CargaRecursoException (exception.getMessage() + "\n" + "Error al cargar el fondo " + fondoNombre + ".");
+		}
+	}
+	
+	/**
 	 * Cambia el BloqueGrafico anterior por el pasado por parámetro bg.
 	 * 
 	 * @param bg Nuevo BloqueGrafico.
@@ -90,16 +122,6 @@ public class Escenario extends Canvas implements Runnable
 	public void setBloqueGraficoAnterior (BloqueGrafico bg)
 	{
 		anterior = bg;
-	}
-	
-	/**
-	 * Devuelve el BloqueGrafico anterior.
-	 * 
-	 * @return BloqueGrafico anterior.
-	 */
-	public BloqueGrafico getBloqueGraficoAnterior ()
-	{
-		return anterior;
 	}
 	
 	/**
@@ -113,16 +135,6 @@ public class Escenario extends Canvas implements Runnable
 	}
 	
 	/**
-	 * Devuelve el BloqueGrafico actual.
-	 * 
-	 * @return BloqueGrafico actual.
-	 */
-	public BloqueGrafico getBloqueGraficoActual ()
-	{
-		return actual;
-	}
-	
-	/**
 	 * Cambia el BloqueGrafico siguiente por el pasado por parámetro bg.
 	 * 
 	 * @param bg Nuevo BloqueGrafico.
@@ -130,6 +142,42 @@ public class Escenario extends Canvas implements Runnable
 	public void setBloqueGraficosiguiente (BloqueGrafico bg)
 	{
 		siguiente = bg;
+	}
+	
+	/**
+	 * Elimina todos los elementos del escenario.
+	 */
+	public void limpiar ()
+	{
+		fondo = null;
+		anterior.limpiar();
+		anterior = null;
+		actual.limpiar();
+		actual = null;
+		siguiente.limpiar();
+		siguiente = null;
+	}
+	
+	/*CONSULTAS*/
+	
+	/**
+	 * Devuelve el BloqueGrafico anterior.
+	 * 
+	 * @return BloqueGrafico anterior.
+	 */
+	public BloqueGrafico getBloqueGraficoAnterior ()
+	{
+		return anterior;
+	}
+	
+	/**
+	 * Devuelve el BloqueGrafico actual.
+	 * 
+	 * @return BloqueGrafico actual.
+	 */
+	public BloqueGrafico getBloqueGraficoActual ()
+	{
+		return actual;
 	}
 	
 	/**
@@ -142,39 +190,50 @@ public class Escenario extends Canvas implements Runnable
 		return siguiente;
 	}
 	
-	/**
-	 * 
-	 */
-	public void limpiar ()
-	{
-		fondo = null;
-		anterior = null;
-		actual = null;
-		siguiente = null;
-	}
-	
 	/*Métodos en Ejecución*/
 	
 	/**
-	 * 
+	 * Método de actualización del Escenario.
 	 */
 	public void run ()
 	{
-		
+		while (actualizar)
+		{
+			imprimirBloque(actual);
+			run();
+		}
 	}
 	
 	/**
+	 * Imprime en el Escenario el bloque pasado por parámetro.
 	 * 
+	 * @param bloqueGrafico Bloque que contiene los sprites a imprimir.
+	 * @exception EscenarioIncompletoException Si el escenario no ha sido totalmente inicializado.
 	 */
-	public void imprimirBloque () throws PosicionIncorrectaException
+	public void imprimirBloque (BloqueGrafico bloqueGrafico) throws EscenarioIncompletoException
 	{
+		if ((fondo == null) || (actual == null))
+			throw new EscenarioIncompletoException ("El Escenario no ha sido totalmente inicializado.");
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
-		for (SpriteManager sp: sprites)
+		imprimirFondo(g);
+		int difPiso = this.getHeight() - bloqueGrafico.getNivelPiso();
+		for (SpriteManager sp: bloqueGrafico.sprites)
 		{
-			int x = (int) (sp.posicion()[0] * medidaPixelCelda);
-			int y = (int) (sp.posicion()[1] * medidaPixelCelda);
-			g.drawImage(sp.getSprite(), x, y, e);
+			g.drawImage(sp.getSpriteActual(), (int) (sp.posicion()[0] * medidaPixelCelda) - difPiso
+					                        , (int) (sp.posicion()[1] * medidaPixelCelda) - difPiso, this);
 		}
+	}
+	
+	/**
+	 * Imprime el fondo en el Graphics2D g.
+	 * 
+	 * @param g Graphics2D donde imprimir el fondo del Escenario.
+	 */
+	private void imprimirFondo (Graphics2D g)
+	{
+		g = (Graphics2D) fondo.getGraphics();
+		g.setPaint( new TexturePaint(fondo, new Rectangle(0, 0, fondo.getWidth(), fondo.getHeight())));
+		g.fillRect(0, 0, fondo.getWidth(), fondo.getHeight());
 	}
 
 }

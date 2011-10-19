@@ -176,6 +176,7 @@ public class VentanaPrincipal extends JFrame
 		Escenario e = new Escenario(this);
 		ControlCentral cC = new ControlCentral(this, nombreJugador, e);
 		Thread t = new Thread (cC);
+		cC.agregarThread(t);
 		t.start();
 	}
 	

@@ -8,13 +8,15 @@ package ProyectoXnoParaEntrega.Logica.Personajes;
  */
 public class MarioGrande extends Mario
 {
-	/* CONSTRUCTORES */
+	
+	/*CONSTRUCTORES*/
+	
 	public MarioGrande ()
 	{
 		super();
 	}
 	
-	/* COMANDOS IMPLEMENTADOS*/
+	/*COMANDOS IMPLEMENTADOS*/
 	
 	/**
 	 * Mario realiza la acción de saltar.
@@ -79,4 +81,5 @@ public class MarioGrande extends Mario
 	{
 		
 	}
+	
 }

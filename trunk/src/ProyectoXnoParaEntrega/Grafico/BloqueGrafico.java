@@ -1,7 +1,5 @@
 package ProyectoXnoParaEntrega.Grafico;
 
-import java.awt.Graphics2D;
-
 import ProyectoXnoParaEntrega.Excepciones.PosicionIncorrectaException;
 import ProyectoXnoParaEntrega.Grafico.Sprite.SpriteManager;
 import ProyectoXnoParaEntrega.Librerias.TDALista.ListaPositionSimple;
@@ -57,17 +55,27 @@ public class BloqueGrafico
 	}
 	
 	/**
+	 * Agrega los Sprites al Bloque.
+	 * 
+	 * @param sps Sprites a agregar.
+	 */
+	public void agregarSprites (PositionList<SpriteManager> sps) throws PosicionIncorrectaException
+	{
+		for (SpriteManager sp: sps)
+			agregarSprite(sp);
+	}
+	
+	/**
 	 * Elimina un Sprite del Bloque.
 	 * 
 	 * @param sp Sprite a Eliminar.
-	 * @return Sprite eliminado.
 	 */
-	public SpriteManager eliminarSprite (SpriteManager sp)
+	public void eliminarSprite (SpriteManager sp)
 	{
 		Position<SpriteManager> aux = sprites.first();
 		while (aux.element() != sp)
 			aux = sprites.next(aux);
-		return sprites.remove(aux);
+		sprites.remove(aux);
 	}
 	
 	/**
@@ -78,6 +86,15 @@ public class BloqueGrafico
 	public void setNivelPiso (int nPiso)
 	{
 		nivelPiso = nPiso;
+	}
+	
+	/**
+	 * Elimina todos los sprites del bloque.
+	 */
+	public void limpiar ()
+	{
+		while (! sprites.isEmpty())
+			sprites.remove(sprites.first());
 	}
 	
 	/*CONSULTAS*/
