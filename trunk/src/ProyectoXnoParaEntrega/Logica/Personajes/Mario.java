@@ -10,14 +10,16 @@ import ProyectoXnoParaEntrega.Logica.Actor;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public abstract class Mario implements PjSeleccionable
+public abstract class Mario extends Actor implements PjSeleccionable
 {	
-	/* VARIABLES DE INSTANCIA */
-	protected int tamaño;
-	protected boolean invulnerable;		//Representa el estado en que Mario puede o no ser dañado por los enemigos al colisionar.
-	protected boolean destructor;		//Representa el estado en que Mario puede o no matar a los enemigos al colisionar con ellos.
 	
-	/* CONSTRUCTOR */
+	//VARIABLES DE INSTANCIA
+	protected int tamaño;
+	protected boolean invulnerable;//Representa el estado en que Mario puede o no ser dañado por los enemigos al colisionar.
+	protected boolean destructor;//Representa el estado en que Mario puede o no matar a los enemigos al colisionar con ellos.
+	
+	/*CONSTRUCTOR*/
+	
 	protected Mario ()
 	{
 		tamaño = 1;
@@ -50,7 +52,7 @@ public abstract class Mario implements PjSeleccionable
 	{
 		moverseAizquierda();
 	}
-			
+	
 	/**
 	 * Realiza la acción "derecha".
 	 */
@@ -75,16 +77,7 @@ public abstract class Mario implements PjSeleccionable
 		accionB();
 	}
 	
-	/**
-	 * Realiza la acción de colisionar con otro Actor. Mario no provoca nada al colisionar con otros actores.
-	 * Los efectos de la colisión la provocan los otros actores. 
-	 */
-	public void colisionar (Actor a)
-	{
-		
-	}
-	
-	/* COMANDOS DE LA CLASE */
+	/*COMANDOS*/
 	
 	/**
 	 * Modifica el estado invulnerable de Mario a "v".
@@ -141,7 +134,7 @@ public abstract class Mario implements PjSeleccionable
 	 */
 	public abstract void crecer ();
 	
-	/* CONSULTAS */
+	/*CONSULTAS*/
 	
 	/**
 	 * Devuelve el estado de invulnerabilidad de Mario.
@@ -159,5 +152,16 @@ public abstract class Mario implements PjSeleccionable
 	public boolean esDestructor ()
 	{
 		return destructor;
+	}
+	
+	/*Métodos en Ejecución*/
+	
+	/**
+	 * Realiza la acción de colisionar con otro Actor. Mario no provoca nada al colisionar con otros actores.
+	 * Los efectos de la colisión la provocan los otros actores. 
+	 */
+	public void colisionar (Actor a)
+	{
+		
 	}
 }
