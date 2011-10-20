@@ -115,6 +115,16 @@ public class Escenario extends Canvas implements Runnable
 	}
 	
 	/**
+	 * Indica si se debe seguir actualizando el Escenario.
+	 * 
+	 * @param act Si se debe seguir actualizando el Escenario.
+	 */
+	public void setActualizar (boolean act)
+	{
+		actualizar = act;
+	}
+	
+	/**
 	 * Cambia el BloqueGrafico anterior por el pasado por parámetro bg.
 	 * 
 	 * @param bg Nuevo BloqueGrafico.
@@ -149,6 +159,7 @@ public class Escenario extends Canvas implements Runnable
 	 */
 	public void limpiar ()
 	{
+		actualizar = false;
 		fondo = null;
 		anterior.limpiar();
 		anterior = null;
@@ -190,6 +201,17 @@ public class Escenario extends Canvas implements Runnable
 		return siguiente;
 	}
 	
+	/**
+	 * Devuelve si se debe actualizar o no el Escenario.
+	 * 
+	 * @return True:  se debe actualizar el Escenario.
+	 *         False: no se debe actualizar el Escenario.
+	 */
+	public boolean getActualizar ()
+	{
+		return actualizar;
+	}
+	
 	/*Métodos en Ejecución*/
 	
 	/**
@@ -222,6 +244,7 @@ public class Escenario extends Canvas implements Runnable
 			g.drawImage(sp.getSpriteActual(), (int) (sp.posicion()[0] * medidaPixelCelda) - difPiso
 					                        , (int) (sp.posicion()[1] * medidaPixelCelda) - difPiso, this);
 		}
+		bufferStrategy.show();
 	}
 	
 	/**

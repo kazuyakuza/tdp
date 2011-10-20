@@ -1,4 +1,4 @@
-package GeneradorCodigoPostear.Rec.TDALista;
+package ProyectoXnoParaEntrega.Librerias.TDALista;
 
 /**
  * Interface Position: Establece las operaciones necesarias para un TDA position.

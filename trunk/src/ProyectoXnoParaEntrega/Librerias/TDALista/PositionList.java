@@ -1,4 +1,4 @@
-package GeneradorCodigoPostear.Rec.TDALista;
+package ProyectoXnoParaEntrega.Librerias.TDALista;
 
 import java.util.Iterator;
 

@@ -1,4 +1,4 @@
-package GeneradorCodigoPostear.Rec.TDALista;
+package ProyectoXnoParaEntrega.Librerias.TDALista;
 
 /**
  * Clase Nodo con elemento de tipo Genérico que implementa la interface Position.

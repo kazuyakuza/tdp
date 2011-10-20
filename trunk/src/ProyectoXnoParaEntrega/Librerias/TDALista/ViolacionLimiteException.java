@@ -1,4 +1,4 @@
-package GeneradorCodigoPostear.Rec.TDALista;
+package ProyectoXnoParaEntrega.Librerias.TDALista;
 
 /**
  * Violacion de Limite Exception: Excepción en tiempo de ejecución provocada al sobrepasar los límites.

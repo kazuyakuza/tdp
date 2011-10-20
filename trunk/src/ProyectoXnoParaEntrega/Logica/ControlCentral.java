@@ -1,14 +1,14 @@
 package ProyectoXnoParaEntrega.Logica;
 
-import sun.awt.windows.ThemeReader;
 import ProyectoXnoParaEntrega.Grafico.Escenario;
 import ProyectoXnoParaEntrega.Grafico.VentanaPrincipal;
-import ProyectoXnoParaEntrega.Logica.Controles.Control;
-import ProyectoXnoParaEntrega.Logica.Controles.Teclado;
-import ProyectoXnoParaEntrega.Logica.Personajes.MarioChico;
-import ProyectoXnoParaEntrega.Logica.Personajes.PjSeleccionable;
 import ProyectoXnoParaEntrega.Librerias.TDALista.ListaPositionSimple;
 import ProyectoXnoParaEntrega.Librerias.TDALista.PositionList;
+import ProyectoXnoParaEntrega.Logica.Controles.Control;
+import ProyectoXnoParaEntrega.Logica.Controles.Teclado;
+import ProyectoXnoParaEntrega.Logica.Mapa.Nivel;
+import ProyectoXnoParaEntrega.Logica.Personajes.Mario;
+import ProyectoXnoParaEntrega.Logica.Personajes.MarioChico;
 
 /**
  * Representa al Control Central del Juego.
@@ -27,6 +27,7 @@ public class ControlCentral implements Runnable
 	private VentanaPrincipal ventanaPrincipal;
 	private Escenario escenario;
 	private Jugador jugador;
+	private Nivel nivel;
 	private PositionList<Actor> actores;
 	
 	//Threads
@@ -47,17 +48,19 @@ public class ControlCentral implements Runnable
 		ventanaPrincipal = ventana;
 		escenario = e;
 		
-		PjSeleccionable pjS = new MarioChico ();
+		Mario PJ = new MarioChico ();
 		Control c = new Teclado();
-		jugador = new Jugador (nJ, pjS, c);
+		jugador = new Jugador (nJ, PJ, c);
 		
 		actores = new ListaPositionSimple<Actor> ();
 		
-		actores.addLast(pjS);
+		actores.addLast(PJ);
 		
 		//Metodos Pre Inicialización ("de agregado")
 		ventanaPrincipal.agregarEscenario(e);
 		escenario.agregarControl(c);
+		
+		nivel = new Nivel(1);
 	}
 	
 	/*COMANDOS*/

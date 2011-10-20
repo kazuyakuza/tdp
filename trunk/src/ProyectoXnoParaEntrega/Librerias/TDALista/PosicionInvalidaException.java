@@ -1,4 +1,4 @@
-package GeneradorCodigoPostear.Rec.TDALista;
+package ProyectoXnoParaEntrega.Librerias.TDALista;
 
 /**
  * Posicion Invalida Exception: Excepción en tiempo de ejecución provocada al intentar asignar una posición inválida.

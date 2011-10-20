@@ -1,5 +1,6 @@
 package ProyectoXnoParaEntrega.Logica;
 
+import ProyectoXnoParaEntrega.Grafico.Sprite.CargadorSprite;
 import ProyectoXnoParaEntrega.Grafico.Sprite.SpriteManager;
 
 /**
@@ -25,9 +26,9 @@ public abstract class Actor
 	 * 
 	 * @param nombresSprites Nombres de los archivos de las imagenes del Sprite para este Actor.
 	 */
-	protected Actor (String[] nombresSprites)
+	protected Actor (String[] nombresSprites, CargadorSprite cargadorSprite)
 	{
-		spriteManager = new SpriteManager (nombresSprites);
+		spriteManager = new SpriteManager (nombresSprites, cargadorSprite);
 	}
 	
 	/*COMANDOS*/

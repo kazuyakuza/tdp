@@ -1,6 +1,8 @@
 package ProyectoXnoParaEntrega.Logica.Mapa;
 
 /**
+ * Representa un Nivel del Juego.
+ * 
  * Proyecto X
  * 
  * @author Javier Eduardo Barrocal LU:87158
@@ -11,30 +13,36 @@ public class Nivel
 	
 	//Atributos de Clase
 	protected Mapa mapa;
-	protected Bloque bloqueActual;
+	protected Bloque bloqueActual; //Bloque en el que está el Jugador.
 	protected int id;
 	
 	/*CONSTRUCTOR*/
 	
 	/**
+	 * Crea el Nivel i.
 	 * 
+	 * @param i Nivel a inicializar.
 	 */
 	public Nivel (int i)
 	{
-		/*switch (i)
+		switch (i)
 		{
 			case 1: crearNivel1 ();
-		}*/
-		mapa = new Mapa(1);
-		bloqueActual = mapa.bloque(1);
-		id = i;
-		
+		}	
 	}
 	
 	/*COMANDOS*/
 	
 	/**
 	 * 
+	 */
+	public void setBloqueActual (Bloque bloque)
+	{
+		bloqueActual = bloque;
+	}
+	
+	/**
+	 * Crea el Nivel 1.
 	 */
 	private void crearNivel1 ()
 	{
@@ -45,6 +53,7 @@ public class Nivel
 	
 	/**
 	 * Devuelve el mapa correspondiente al nivel.
+	 * 
 	 * @return el mapa del nivel.
 	 */
 	public Mapa getMapa ()
@@ -54,6 +63,7 @@ public class Nivel
 	
 	/**
 	 * Retorna el bloque actual donde se encuentra el personaje del jugador dentro del nivel.
+	 * 
 	 * @return el bloque actual donde se encuentra el jugador. 
 	 */
 	public Bloque getBloqueActual ()

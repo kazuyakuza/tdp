@@ -1,7 +1,7 @@
 package ProyectoXnoParaEntrega.Excepciones;
 
 /**
- * Excepción producida al ingresar una posición en un SpriteManager.
+ * Excepción producida al ingresar una posición incorrecta o no debida.
  * 
  * Proyecto X
  * 

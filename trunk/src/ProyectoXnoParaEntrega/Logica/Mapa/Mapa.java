@@ -1,9 +1,11 @@
 package ProyectoXnoParaEntrega.Logica.Mapa;
 
 import ProyectoXnoParaEntrega.Excepciones.BoundaryViolationException;
-import ProyectoXnoParaEntrega.Excepciones.PosicionIncorrectaException;
 
 /**
+ * Representa la parte Jugable del Juego.
+ * El Mapa esta conformado por uno o mas bloques.
+ * 
  * Proyecto X
  * 
  * @author Javier Eduardo Barrocal LU:87158
@@ -19,18 +21,36 @@ public class Mapa
 	/*CONSTRUCTOR*/
 	
 	/**
+	 * Crea un Mapa con los Bloques ingresados.
 	 * 
+	 * @param bs Bloques para el nuevo Mapa.
 	 */
-	public Mapa (int i)
+	public Mapa (Bloque[] bs)
 	{
-		cant = i;
-		bloques = new Bloque[cant];
+		bloques = bs;
+		cant = bloques.length;
+	}
+	
+	/*COMANDOS*/
+	
+	/**
+	 * Cambia el Bloque i por el nuevo Bloque pasado por parámetro.
+	 * 
+	 * @param bloque Nuevo Bloque para la posición i.
+	 * @exception BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
+	 */
+	public void setBloque (int i, Bloque bloque) throws BoundaryViolationException
+	{
+		verificarPosicion(i);
+		bloques[i] = bloque;
 	}
 	
 	/*CONSULTAS*/
 	
 	/**
+	 * Devuelve la cantidad de Bloques del Mapa.
 	 * 
+	 * @return Cantidad de Bloques del Mapa.
 	 */
 	public int cantBloques ()
 	{
@@ -38,45 +58,58 @@ public class Mapa
 	}
 	
 	/**
+	 * Verifica si la posicion i es correcta y pertenece al Mapa.
 	 * 
+	 * @param i Posición a verificar.
+	 * @exception BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
 	 */
-	public Bloque bloque (int i)
+	private void verificarPosicion (int i) throws BoundaryViolationException
 	{
+		if ((i < 0) || (i >= cantBloques()))
+			throw new BoundaryViolationException ("No existe Bloque " + i + " en el Mapa.");
+	}
+	
+	/**
+	 * Devuelve el Bloque i del Mapa.
+	 * 
+	 * @param i Posición del Bloque a devolver.
+	 * @return Bloque en la posición i.
+	 * @exception BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
+	 */
+	public Bloque getBloque (int i) throws BoundaryViolationException
+	{
+		verificarPosicion(i);
+		return bloques[i];
+	}
+	
+	/**
+	 * Devuelve el Bloque anterior al Bloque i del Mapa.
+	 * 
+	 * @param i Posición del Bloque siguiente al Bloque a devolver.
+	 * @return Bloque en la posición i-1.
+	 * @exception BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
+	 */
+	public Bloque getBloqueAnterior (int i) throws BoundaryViolationException
+	{
+		verificarPosicion(i);
+		if (i == 0)
+			throw new BoundaryViolationException ("No existe Bloque anterior al primero.");
 		return bloques[i-1];
 	}
 	
 	/**
+	 * Devuelve el Bloque siguiente al Bloque i del Mapa.
 	 * 
+	 * @param i Posición del Bloque anterior al Bloque a devolver.
+	 * @return Bloque en la posición i+1.
+	 * @exception BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
 	 */
-	public Bloque getSiguiente (Bloque b) throws PosicionIncorrectaException, BoundaryViolationException
+	public Bloque getBloqueSiguiente (int i) throws BoundaryViolationException
 	{
-		if (b == null)
-			throw new PosicionIncorrectaException("El bloque no es válido.");
-		else
-		   { int i = 0;
-			 Bloque aux = bloques[i];
-		   	 while (aux != b)
-		   		 i++;
-		   	 if (i == cant)
-		   		 throw new BoundaryViolationException("Es el último bloque, no tiene siguiente.");
-		   	 return bloques[i+1];
-		   }		
-	}	
-	/**
-	 * 
-	 */
-	public Bloque getAnterior (Bloque b) throws PosicionIncorrectaException, BoundaryViolationException
-	{
-		if (b == null)
-			throw new PosicionIncorrectaException("El bloque no es válido.");
-		else
-		   { int i = 0;
-			 Bloque aux = bloques[i];
-		   	 while (aux != b)
-		   		 i++;
-		   	 if (i == 0)
-		   		 throw new BoundaryViolationException("Es el primer bloque, no tiene anterior.");
-		   	 return bloques[i+1];
-		   }
+		verificarPosicion(i);
+		if (i == cantBloques()-1)
+			throw new BoundaryViolationException ("No existe Bloque siguiente al ultimo.");
+		return bloques[i+1];
 	}
+	
 }

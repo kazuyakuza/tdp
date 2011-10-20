@@ -1,7 +1,7 @@
 package ProyectoXnoParaEntrega.Excepciones;
 
 /**
- * Excepción producida al ingresar valores fuera del rango de lo esperado.
+ * Excepción producida cuando un Actor realiza una acción errónea.
  * 
  * Proyecto X
  * 
@@ -9,7 +9,7 @@ package ProyectoXnoParaEntrega.Excepciones;
  * @author Pablo Isaias Chacar LU:67704
  */
 @SuppressWarnings("serial")
-public class BoundaryViolationException extends RuntimeException
+public class AccionActorException extends RuntimeException
 {
 
 	/**
@@ -17,8 +17,9 @@ public class BoundaryViolationException extends RuntimeException
 	 * 
 	 * @param error Información del error.
 	 */
-	public BoundaryViolationException (String error)
+	public AccionActorException (String error)
 	{
 		super(error);
-	}	
+	}
+	
 }
