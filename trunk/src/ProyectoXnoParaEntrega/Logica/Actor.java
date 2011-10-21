@@ -2,6 +2,8 @@ package ProyectoXnoParaEntrega.Logica;
 
 import ProyectoXnoParaEntrega.Grafico.Sprite.CargadorSprite;
 import ProyectoXnoParaEntrega.Grafico.Sprite.SpriteManager;
+import ProyectoXnoParaEntrega.Logica.Mapa.Celda;
+import ProyectoXnoParaEntrega.Logica.Personajes.PjSeleccionable;
 
 /**
  * Representa a todos los objetos digitales que pueden desarrolar una "actuación" dentro del juego.
@@ -16,8 +18,11 @@ public abstract class Actor
 {
 	
 	//Variables de Instancia
-	private SpriteManager spriteManager;
+	protected SpriteManager spriteManager;
 	//private SoundManager soundManager;
+	
+	protected Celda celdaActual; 
+	protected boolean bajoGravedad; //Estado que representa cuándo el actor puede ser afectado o no por la gravedad. 
 	
 	/*CONSTRUCTOR*/
 	
@@ -29,6 +34,7 @@ public abstract class Actor
 	protected Actor (String[] nombresSprites, CargadorSprite cargadorSprite)
 	{
 		spriteManager = new SpriteManager (nombresSprites, cargadorSprite);
+		bajoGravedad = false;
 	}
 	
 	/*COMANDOS*/
@@ -43,6 +49,42 @@ public abstract class Actor
 		spriteManager = sp;
 	}
 	
+	/**
+	 * Setea la celda actual del actor con c.
+	 * @param c es la celda con la que se setea como actual para el actor.
+	 */
+	public void setCeldaActual (Celda c)
+	{
+		celdaActual = c;
+	}
+	 /**
+	  * Setea el estado del actor, si puede ser afectado o no por la gravedad, a v.
+	  * @param v es el nuevo estado del actor bajo los efectos de la gravedad.
+	  */
+	public void setBajoGravedad (boolean v)
+	{
+		bajoGravedad = v;
+	}
+	
+	/*COMANDOS ABSTRACTOS*/
+	
+	/**
+	 * Realiza la acción de colisionar con otro actor a.
+	 * @param a es el actor con el que se vá a colisionar. 
+	 */
+	public abstract void colisionar (Actor a);
+	
+	/**
+	 * Realiza la acción de colisionar con un personaje del jugador.
+	 * @param pj es el actor con el que se vá a colisionar. 
+	 */
+	public abstract void colisionarPj (PjSeleccionable pj);
+	
+	/**
+	 * Realiza la Acción caer, producida por el efecto de la gravedad. 
+	 */
+	public abstract void caer ();
+	
 	/*CONSULTAS*/
 	
 	/**
@@ -53,6 +95,24 @@ public abstract class Actor
 	public SpriteManager getSpriteManager ()
 	{
 		return spriteManager;
+	}
+	
+	/**
+	 * Devuelve la celda actual del actor.
+	 * @return la celda actual.
+	 */
+	public Celda getCeldaActual ()
+	{
+		return celdaActual;
+	}
+	
+	/**
+	 * Devuelve el estado del actor en cuanto si es afectable a la gravedad.
+	 * @return true si el actor es afectable por la gravedad, en caso contrario, false. 
+	 */
+	public boolean bajoGravedad ()
+	{
+		return bajoGravedad;
 	}
 
 }

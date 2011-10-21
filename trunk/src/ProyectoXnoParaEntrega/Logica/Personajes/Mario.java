@@ -1,5 +1,6 @@
 package ProyectoXnoParaEntrega.Logica.Personajes;
 
+import ProyectoXnoParaEntrega.Grafico.Sprite.CargadorSprite;
 import ProyectoXnoParaEntrega.Logica.Actor;
 
 /**
@@ -14,15 +15,15 @@ public abstract class Mario extends Actor implements PjSeleccionable
 {	
 	
 	//VARIABLES DE INSTANCIA
-	protected int tamaño;
+	
 	protected boolean invulnerable;//Representa el estado en que Mario puede o no ser dañado por los enemigos al colisionar.
 	protected boolean destructor;//Representa el estado en que Mario puede o no matar a los enemigos al colisionar con ellos.
 	
 	/*CONSTRUCTOR*/
 	
-	protected Mario ()
+	protected Mario (String[] nombresSprites, CargadorSprite cargadorSprite)
 	{
-		tamaño = 1;
+		super (nombresSprites, cargadorSprite);
 		invulnerable = false;
 		destructor = false;
 	}
@@ -34,7 +35,9 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	 */
 	public void arriba ()
 	{
+		bajoGravedad = false;
 		saltar();
+		bajoGravedad = true;
 	}
 	
 	/**
@@ -75,6 +78,14 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	public void B ()
 	{
 		accionB();
+	}
+	
+	/**
+	 * Realiza la Acción caer, producida por el efecto de la gravedad. 
+	 */
+	public void caer ()
+	{
+		
 	}
 	
 	/*COMANDOS*/
@@ -161,6 +172,14 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	 * Los efectos de la colisión la provocan los otros actores. 
 	 */
 	public void colisionar (Actor a)
+	{
+		
+	}
+	
+	/**
+	 * Realiza la acción de colisionar con otro personaje. Mario no provoca nada al colisionar con otro personaje.	 
+	 */
+	public void colisionarPj (PjSeleccionable pj)
 	{
 		
 	}

@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import ProyectoXnoParaEntrega.Excepciones.AccionActorException;
 import ProyectoXnoParaEntrega.Excepciones.PosicionIncorrectaException;
+
 import ProyectoXnoParaEntrega.Librerias.TDALista.ListaPositionSimple;
 import ProyectoXnoParaEntrega.Librerias.TDALista.Position;
 import ProyectoXnoParaEntrega.Librerias.TDALista.PositionList;
@@ -27,6 +28,7 @@ public class Celda
 	protected boolean totalmenteOcupada;
 	protected int posFila, posColumna;
 	protected PositionList<Actor> actores;
+	protected Bloque bloque;
 	
 	/*CONSTRUCTORES*/
 	
@@ -127,6 +129,15 @@ public class Celda
 	public int[] getPosicion ()
 	{
 		return new int[] {posFila, posColumna};
+	}
+	
+	/**
+	 * Retorna el bloque al que pertenece la celda.
+	 * @return es el bloque al que pertenece la celda.
+	 */
+	public Bloque getBloque ()
+	{
+		return bloque;
 	}
 
 }
