@@ -35,21 +35,25 @@ public class Gravedad implements Runnable
 	{		
 		while (true)
 		{			
-			Iterator <Actor> actores = controlCentral.getActores().iterator();
-			Actor actor;
+			Iterator <Actor> actores = controlCentral.getActores().iterator();			
 			while (actores.hasNext())
 			{
-				actor = actores.next();
-				if (actor.bajoGravedad())
-				{
-					actor.caer();
-					//Si el actor se encuentra en una fila por debajo del nivel del piso, entonces debe morir por caer al precipicio.
-					if (actor.getCeldaActual().getPosicion()[0] > actor.getCeldaActual().getBloque().getNivelPiso())
-						actor.morir();
-				}
-			}
-			
-			
+				afectar(actores.next());				
+			}			
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	public void afectar (Actor a)
+	{
+		if (a.bajoGravedad())
+		{
+			a.caer();
+			//Si el actor se encuentra en una fila por debajo del nivel del piso, entonces debe morir por caer al precipicio.
+			if (a.getCeldaActual().getPosicion()[0] > a.getCeldaActual().getBloque().getNivelPiso())
+				a.morir();
 		}
 	}
 }
