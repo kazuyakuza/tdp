@@ -28,10 +28,11 @@ public class ControlCentral implements Runnable
 	private Escenario escenario;
 	private Jugador jugador;
 	private Nivel nivel;
-	private PositionList<Actor> actores;
+	private PositionList<Actor> actores;	
+	private Gravedad gravedad;
 	
 	//Threads
-	private Thread Tactual, Tescenario, Tjugador; 
+	private Thread Tactual, Tescenario, Tjugador, Tgravedad;	
 	
 	/*CONSTRUCTOR*/
 	
@@ -59,6 +60,7 @@ public class ControlCentral implements Runnable
 		//Metodos Pre Inicialización ("de agregado")
 		ventanaPrincipal.agregarEscenario(e);
 		escenario.agregarControl(c);
+		gravedad = new Gravedad (this);
 		
 		nivel = new Nivel(1);
 	}
@@ -98,13 +100,15 @@ public class ControlCentral implements Runnable
 	 * 
 	 */
 	public void run ()
-	{		
+	{			
 		Tescenario = new Thread(escenario);
 		Tjugador = new Thread (jugador);
+		Tgravedad = new Thread (gravedad);
 		
 		//Start Thread's
 		Tescenario.start();
 		Tjugador.start();
+		Tgravedad.start();		
 	}
 	
 	/**

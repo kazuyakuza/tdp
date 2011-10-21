@@ -1,7 +1,6 @@
 package ProyectoXnoParaEntrega.Logica;
 
 import java.util.Iterator;
-import ProyectoXnoParaEntrega.Librerias.TDALista.PositionList;
 
 /**
  * Representa a la gravedad en el juego, provoca la caída de los actores que no se encuentran sobre una celda sólida (ocupada).
@@ -44,15 +43,16 @@ public class Gravedad implements Runnable
 	}
 	
 	/**
-	 * 
+	 * Realiza el efecto que la gravedad ejerce sobre el actor.
+	 * @param a es el actor al cual la gravedad afecta.
 	 */
-	public void afectar (Actor a)
+	protected void afectar (Actor a)
 	{
 		if (a.bajoGravedad())
 		{
 			a.caer();
-			//Si el actor se encuentra en una fila por debajo del nivel del piso, entonces debe morir por caer al precipicio.
-			if (a.getCeldaActual().getPosicion()[0] > a.getCeldaActual().getBloque().getNivelPiso())
+			//Si el actor se encuentra en la última fila del bloque, entonces debe morir por caer al precipicio.
+			if (a.getCeldaActual().getPosicion()[0] > a.getCeldaActual().getBloque().getFilas())
 				a.morir();
 		}
 	}
