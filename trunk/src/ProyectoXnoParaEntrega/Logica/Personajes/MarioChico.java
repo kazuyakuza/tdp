@@ -19,7 +19,7 @@ import ProyectoXnoParaEntrega.Excepciones.SpriteException;
 public class MarioChico extends Mario
 {
 	/*ATRIBUTOS DE CLASE*/
-	private static final String dirRecursos = "ProyectoXnoParaEntrega/Recursos/Imagenes/Mario/";
+	private static final String dirRecursos = "Mario/";
 	private static final String [] nombresSprites = {dirRecursos+"Mario - dead.gif",dirRecursos+"Mario.gif",dirRecursos+"Mario - Walk1.gif",dirRecursos+"Mario - Walk2.gif",dirRecursos+"Mario - Walk3.gif",dirRecursos+"Mario - Jump.gif"};
 	/*
 	 * En este arreglo se encuentran todas las sprites correspondientes a MarioChico, la ubicación en los índices es:
@@ -55,9 +55,7 @@ public class MarioChico extends Mario
 				 Celda celdaSuperior = celdaActual.getBloque().getSuperior(celdaActual);
 				 if (!celdaSuperior.getOcupada())
 				 {
-					 Iterator <Actor> actores = celdaSuperior.getActores();
-					 while (actores.hasNext())
-						 actores.next().colisionarPj(this);
+					 producirColisiones(celdaSuperior);
 					 celdaActual = celdaSuperior;
 					 int[] pos = celdaSuperior.getPosicion();
 					 spriteManager.actualizar(pos[0],pos[1]);
@@ -84,9 +82,7 @@ public class MarioChico extends Mario
 			 Celda celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
 			 if (!celdaAnterior.getOcupada())
 			 {
-				 Iterator <Actor> actores = celdaAnterior.getActores();
-				 while (actores.hasNext())
-					 actores.next().colisionarPj(this);
+				 producirColisiones(celdaAnterior);
 				 celdaActual = celdaAnterior;
 				 int[] pos = celdaAnterior.getPosicion();
 				 spriteManager.actualizar(pos[0],pos[1]);				 
@@ -109,9 +105,7 @@ public class MarioChico extends Mario
 			 Celda celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
 			 if (!celdaSiguiente.getOcupada())
 			 {
-				 Iterator <Actor> actores = celdaSiguiente.getActores();
-				 while (actores.hasNext())
-					 actores.next().colisionarPj(this);
+				 producirColisiones(celdaSiguiente);
 				 celdaActual = celdaSiguiente;
 				 int[] pos = celdaSiguiente.getPosicion();
 				 spriteManager.actualizar(pos[0],pos[1]);				 

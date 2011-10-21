@@ -50,8 +50,8 @@ public class ControlCentral implements Runnable
 		
 		Mario PJ = new MarioChico ();
 		Control c = new Teclado();
-		jugador = new Jugador (nJ, PJ, c);
-		
+		jugador = new Jugador (nJ, PJ, c, this);
+		PJ.setJugador(jugador);
 		actores = new ListaPositionSimple<Actor> ();
 		
 		actores.addLast(PJ);
@@ -76,13 +76,29 @@ public class ControlCentral implements Runnable
 			Tactual = t;
 	}
 	
+	/**
+	 * Reinicia el nivel a una posición inicial.
+	 */
+	public void reiniciarNivel ()
+	{
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void ganarNivel ()
+	{
+		
+	}
+	
 	/*Métodos en Ejecución*/
 	
 	/**
 	 * 
 	 */
 	public void run ()
-	{
+	{		
 		Tescenario = new Thread(escenario);
 		Tjugador = new Thread (jugador);
 		
@@ -107,6 +123,26 @@ public class ControlCentral implements Runnable
 	public void aceptar ()
 	{
 		//pausa
+	}
+	
+	/* CONSULTRAS */
+	
+	/**
+	 * Retorna el jugador del juego.
+	 * @return el jugador del juego.
+	 */
+	public Jugador getJugador ()
+	{
+		return jugador;
+	}
+	
+	/**
+	 * Devuelve una lista de los actores actuales en el juego.
+	 * @return lista de actores actores en el juego.
+	 */
+	public PositionList <Actor> getActores ()
+	{
+		return actores;
 	}
 
 }

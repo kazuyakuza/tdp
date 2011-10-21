@@ -78,12 +78,17 @@ public abstract class Actor
 	 * Realiza la acción de colisionar con un personaje del jugador.
 	 * @param pj es el actor con el que se vá a colisionar. 
 	 */
-	public abstract void colisionarPj (PjSeleccionable pj);
+	public abstract void colisionarPj (Actor actorJugador);
 	
 	/**
 	 * Realiza la Acción caer, producida por el efecto de la gravedad. 
 	 */
 	public abstract void caer ();
+	
+	/**
+	 * Realiza la acción de morir del actor.
+	 */
+	public abstract void morir();
 	
 	/*CONSULTAS*/
 	

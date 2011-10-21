@@ -21,6 +21,7 @@ public class Jugador implements Runnable
 	//Variables de Instancia
 	protected Control control;
 	protected PjSeleccionable personaje;
+	protected ControlCentral controlCentral;
 	protected int monedas, puntos, vidas;
 	protected String nombre;
 	protected boolean muerto;
@@ -33,11 +34,12 @@ public class Jugador implements Runnable
 	 * @param nom Nombre del Jugador.
 	 * @param pj Personaje del Jugador.
 	 */
-	public Jugador (String nom, PjSeleccionable pj, Control c)
+	public Jugador (String nom, PjSeleccionable pj, Control c, ControlCentral cc)
 	{
 		nombre = nom;
 		personaje = pj;
 		control = c;
+		controlCentral = cc;
 		monedas = puntos = 0;
 		vidas = vidasInicial;
 		muerto = false;
@@ -76,6 +78,9 @@ public class Jugador implements Runnable
 		vidas--;
 		if (vidas == 0)
 			muerto = true;
+		else
+			controlCentral.reiniciarNivel ();
+			
 	}
 	
 	/**
