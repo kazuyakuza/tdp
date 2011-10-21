@@ -52,7 +52,7 @@ public class Gravedad implements Runnable
 		{
 			a.caer();
 			//Si el actor se encuentra en la última fila del bloque, entonces debe morir por caer al precipicio.
-			if (a.getCeldaActual().getPosicion()[0] > a.getCeldaActual().getBloque().getFilas())
+			if (a.getCeldaActual().getPosFila() > a.getCeldaActual().getBloque().getFilas())
 				a.morir();
 		}
 	}

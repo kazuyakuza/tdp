@@ -1,6 +1,8 @@
-package ProyectoXnoParaEntrega.Logica;
+package ProyectoXnoParaEntrega.Logica.NoPersonajes.Especiales;
 
 import ProyectoXnoParaEntrega.Grafico.Sprite.CargadorSprite;
+import ProyectoXnoParaEntrega.Logica.Actor;
+import ProyectoXnoParaEntrega.Logica.ControlCentral;
 import ProyectoXnoParaEntrega.Logica.Mapa.Celda;
 
 /**
@@ -12,6 +14,7 @@ import ProyectoXnoParaEntrega.Logica.Mapa.Celda;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
+
 public class Llegada extends Actor
 {
 	/*ATRIBUTOS DE CLASE*/

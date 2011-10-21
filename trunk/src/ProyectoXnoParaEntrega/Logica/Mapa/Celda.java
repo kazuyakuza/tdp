@@ -132,6 +132,24 @@ public class Celda
 	}
 	
 	/**
+	 * Retorna la posición horizontal (eje x) de la celda.
+	 * @return la posición horizontal de la celda.
+	 */
+	public int getPosFila ()
+	{
+		return posFila;
+	}
+	
+	/**
+	 * Retorna la posición vertical (eje y) de la celda.
+	 * @return la posición vertical de la celda.
+	 */
+	public int getPosColumna ()
+	{
+		return posColumna;
+	}
+	
+	/**
 	 * Retorna el bloque al que pertenece la celda.
 	 * @return es el bloque al que pertenece la celda.
 	 */

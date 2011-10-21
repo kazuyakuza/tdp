@@ -56,14 +56,12 @@ public class MarioChico extends Mario
 				 if (!celdaSuperior.getOcupada())
 				 {
 					 producirColisiones(celdaSuperior);
-					 celdaActual = celdaSuperior;
-					 int[] pos = celdaSuperior.getPosicion();
-					 spriteManager.actualizar(pos[0],pos[1]);
-					 //Afectar con gravedad
+					 celdaActual = celdaSuperior;					 
+					 spriteManager.actualizar(celdaSuperior.getPosFila(),celdaSuperior.getPosColumna());
+					 i++;
 				 }
 				 else
-					 terminar = true;
-				 i++;
+					 terminar = true;				 
 			 }			 
 		}
 		catch (SpriteException ex) {/*No pasa nunca.*/}
@@ -83,9 +81,8 @@ public class MarioChico extends Mario
 			 if (!celdaAnterior.getOcupada())
 			 {
 				 producirColisiones(celdaAnterior);
-				 celdaActual = celdaAnterior;
-				 int[] pos = celdaAnterior.getPosicion();
-				 spriteManager.actualizar(pos[0],pos[1]);				 
+				 celdaActual = celdaAnterior;				 
+				 spriteManager.actualizar(celdaAnterior.getPosFila(),celdaAnterior.getPosColumna());				 
 			 }
 			 
 		}
@@ -106,9 +103,8 @@ public class MarioChico extends Mario
 			 if (!celdaSiguiente.getOcupada())
 			 {
 				 producirColisiones(celdaSiguiente);
-				 celdaActual = celdaSiguiente;
-				 int[] pos = celdaSiguiente.getPosicion();
-				 spriteManager.actualizar(pos[0],pos[1]);				 
+				 celdaActual = celdaSiguiente;				 
+				 spriteManager.actualizar(celdaSiguiente.getPosFila(),celdaSiguiente.getPosColumna());				 
 			 }
 			 
 		}

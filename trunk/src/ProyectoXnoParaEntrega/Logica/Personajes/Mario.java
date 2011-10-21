@@ -98,9 +98,8 @@ public abstract class Mario extends Actor implements PjSeleccionable
 			 if (!celdaInferior.getOcupada())
 			 {
 				 producirColisiones(celdaInferior);
-				 celdaActual = celdaInferior;
-				 int[] pos = celdaInferior.getPosicion();
-				 spriteManager.actualizar(pos[0],pos[1]);				 
+				 celdaActual = celdaInferior;				 
+				 spriteManager.actualizar(celdaInferior.getPosFila(),celdaInferior.getPosColumna());				 
 			 }
 			 
 		}
