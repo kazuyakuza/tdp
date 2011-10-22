@@ -164,7 +164,7 @@ public class ControlCentral implements Runnable
 	/**
 	 * 
 	 */
-	public void controlThreads ()
+	/*public void controlThreads ()
 	{
 		long startTime = 0;
 		while (true)
@@ -175,18 +175,17 @@ public class ControlCentral implements Runnable
 				Tgravedad.sleep(1000/velocidad);
 			    Tescenario.sleep(1000/velocidad);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-	}
+	}*/
 	
 	/**
 	 * Inidica el tiempo de espera de actualización del Thread ingresado.
 	 * 
 	 * @param t Thread a pausar.
 	 */
-	public void esperar (Thread t)
+	/*public void esperar (Thread t)
 	{
 		long startTime = System.currentTimeMillis();
 		do
@@ -194,7 +193,7 @@ public class ControlCentral implements Runnable
 			Thread.yield();
 		}
 		while (System.currentTimeMillis()-startTime < (1000/velocidad));
-	}
+	}*/
 	
 	/**
 	 * Acción ESC (escape) del Juego.

@@ -1,9 +1,17 @@
 package ProyectoXnoParaEntrega.Grafico.Sprite;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Composite;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.Transparency;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
@@ -108,18 +116,9 @@ public class SpriteManager implements ImageObserver
 		int w = image.getWidth();
 		int h = image.getHeight();
 		Graphics2D g = image.createGraphics();
-		AffineTransform at = AffineTransform.getTranslateInstance(((h - w) / 2.0), ((w - h) / 2.0));
-		try
-		{
-			at.invert();
-		}
-		catch (NoninvertibleTransformException e)
-		{
-			throw new SpriteException("Error al invertir la imagen." + "\n" + e.getMessage());
-		}
-		g.drawImage(image, at, this);
+		g.drawImage(image, 0, 0, w, h, w, 0, 0, h, this);
 		g.dispose();
-		return image; 
+		return image;
 	}
 	
 	/**
