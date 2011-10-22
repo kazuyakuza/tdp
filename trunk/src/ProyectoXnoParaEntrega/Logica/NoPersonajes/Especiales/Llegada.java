@@ -1,13 +1,14 @@
 package ProyectoXnoParaEntrega.Logica.NoPersonajes.Especiales;
 
+import ProyectoXnoParaEntrega.Excepciones.AccionActorException;
+import ProyectoXnoParaEntrega.Excepciones.ColisionException;
 import ProyectoXnoParaEntrega.Grafico.Sprite.CargadorSprite;
 import ProyectoXnoParaEntrega.Logica.Actor;
 import ProyectoXnoParaEntrega.Logica.ControlCentral;
-import ProyectoXnoParaEntrega.Logica.Mapa.Celda;
 
 /**
- * Representa al lugar de llegada para ganar un nivel.
- * Cuando un PjSeleccionable colisiona (se ubica en la misma celda) con una Llegada, el jugador gana y pasa de nivel.
+ * Representa al lugar de llegada para ganar un Nivel.
+ * Cuando un PjSeleccionable colisiona (se ubica en la misma celda) con una Llegada, el Jugador gana y termina el Nivel.
  * 
  * Proyecto X
  * 
@@ -17,63 +18,72 @@ import ProyectoXnoParaEntrega.Logica.Mapa.Celda;
 
 public class Llegada extends Actor
 {
-	/*ATRIBUTOS DE CLASE*/
+	
+	//Atributos de Clase
 	private static final String dirRecursos = "Objetos/";
-	private static final String [] nombresSprites = {dirRecursos+"Vine2.gif",dirRecursos+"Goal Flag.gif"};
+	private static final String [] nombresSprites = {dirRecursos + "Vine2.gif", dirRecursos + "Goal Flag.gif"};
 	
-	/* Atributos de Instancia*/
-	protected ControlCentral controlCentral;
+	//Atributos de Instancia
+	private ControlCentral controlCentral;
 	
-	/* CONTRUCTOR*/
+	/*CONTRUCTOR*/
 	
 	/**
-	 * Crea una Llegada para una celda determinada.
-	 * @param cc es el control central del juego.
-	 * @param celda es la celda asociada para la llegada.
+	 * Crea una Llegada.
+	 * 
+	 * @param cc ControlCentral del Juego.
+	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public Llegada (ControlCentral cc, Celda celda, CargadorSprite cargadorSprite)
+	public Llegada (ControlCentral cc, CargadorSprite cargadorSprite)
 	{
-		super (nombresSprites,cargadorSprite);
+		super (nombresSprites, cargadorSprite);
 		controlCentral = cc;
-		celdaActual = celda;		
 	}
 	
 	/*COMANDOS IMPLEMENTADOS*/
 	
 	/**
-	 * Realiza la acción de colisionar con otro actor a.
+	 * Realiza la acción de colisionar con otro Actor a.
 	 * No tiene ningún efecto con Llegada.
-	 * @param a es el actor con el que se vá a colisionar. 
+	 * 
+	 * @param a Actor con el que se va a colisionar.
+	 * @exception ColisionException Si se produce algún error en la colisión. 
 	 */
-	public void colisionar (Actor a)
+	public void colisionar (Actor a) throws ColisionException
 	{
-		/*No hace nada, no tiene efecto sobre actores que no sean PjSeleccionable.*/
+		/*No hace nada, no tiene efecto sobre Actores que no sean Personajes.*/
 	}
 	
 	/**
-	 * Realiza la acción de colisionar con un personaje del jugador.
-	 * @param pj es el actor con el que se vá a colisionar. 
+	 * Realiza la acción de colisionar con un Personaje Seleccionable de un Jugador.
+	 * 
+	 * @param actorJugador Actor con el que se va a colisionar.
+	 * @exception ColisionException Si se produce algún error en la colisión.
 	 */
-	public void colisionarPj (Actor actorJugador)
+	public void colisionarPj (Actor actorJugador) throws ColisionException
 	{
 		controlCentral.ganarNivel();
 	}
 	
 	/**
-	 * Realiza la Acción caer, producida por el efecto de la gravedad. 
-	 * No tiene ningún efecto sobre Llegada.
+	 * Realiza la Acción caer, producida por el efecto de la Gravedad.
+	 * No tiene ningún efecto con Llegada.
+	 * 
+	 * @exception AccionActorException Si se produce algún error al caer.
 	 */
-	public void caer ()
+	public void caer () throws AccionActorException
 	{
 		/*No hace nada, nunca ocurre.*/
 	}
 	
 	/**
-	 * Realiza la acción de morir del actor.
-	 * No tiene ningún efecto sobre Llegada.
+	 * Realiza la acción de morir del Actor.
+	 * 
+	 * No tiene ningún efecto con Llegada.
 	 */
 	public void morir()
 	{
 		/*No hace nada, nunca ocurre.*/
 	}
+	
 }

@@ -38,8 +38,8 @@ public class CargadorSprite extends CargadorRecurso
 	public BufferedImage obtenerSprite (String nombre, ImageObserver io) throws CargaRecursoException
 	{
 		BufferedImage imagenCargada = (BufferedImage) obtenerRecurso(nombre);
-        BufferedImage combatible = crearCombatible(imagenCargada.getWidth(), imagenCargada.getHeight(), Transparency.BITMASK); 
-        Graphics g = combatible.getGraphics();
+		BufferedImage combatible = crearCombatible(imagenCargada.getWidth(), imagenCargada.getHeight(), Transparency.BITMASK);
+		Graphics g = combatible.getGraphics();
         g.drawImage(imagenCargada, 0, 0, io);
         return combatible;
 	}

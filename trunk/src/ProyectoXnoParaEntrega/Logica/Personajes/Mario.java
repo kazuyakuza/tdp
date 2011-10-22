@@ -2,8 +2,8 @@ package ProyectoXnoParaEntrega.Logica.Personajes;
 
 import java.util.Iterator;
 
-import ProyectoXnoParaEntrega.Excepciones.PosicionIncorrectaException;
-import ProyectoXnoParaEntrega.Excepciones.SpriteException;
+import ProyectoXnoParaEntrega.Excepciones.AccionActorException;
+import ProyectoXnoParaEntrega.Excepciones.ColisionException;
 import ProyectoXnoParaEntrega.Grafico.Sprite.CargadorSprite;
 import ProyectoXnoParaEntrega.Logica.Actor;
 import ProyectoXnoParaEntrega.Logica.Jugador;
@@ -21,13 +21,18 @@ public abstract class Mario extends Actor implements PjSeleccionable
 {	
 	
 	//VARIABLES DE INSTANCIA
-	
 	protected boolean invulnerable;//Representa el estado en que Mario puede o no ser dañado por los enemigos al colisionar.
 	protected boolean destructor;//Representa el estado en que Mario puede o no matar a los enemigos al colisionar con ellos.
 	protected Jugador jugador;
 	
 	/*CONSTRUCTOR*/
 	
+	/**
+	 * Crea un Personaje Seleccionable Mario con los sprites pasados por parametro.
+	 * 
+	 * @param nombresSprites Nombres de los archivos de las imagenes del Sprite para este Actor.
+	 * @param cargadorSprite Clase para cargar los sprites.
+	 */
 	protected Mario (String[] nombresSprites, CargadorSprite cargadorSprite)
 	{
 		super (nombresSprites, cargadorSprite);
@@ -38,7 +43,7 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	/*COMANDOS IMPLEMENTADOS*/
 	
 	/**
-	 * Realiza la acción "arriba".
+	 * Especifica la acción "arriba".
 	 */
 	public void arriba ()
 	{
@@ -48,7 +53,7 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	}
 	
 	/**
-	 * Realiza la acción "abajo".
+	 * Especifica la acción "abajo".
 	 */
 	public void abajo ()
 	{
@@ -56,7 +61,7 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	}
 	
 	/**
-	 * Realiza la acción "izquierda".
+	 * Especifica la acción "izquierda".
 	 */
 	public void izquierda ()
 	{
@@ -64,7 +69,7 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	}
 	
 	/**
-	 * Realiza la acción "derecha".
+	 * Especifica la acción "derecha".
 	 */
 	public void derecha ()
 	{
@@ -72,7 +77,7 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	}
 	
 	/**
-	 * Realiza la acción "A".
+	 * Especifica la acción "A".
 	 */
 	public void A ()
 	{
@@ -80,7 +85,7 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	}
 	
 	/**
-	 * Realiza la acción "B".
+	 * Especifica la acción "B".
 	 */
 	public void B ()
 	{
@@ -88,24 +93,25 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	}
 	
 	/**
-	 * Realiza la Acción caer, producida por el efecto de la gravedad. 
+	 * Realiza la Acción Caer, producida por el efecto de la Gravedad.
+	 * 
+	 * @exception AccionActorException Si se produce un error al caer.
 	 */
-	public void caer ()
+	public void caer () throws AccionActorException
 	{
+		Celda celdaInferior = celdaActual;
 		try 
 		{			 
-			 Celda celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
-			 if (!celdaInferior.getOcupada())
-			 {
-				 producirColisiones(celdaInferior);
-				 celdaActual = celdaInferior;				 
-				 spriteManager.actualizar(celdaInferior.getPosFila(),celdaInferior.getPosColumna());				 
-			 }
-			 
+			 celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
+			 if (!celdaInferior.isOcupada())
+				 moverseAcelda(celdaInferior);
 		}
-		catch (SpriteException ex) {/*No pasa nunca.*/}
-		catch (NullPointerException ex) {/*No pasa nunca.*/}
-		catch (PosicionIncorrectaException ex) {}	
+		catch (Exception e)
+		{
+			throw new AccionActorException ("Imposible realizar la acción caer a/desde Celda de posición (" + celdaInferior.getPosFila() + "," + celdaInferior.getPosColumna() + ")." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e.getMessage());
+		}
 	}
 	
 	/**
@@ -113,25 +119,16 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	 */
 	public void morir ()
 	{
+		super.morir();
 		jugador.quitarVida();
 	}
 	
 	/*COMANDOS*/
 	
 	/**
-	 * Realiza las colisiones de Mario con los actores que se encuentran en la celda c.
-	 * @param c es la celda con los actores a colisionar con Mario. 
-	 */
-	protected void producirColisiones (Celda c)
-	{
-		Iterator <Actor> actores = c.getActores();
-		while (actores.hasNext())
-			actores.next().colisionarPj(this);		
-	}
-	
-	/**
-	 * Setea al jugador que controla a Mario con j.
-	 * @param j es el jugador de Mario.
+	 * Setea al Jugador que controla a Mario con j.
+	 * 
+	 * @param j Jugador de Mario.
 	 */
 	public void setJugador (Jugador j)
 	{
@@ -140,7 +137,8 @@ public abstract class Mario extends Actor implements PjSeleccionable
 			
 	/**
 	 * Modifica el estado invulnerable de Mario a "v".
-	 * @param v es el nuevo estado de invulnerabilidad (verdadero o falso) de Mario.
+	 * 
+	 * @param v Nuevo estado de invulnerabilidad (verdadero o falso) de Mario.
 	 */
 	public void setInvulnerabilidad (boolean v)
 	{
@@ -149,7 +147,8 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	
 	/**
 	 * Modifica el estado de destructor de Mario a "v".
-	 * @param v es el nuevo estado de destructor (verdadero o falso) de Mario.
+	 * 
+	 * @param v Nuevo estado de destructor (verdadero o falso) de Mario.
 	 */
 	public void setDestructor (boolean v)
 	{
@@ -160,44 +159,60 @@ public abstract class Mario extends Actor implements PjSeleccionable
 		
 	/**
 	 * Mario realiza la acción de saltar.
+	 * 
+	 * @exception AccionActorException Si se produce algún error al saltar.
 	 */
-	public abstract void saltar ();
+	public abstract void saltar () throws AccionActorException;
 		
 	/**
 	 * Mario realiza la acción de moverse hacia la izquierda.
+	 * 
+	 * @exception AccionActorException Si se produce algún error al moverse a izquierda.
 	 */
-	public abstract void moverseAizquierda ();
+	public abstract void moverseAizquierda () throws AccionActorException;
 		
 	/**
 	 * Mario realiza la acción de moverse hace la derecha.
+	 * 
+	 * @exception AccionActorException Si se produce algún error al moverse a derecha.
 	 */
-	public abstract void moverseAderecha ();
+	public abstract void moverseAderecha () throws AccionActorException;
 		
 	/**
 	 * Mario realiza la acción de agacharse.
+	 * 
+	 * @exception AccionActorException Si se produce algún error al agacharse.
 	 */
-	public abstract void agacharse ();
+	public abstract void agacharse () throws AccionActorException;
 	
 	/**
 	 * Mario realiza la acción A.
+	 * 
+	 * @exception AccionActorException Si se produce algún error al realizar la acción A.
 	 */
-	public abstract void accionA ();
+	public abstract void accionA () throws AccionActorException;
 		
 	/**
 	 * Mario realiza la acción B.
+	 * 
+	 * @exception AccionActorException Si se produce algún error al realizar la acción B.
 	 */
-	public abstract void accionB ();
+	public abstract void accionB () throws AccionActorException;
 	
 	/**
-	 * Realiza el efecto de crecer sobre Mario producido por un Super Hongo. Dicho efecto evoluciona a Mario.
+	 * Realiza el efecto de crecer sobre Mario producido por un Super Hongo.
+	 * Dicho efecto evoluciona a Mario.
+	 * 
+	 * @exception AccionActorException Si se produce algún error al crecer.
 	 */
-	public abstract void crecer ();
+	public abstract void crecer () throws AccionActorException;
 	
 	/*CONSULTAS*/
 	
 	/**
-	 * Devuelve el jugador que controla a Mario.
-	 * @return el jugador que controla a Mario.
+	 * Devuelve el Jugador que controla a Mario.
+	 * 
+	 * @return Jugador que controla a Mario.
 	 */
 	public Jugador getJugador ()
 	{
@@ -206,7 +221,9 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	
 	/**
 	 * Devuelve el estado de invulnerabilidad de Mario.
-	 * @return verdadero si Mario es invulnerable, falso en caso contrario.
+	 * 
+	 * @return True:  Mario es invulnerable.
+	 *         False: caso contrario.
 	 */
 	public boolean esInvulnerable ()
 	{
@@ -215,7 +232,9 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	
 	/**
 	 * Retorna el estado de destructor de Mario.
-	 * @return verdadero si Mario está en estado destructor, falso en caso contrario.
+	 * 
+	 * @return True:  si Mario está en estado destructor.
+	 *         False: caso contrario.
 	 */
 	public boolean esDestructor ()
 	{
@@ -225,19 +244,27 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	/*Métodos en Ejecución*/
 	
 	/**
-	 * Realiza la acción de colisionar con otro Actor. Mario no provoca nada al colisionar con otros actores.
-	 * Los efectos de la colisión la provocan los otros actores. 
+	 * Realiza la acción de colisionar con otro Actor.
+	 * Mario no provoca nada al colisionar con otros Actores.
+	 * 
+	 * Los efectos de la colisión la provocan los otros Actores.
+	 * 
+	 * @exception ColisionException Si se produce algún error en la colisión.
 	 */
-	public void colisionar (Actor a)
+	public void colisionar (Actor a) throws ColisionException
 	{
 		
 	}
 	
 	/**
-	 * Realiza la acción de colisionar con otro personaje. Mario no provoca nada al colisionar con otro personaje.	 
+	 * Realiza la acción de colisionar con otro Personaje Seleccionable.
+	 * Mario no provoca nada al colisionar con otro Personaje.
+	 * 
+	 * @exception ColisionException Si se produce algún error en la colisión.
 	 */
-	public void colisionarPj (Actor actorJugador)
+	public void colisionarPj (Actor actorJugador) throws ColisionException
 	{
 		
 	}
+	
 }

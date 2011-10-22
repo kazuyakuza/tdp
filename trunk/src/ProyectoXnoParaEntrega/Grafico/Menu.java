@@ -50,8 +50,8 @@ public class Menu extends JPanel
 	 */
 	private void initGUI ()
 	{
-		try
-		{
+		//try
+		//{
 			this.setPreferredSize(new Dimension(largo, alto));
 			this.setLayout(null);
 			this.setSize(largo, alto);
@@ -76,11 +76,11 @@ public class Menu extends JPanel
 				Salir.setBounds((largo/2-botonLargo/2), (alto/2-botonAlto/2+45), botonLargo, botonAlto);
 				Salir.addActionListener(listenerSalir());
 			}
-		}
+		/*}
 		catch (Exception e)
 		{
 			ventanaPrincipal.mensajeError("Error", e.getMessage(), true);
-		}
+		}*/
 	}
 	
 	/**
@@ -106,15 +106,15 @@ public class Menu extends JPanel
             //Método del ActionListener
             public void actionPerformed (ActionEvent event)
             {
-            	try
-            	{
+            	//try
+            	//{
             		ventanaPrincipal.pedirDatosJugador();
             		ventanaPrincipal.eliminarMenu();
-            	}
+            	/*}
             	catch (Exception e)
             	{
             		ventanaPrincipal.mensajeError("ERROR", e.getMessage(), true);
-        		}
+        		}*/
             	
             }
            };

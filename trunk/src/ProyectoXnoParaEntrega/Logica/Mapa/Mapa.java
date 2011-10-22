@@ -45,18 +45,6 @@ public class Mapa
 		bloques[i] = bloque;
 	}
 	
-	/*CONSULTAS*/
-	
-	/**
-	 * Devuelve la cantidad de Bloques del Mapa.
-	 * 
-	 * @return Cantidad de Bloques del Mapa.
-	 */
-	public int cantBloques ()
-	{
-		return cant;
-	}
-	
 	/**
 	 * Verifica si la posicion i es correcta y pertenece al Mapa.
 	 * 
@@ -67,6 +55,18 @@ public class Mapa
 	{
 		if ((i < 0) || (i >= cantBloques()))
 			throw new BoundaryViolationException ("No existe Bloque " + i + " en el Mapa.");
+	}
+	
+	/*CONSULTAS*/
+	
+	/**
+	 * Devuelve la cantidad de Bloques del Mapa.
+	 * 
+	 * @return Cantidad de Bloques del Mapa.
+	 */
+	public int cantBloques ()
+	{
+		return cant;
 	}
 	
 	/**
@@ -108,7 +108,7 @@ public class Mapa
 	{
 		verificarPosicion(i);
 		if (i == cantBloques()-1)
-			throw new BoundaryViolationException ("No existe Bloque siguiente al ultimo.");
+			throw new BoundaryViolationException ("No existe Bloque siguiente al último.");
 		return bloques[i+1];
 	}
 	

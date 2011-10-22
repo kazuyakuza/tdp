@@ -19,9 +19,9 @@ public class Jugador implements Runnable
 	private static int maxMonedas = 100;
 	
 	//Variables de Instancia
+	private ControlCentral controlCentral;
 	protected Control control;
 	protected PjSeleccionable personaje;
-	protected ControlCentral controlCentral;
 	protected int monedas, puntos, vidas;
 	protected String nombre;
 	protected boolean muerto;
@@ -36,10 +36,10 @@ public class Jugador implements Runnable
 	 */
 	public Jugador (String nom, PjSeleccionable pj, Control c, ControlCentral cc)
 	{
+		controlCentral = cc;
 		nombre = nom;
 		personaje = pj;
 		control = c;
-		controlCentral = cc;
 		monedas = puntos = 0;
 		vidas = vidasInicial;
 		muerto = false;
@@ -72,6 +72,8 @@ public class Jugador implements Runnable
 	
 	/**
 	 * Quita una vida al Jugador.
+	 * 
+	 * Si la cantidad de vidas del Jugador llega a 0, entonces el Jugador pierde el juego..
 	 */
 	public void quitarVida ()
 	{
@@ -86,7 +88,7 @@ public class Jugador implements Runnable
 	/**
 	 * Actualiza la cantidad de puntos del Jugador, sumando pts a sus puntos actuales.
 	 * 
-	 * @param pts Cantidad de puntos a sumar. (Restar si pts<0)
+	 * @param pts Cantidad de puntos a sumar. (Restar si pts < 0)
 	 */
 	public void asignarPuntos (int pts)
 	{
@@ -163,14 +165,13 @@ public class Jugador implements Runnable
 	 */
 	public void run ()
 	{
-		while (!(muerto))
+		if (!(muerto))
 			actuar();
 	}
 	
 	/**
 	 * Hace "actuar" al personaje del Jugador actual.
-	 * Para eso, primero verifica que acción está queriendo realizar el Jugador mediante su control,
-	 * y luego realiza la acción deseada.
+	 * Para eso, primero verifica que acción está queriendo realizar el Jugador mediante su control, y luego realiza la acción deseada.
 	 */
 	private void actuar ()
 	{

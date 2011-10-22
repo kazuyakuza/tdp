@@ -30,6 +30,8 @@ public class SpriteManager implements ImageObserver
 	                                 //para cargar la imagen a izquierda [-1], se invierte la imagen en [1]. "mirando hacia la izquierda"
 	private boolean invertido; //True:  el sprite actual esta invertido deacuerdo a su imagen original.
 	                           //False: caso contrario.
+	private boolean eliminar; //True:  el sprite debe ser eliminado.
+	                          //False: caso contrario.
 	private double posX, posY; //Posición Actual del Sprite en el Escenario.
 	                           //(si posX=-1 y posY=-1, entonces no se ha asignado una posición aún)
 	
@@ -46,18 +48,20 @@ public class SpriteManager implements ImageObserver
 	 */
 	public SpriteManager (String[] nombresSprites, CargadorSprite cargadorSprite) throws CargaRecursoException
 	{
+		sprites = new BufferedImage[nombresSprites.length];
 		for (int i=0; i<nombresSprites.length; i++)
-			try
-			{
+			//try
+			//{
 				sprites[i] = cargadorSprite.obtenerSprite(nombresSprites[i], this);
-			}
+			/*}
 			catch (CargaRecursoException exception)
 			{
 				throw new CargaRecursoException (exception.getMessage() + "\n" + "Error al cargar el sprite " + nombresSprites[i] + ".");
-			}
+			}*/
 		spriteActual = sprites[0];
 		posX = posY = -1;
 		invertido = false;
+		eliminar = false;
 	}
 	
 	/*COMANDOS*/
@@ -119,10 +123,22 @@ public class SpriteManager implements ImageObserver
 	}
 	
 	/**
+	 * Actualiza ls posición del sprite a la posición pasada por parámetro.
+	 * 
+	 * @param posicion Arreglo de dos componenete con posicion[0] = Nueva posición X, y posicion[1] = Nueva posición Y.
+	 * @exception PosicionIncorrectaException Si se ingresa una posición incorrecta.
+	 */
+	public void actualizar (int[] posicion) throws PosicionIncorrectaException
+	{
+		actualizar(posicion[0], posicion[1]);
+	}
+	
+	/**
 	 * Actualiza la posición del sprite a la posición (X,Y).
 	 * 
 	 * @param X Nueva posición X.
 	 * @param Y Nueva posición Y.
+	 * @exception PosicionIncorrectaException Si se ingresa una posición incorrecta.
 	 */
 	public void actualizar (int X, int Y) throws PosicionIncorrectaException
 	{
@@ -151,6 +167,14 @@ public class SpriteManager implements ImageObserver
 		}
 	}
 	
+	/**
+	 * Indica a este SpriteManager como "debe ser eliminado".
+	 */
+	public void setEliminar ()
+	{
+		eliminar = true;
+	}
+	
 	/*CONSULTAS*/
 	
 	/**
@@ -168,10 +192,24 @@ public class SpriteManager implements ImageObserver
 	 * 
 	 * @return (x,y):   Posición actual del Sprite.
 	 *         (-1,-1): Cuando el Sprite no tiene una posición asignada.
+	 * @exception PosicionIncorrectaException Si no se ha asignado una posición.
 	 */
-	public double[] posicion ()
+	public double[] posicion () throws PosicionIncorrectaException
 	{
+		if ((posX == -1) && (posY == -1))
+			throw new PosicionIncorrectaException ("No se ha asignado posición.");
 		return new double[] {posX, posY};
+	}
+	
+	/**
+	 * Indica si el SpriteManager debe ser eliminado.
+	 * 
+	 * @return True:  el SpriteManger debe ser eliminado.
+	 *         False: caso contrario.
+	 */
+	public boolean isEliminar ()
+	{
+		return eliminar;
 	}
 	
 	/*Métodos en Ejecución*/

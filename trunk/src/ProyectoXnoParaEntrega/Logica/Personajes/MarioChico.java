@@ -1,16 +1,13 @@
 package ProyectoXnoParaEntrega.Logica.Personajes;
 
-import java.util.Iterator;
+import ProyectoXnoParaEntrega.Excepciones.AccionActorException;
 import ProyectoXnoParaEntrega.Grafico.Sprite.CargadorSprite;
 import ProyectoXnoParaEntrega.Logica.Mapa.Celda;
-import ProyectoXnoParaEntrega.Logica.Actor;
-//import ProyectoXnoParaEntrega.Grafico.Sprite.SpriteManager;
-
-import ProyectoXnoParaEntrega.Excepciones.PosicionIncorrectaException;
-import ProyectoXnoParaEntrega.Excepciones.SpriteException;
 
 
 /**
+ * Representa a Mario Chico, uno de los Personajes Seleccionables por el Jugador en el Juego.
+ * 
  * Proyecto X
  * 
  * @author Javier Eduardo Barrocal LU:87158
@@ -18,129 +15,154 @@ import ProyectoXnoParaEntrega.Excepciones.SpriteException;
  */
 public class MarioChico extends Mario
 {
-	/*ATRIBUTOS DE CLASE*/
+	
+	//Atributos de Clase
 	private static final String dirRecursos = "Mario/";
-	private static final String [] nombresSprites = {dirRecursos+"Mario - dead.gif",dirRecursos+"Mario.gif",dirRecursos+"Mario - Walk1.gif",dirRecursos+"Mario - Walk2.gif",dirRecursos+"Mario - Walk3.gif",dirRecursos+"Mario - Jump.gif"};
-	/*
-	 * En este arreglo se encuentran todas las sprites correspondientes a MarioChico, la ubicación en los índices es:
-	 * 0: Mario muere.
-	 * 1: Mario quieto.
-	 * 2: Mario camina1.
-	 * 3: Mario camina2.
-	 * 4: Mario camina3.
-	 * 5: Mario salta.
-	 */
+	private static final String [] nombresSprites = //En este arreglo se encuentran todas las rutas a las imagenes correspondientes a MarioChico, la ubicación en los índices es:
+	                                                {dirRecursos + "Mario - dead.gif", //0: Mario muerto
+		                                             dirRecursos + "Mario.gif",        //1: Mario quieto
+		                                             dirRecursos + "Mario - Walk1.gif",//2: Mario caminando1
+		                                             dirRecursos + "Mario - Walk2.gif",//3: Mario caminando2
+		                                             dirRecursos + "Mario - Walk3.gif",//4: Mario caminando3
+		                                             dirRecursos + "Mario - Jump.gif"};//5: Mario saltando
+	private static int muerto = 0;
+	private static int quieto = 1;
+	private static int caminando = 2;
+	private static int saltando = 5;
 	
 	/*CONSTRUCTORES*/
 	
+	/**
+	 * Crea un Personaje Seleccionable Mario Chico.
+	 * 
+	 * @param cargadorSprite Clase para cargar los sprites.
+	 */
 	public MarioChico (CargadorSprite cargadorSprite)
 	{
-		super(nombresSprites,cargadorSprite);
+		super(nombresSprites, cargadorSprite);
+		spriteManager.cambiarSprite(quieto);
 	}
 	
 	/*COMANDOS IMPLEMENTADOS*/
 	
 	/**
 	 * Mario realiza la acción de saltar.
+	 * 
+	 * @exception AccionActorException Si se produce algún error al saltar.
 	 */
-	public void saltar ()
+	public void saltar () throws AccionActorException
 	{
+		Celda celdaSuperior = celdaActual;
 		try 
 		{
-			 spriteManager.cambiarSprite(5);			 
-			 int i=0;
-			 boolean terminar = false;
-			 while (!terminar || i<4)			 
-			 {
-				 Celda celdaSuperior = celdaActual.getBloque().getSuperior(celdaActual);
-				 if (!celdaSuperior.getOcupada())
-				 {
-					 producirColisiones(celdaSuperior);
-					 celdaActual = celdaSuperior;					 
-					 spriteManager.actualizar(celdaSuperior.getPosFila(),celdaSuperior.getPosColumna());
-					 i++;
-				 }
-				 else
-					 terminar = true;				 
-			 }			 
+			spriteManager.cambiarSprite(saltando);
+			int i=0;
+			boolean terminar = false;
+			while (!terminar || i<4)
+			{
+				celdaSuperior = celdaActual.getBloque().getSuperior(celdaActual);
+				if (!celdaSuperior.isOcupada())
+				{
+					moverseAcelda(celdaSuperior);
+					i++;
+				}
+				else
+					terminar = true;				 
+			}
+			spriteManager.cambiarSprite(quieto);
 		}
-		catch (SpriteException ex) {/*No pasa nunca.*/}
-		catch (NullPointerException ex) {/*No pasa nunca.*/}
-		catch (PosicionIncorrectaException ex) {}
+		catch (Exception e)
+		{
+			throw new AccionActorException ("Imposible realizar la acción saltar a/desde Celda de posición (" + celdaSuperior.getPosFila() + "," + celdaSuperior.getPosColumna() + ")." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e.getMessage());
+		}
 	}
 		
 	/**
 	 * Mario realiza la acción de moverse hacia la izquierda.
+	 * 
+	 * @exception AccionActorException Si se produce algún error al moverse a izquierda.
 	 */
-	public void moverseAizquierda ()
+	public void moverseAizquierda () throws AccionActorException
 	{
+		Celda celdaAnterior = celdaActual;
 		try 
 		{
-			 spriteManager.cambiarSprite(-2);
-			 Celda celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
-			 if (!celdaAnterior.getOcupada())
-			 {
-				 producirColisiones(celdaAnterior);
-				 celdaActual = celdaAnterior;				 
-				 spriteManager.actualizar(celdaAnterior.getPosFila(),celdaAnterior.getPosColumna());				 
-			 }
-			 
+			spriteManager.cambiarSprite(-caminando);
+			celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
+			if (!celdaAnterior.isOcupada())
+				moverseAcelda(celdaAnterior);
+			spriteManager.cambiarSprite(quieto);
 		}
-		catch (SpriteException ex) {/*No pasa nunca.*/}
-		catch (NullPointerException ex) {/*No pasa nunca.*/}
-		catch (PosicionIncorrectaException ex) {}		
+		catch (Exception e)
+		{
+			throw new AccionActorException ("Imposible realizar la acción moverAizquierda a/desde Celda de posición (" + celdaAnterior.getPosFila() + "," + celdaAnterior.getPosColumna() + ")." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e.getMessage());
+		}
 	}
 		
 	/**
 	 * Mario realiza la acción de moverse hace la derecha.
+	 * 
+	 * @exception AccionActorException Si se produce algún error al moverse a derecha.
 	 */
-	public void moverseAderecha ()
+	public void moverseAderecha () throws AccionActorException
 	{
+		Celda celdaSiguiente = celdaActual;
 		try 
 		{
-			 spriteManager.cambiarSprite(2);
-			 Celda celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
-			 if (!celdaSiguiente.getOcupada())
-			 {
-				 producirColisiones(celdaSiguiente);
-				 celdaActual = celdaSiguiente;				 
-				 spriteManager.actualizar(celdaSiguiente.getPosFila(),celdaSiguiente.getPosColumna());				 
-			 }
-			 
+			spriteManager.cambiarSprite(caminando);
+			celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
+			if (!celdaSiguiente.isOcupada())
+				moverseAcelda(celdaSiguiente);
+			spriteManager.cambiarSprite(quieto);
 		}
-		catch (SpriteException ex) {/*No pasa nunca.*/}
-		catch (NullPointerException ex) {/*No pasa nunca.*/}
-		catch (PosicionIncorrectaException ex) {}	
+		catch (Exception e)
+		{
+			throw new AccionActorException ("Imposible realizar la acción moverAderecha a/desde Celda de posición (" + celdaSiguiente.getPosFila() + "," + celdaSiguiente.getPosColumna() + ")." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e.getMessage());
+		}
 	}
 	
 	/**
 	 * Mario realiza la acción de agacharse.
+	 * 
+	 * @exception AccionActorException Si se produce algún error al agacharse.
 	 */
-	public void agacharse ()
+	public void agacharse () throws AccionActorException
 	{
 		
 	}
 	
 	/**
 	 * Mario realiza la acción A.
+	 * 
+	 * @exception AccionActorException Si se produce algún error al realizar la acción A.
 	 */
-	public void accionA ()
+	public void accionA () throws AccionActorException
 	{
 		
 	}
 		
 	/**
 	 * Mario realiza la acción B.
+	 * 
+	 * @exception AccionActorException Si se produce algún error al realizar la acción B.
 	 */
-	public void accionB ()
+	public void accionB () throws AccionActorException
 	{
 		
 	}
 	
 	/**
 	 * Realiza el efecto de crecer sobre Mario producido por un Super Hongo. Dicho efecto evoluciona a Mario.
+	 * 
+	 * @exception AccionActorException Si se produce algún error al crecer.
 	 */
-	public void crecer ()
+	public void crecer () throws AccionActorException
 	{
 		
 	}
@@ -148,9 +170,18 @@ public class MarioChico extends Mario
 	/**
 	 * Realiza la acción de ser colisionado por un enemigo.
 	 */
-	public void serDañado ()
+	public void serDañado () throws AccionActorException
 	{
 		
+	}
+	
+	/**
+	 * Realiza la acción de morir (ser destruido) de Mario.
+	 */
+	public void morir ()
+	{
+		super.morir();
+		spriteManager.cambiarSprite(muerto);
 	}
 	
 }

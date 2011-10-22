@@ -57,8 +57,8 @@ public class PedirDatosJugador extends JPanel
 	 */
 	private void initGUI ()
 	{
-		try
-		{
+		//try
+		//{
 			this.setPreferredSize(new Dimension(largo, alto));
 			this.setLayout(null);
 			this.setSize(largo, alto);
@@ -87,11 +87,11 @@ public class PedirDatosJugador extends JPanel
 				Cancelar.setBounds((largo/2+10), (alto/2-botonAlto+20), botonLargo, botonAlto);
 				Cancelar.addActionListener(listenerCancelar());
 			}
-		}
+		/*}
 		catch (Exception e)
 		{
 			ventanaPrincipal.mensajeError("Error", e.getMessage(), true);
-		}
+		}*/
 	}
 	
 	/**
@@ -117,17 +117,17 @@ public class PedirDatosJugador extends JPanel
             //Método del ActionListener
             public void actionPerformed (ActionEvent event)
             {
-            	try
-            	{
-            		if (NombreJugador.getText().equals(""))
-            			throw new StringEmptyException("Falta Ingresar Nombre.");
+            	//try
+            	//{
+            		/*if (NombreJugador.getText().equals(""))
+            			throw new StringEmptyException("Falta Ingresar Nombre.");*/
             		ventanaPrincipal.nuevoJuego(NombreJugador.getText());
             		ventanaPrincipal.eliminarPedirDatosJugador();
-            	}
+            	/*}
             	catch (Exception e)
             	{
             		ventanaPrincipal.mensajeError("ERROR", e.getMessage(), true);
-        		}
+        		}*/
             	
             }
            };

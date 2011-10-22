@@ -1,5 +1,6 @@
 package ProyectoXnoParaEntrega.Grafico;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -22,8 +23,8 @@ public class VentanaPrincipal extends JFrame
 {
 	
 	//Variables de Clase
-	private int largo = 640;
-	private int alto = 480;
+	private int largo = (320 + 6);//640;
+	private int alto = (256 + 26);//480;
 	
 	private String version = "Versión 0.1";
 	private String[] autores = {"Javier Eduardo Barrocal","Pablo Isaias Chacar"};
@@ -65,19 +66,19 @@ public class VentanaPrincipal extends JFrame
 	 */
 	private void initGUI ()
 	{
-		try
-		{
+		//try
+		//{
 			setPreferredSize(new Dimension(largo, alto));
 			{
 				mostrarMenu();
 			}
 			setSize(largo, alto);
 			pack();
-		}
+		/*}
 		catch (Exception e)
 		{
 		    mensajeError("ERROR", e.getMessage(), true);
-		}
+		}*/
 	}
 	
 	/**
@@ -96,7 +97,8 @@ public class VentanaPrincipal extends JFrame
 	protected void mostrarMenu ()
 	{
 		menu = new Menu (this);
-		this.add(menu);
+		this.setContentPane(menu);
+		this.repaint();
 	}
 	
 	/**
@@ -106,8 +108,8 @@ public class VentanaPrincipal extends JFrame
 	{
 		if (menu != null)
 		{
-			this.remove(menu);
 			menu.limpiar();
+			this.remove(menu);
 			menu = null;
 			this.repaint();
 		}
@@ -119,7 +121,8 @@ public class VentanaPrincipal extends JFrame
 	protected void pedirDatosJugador ()
 	{
 		pnj = new PedirDatosJugador(this);
-		this.add(pnj);
+		this.setContentPane(pnj);
+		this.repaint();
 	}
 	
 	/**
@@ -129,8 +132,8 @@ public class VentanaPrincipal extends JFrame
 	{
 		if (pnj != null)
 		{
-			this.remove(pnj);
 			pnj.limpiar();
+			this.remove(pnj);
 			pnj = null;
 			this.repaint();
 		}
@@ -147,7 +150,8 @@ public class VentanaPrincipal extends JFrame
 		jPanelEscenario.setPreferredSize(new Dimension(largo,alto));
 		jPanelEscenario.setLayout (null);
 		jPanelEscenario.add(escenario);
-		this.add(jPanelEscenario);
+		this.setContentPane(jPanelEscenario);
+		this.repaint();
 	}
 	
 	/**

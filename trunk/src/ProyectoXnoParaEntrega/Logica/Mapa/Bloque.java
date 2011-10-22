@@ -21,7 +21,7 @@ public class Bloque
 	//Variables de Instancia
 	protected Celda[][] ABC; //Arreglo Bidimensional de Celdas
 	protected int nivelPiso; //Representa el nivel del Piso en el Mapa.
-	                         //Si hay el bloque tiene piso, entonces 0<=nivelPiso<getFilas()
+	                         //Si el Bloque tiene piso, entonces 0 <= nivelPiso < this.getFilas()
 	                         //Si nivelPiso = -1, entonces el Bloque no tiene piso.
 	
 	/*CONSTRUCTOR*/
@@ -34,8 +34,9 @@ public class Bloque
 	 * @param cantFilas Cantidad de filas del nuevo Bloque.
 	 * @param cantColumnas Cantidad de columnas del nuevo Bloque.
 	 * @exception BoundaryViolationException Si se ingrensa valores incorrectos del tamaño del Bloque.
+	 * @exception PosicionIncorrectaException Si hay un error al ingresar una Celda a una determinada posición.
 	 */
-	public Bloque (int cantFilas, int cantColumnas) throws BoundaryViolationException
+	public Bloque (int cantFilas, int cantColumnas) throws BoundaryViolationException, PosicionIncorrectaException
 	{
 		if ((cantFilas < 0) || (cantFilas < 0))
 			throw new BoundaryViolationException ("Imposible armar un Bloque de " + cantFilas + " filas X " + cantColumnas + " calumnas.");
@@ -48,18 +49,29 @@ public class Bloque
 	
 	/**
 	 * Crea y asigna todas las Celdas al ABC.
+	 * 
+	 * @exception PosicionIncorrectaException Si hay un error al ingresar una Celda a una determinada posición.
 	 */
-	private void crearCeldas ()
+	private void crearCeldas () throws PosicionIncorrectaException
 	{
 		for (int i=0; i < getFilas(); i++)
 			for (int j=0; j < getColumnas(); j++)
-				ABC[i][j] = new Celda (esPiso(i,j), i, j);
+				try
+				{
+					ABC[i][j] = new Celda (esPiso(i,j), i, j, this);
+				}
+				catch (Exception e)
+				{
+					throw new PosicionIncorrectaException ("Error al crear/asignar la Celda de posición (" + i + "," + j + ")." + "\n" +
+							                               "Detalles del error:" + "\n" +
+							                               e.getMessage());
+				}
 	}
 	
 	/**
 	 * Cambia el nivel del piso del bloque.
 	 * 
-	 * Si hay el bloque tiene piso, entonces 0<=nivelPiso<getFilas()
+	 * Si el Bloque tiene piso, entonces 0 <= nivelPiso < this.getFilas()
 	 * Si nivelPiso = -1, entonces el Bloque no tiene piso.
 	 * 
 	 * @param nivel Nuevo nivel del piso.
@@ -145,6 +157,8 @@ public class Bloque
 	/**
 	 * Verica si la pisición (x,y) pertence al piso del Bloque y devuelve el resultado.
 	 * 
+	 * @param fila Fila de la posición que se quiere verificar.
+	 * @param columna Columna de la posición que se quiere verificar.
 	 * @return True:  (x,y) pertence al piso del Bloque.
 	 *         False: caso contrario.
 	 * @exception PosicionIncorrectaException Si se ingresa una posición incorrecta.
@@ -153,6 +167,20 @@ public class Bloque
 	{
 		verificarPosicion (fila, columna);
 		return (fila == nivelPiso);
+	}
+	
+	/**
+	 * Verica si la pisición (x,y) pertence a una posición por debajo del piso del Bloque y devuelve el resultado.
+	 * 
+	 * @param posicion Arreglo de dos componentes donde posicion[0] = Fila de la posición que se quiere verificar y posicion[1] = Columna de la posición que se quiere verificar.
+	 * @return True:  la posición está por debajo del piso del Bloque.
+	 *         False: caso contrario.
+	 * @exception PosicionIncorrectaException Si se ingresa una posición incorrecta.
+	 */
+	public boolean debajoDelPiso (int[] posicion) throws PosicionIncorrectaException
+	{
+		verificarPosicion (posicion[0], posicion[1]);
+		return (posicion[0] < nivelPiso);
 	}
 	
 	/**
@@ -213,22 +241,6 @@ public class Bloque
 	}
 	
 	/**
-	 * Devuelve la Celda por debajo en el ABC de la Celda pasada por parámetro.
-	 * 
-	 * @param celda Celda a la que buscarle la Celda que está por debajo.
-	 * @return Celda por debajo en el ABC de la Celda pasada por parámetro.
-	 * @exception NullPointerException Si la Celda pasada por parámetro es null.
-	 * @exception PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
-	 */
-	public Celda getInferior (Celda celda) throws NullPointerException, PosicionIncorrectaException
-	{
-		verificarCelda (celda);
-		if (celda.posFila == getFilas()-1)
-			throw new PosicionIncorrectaException ("La ultima celda de la fila no tiene inferior.");
-		return ABC[celda.posFila + 1][celda.posColumna];	
-	}
-	
-	/**
 	 * Devuelve la Celda por encima en el ABC de la Celda pasada por parámetro.
 	 * 
 	 * @param celda Celda a la que buscarle la Celda que está por encima.
@@ -242,6 +254,22 @@ public class Bloque
 		if (celda.posFila == 0)
 			throw new BoundaryViolationException ("La primera celda de la fila no tiene superior.");
 		return ABC[celda.posFila - 1][celda.posColumna];	
+	}
+	
+	/**
+	 * Devuelve la Celda por debajo en el ABC de la Celda pasada por parámetro.
+	 * 
+	 * @param celda Celda a la que buscarle la Celda que está por debajo.
+	 * @return Celda por debajo en el ABC de la Celda pasada por parámetro.
+	 * @exception NullPointerException Si la Celda pasada por parámetro es null.
+	 * @exception PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
+	 */
+	public Celda getInferior (Celda celda) throws NullPointerException, PosicionIncorrectaException
+	{
+		verificarCelda (celda);
+		if (celda.posFila == getFilas()-1)
+			throw new PosicionIncorrectaException ("La ultima celda de la fila no tiene inferior.");
+		return ABC[celda.posFila + 1][celda.posColumna];	
 	}
 	
 	/**

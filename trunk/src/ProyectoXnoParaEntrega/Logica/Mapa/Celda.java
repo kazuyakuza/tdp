@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import ProyectoXnoParaEntrega.Excepciones.AccionActorException;
 import ProyectoXnoParaEntrega.Excepciones.PosicionIncorrectaException;
-
 import ProyectoXnoParaEntrega.Librerias.TDALista.ListaPositionSimple;
 import ProyectoXnoParaEntrega.Librerias.TDALista.Position;
 import ProyectoXnoParaEntrega.Librerias.TDALista.PositionList;
@@ -25,10 +24,10 @@ public class Celda
 {
 	
 	//Variables de Instancia
-	protected boolean totalmenteOcupada;
-	protected int posFila, posColumna;
-	protected PositionList<Actor> actores;
-	protected Bloque bloque;
+	protected boolean totalmenteOcupada; //True = ningún otro Actor puede ingresar a la Celda.
+	protected int posFila, posColumna; //Posición en su Bloque.
+	protected PositionList<Actor> actores; //Actores actuales en la Celda.
+	protected Bloque bloque; //Bloque al que pertenece la Celda.
 	
 	/*CONSTRUCTORES*/
 	
@@ -38,15 +37,17 @@ public class Celda
 	 * @param ocupada Si está totalmente ocupada o no la celda.
 	 * @param file Fila de la celda en el Mapa.
 	 * @param columna Columna de la celda en el Mapa.
+	 * @param b Bloque al que pertenece la Celda.
 	 * @exception PosicionIncorrectaException Si se intenta asignar una posición incorrecta a la nueva Celda.
 	 */
-	public Celda (boolean ocupada, int fila, int columna) throws PosicionIncorrectaException
+	public Celda (boolean ocupada, int fila, int columna, Bloque b) throws PosicionIncorrectaException
 	{
 		if ((fila < 0) || (columna < 0))
 			throw new PosicionIncorrectaException ("Imposible asignar la posición (" + fila + "," + columna + ") a la nueva Celda.");
 		totalmenteOcupada = ocupada;
 		posFila = fila;
 		posColumna = columna;
+		bloque = b;
 		actores = new ListaPositionSimple<Actor> ();
 	}
 	
@@ -114,7 +115,7 @@ public class Celda
 	 * @return True:  si la Celda está totalmente ocupada.
 	 *         False: demas casos.
 	 */
-	public boolean getOcupada ()
+	public boolean isOcupada ()
 	{
 		return totalmenteOcupada;
 	}
@@ -132,8 +133,9 @@ public class Celda
 	}
 	
 	/**
-	 * Retorna la posición horizontal (eje x) de la celda.
-	 * @return la posición horizontal de la celda.
+	 * Devuelve la posición horizontal (eje x) de la Celda.
+	 * 
+	 * @return La posición horizontal de la Celda.
 	 */
 	public int getPosFila ()
 	{
@@ -141,8 +143,9 @@ public class Celda
 	}
 	
 	/**
-	 * Retorna la posición vertical (eje y) de la celda.
-	 * @return la posición vertical de la celda.
+	 * Devuelve la posición vertical (eje y) de la Celda.
+	 * 
+	 * @return La posición vertical de la Celda.
 	 */
 	public int getPosColumna ()
 	{
@@ -150,8 +153,9 @@ public class Celda
 	}
 	
 	/**
-	 * Retorna el bloque al que pertenece la celda.
-	 * @return es el bloque al que pertenece la celda.
+	 * Devuelve el Bloque al que pertenece la Celda.
+	 * 
+	 * @return Bloque al que pertenece la Celda.
 	 */
 	public Bloque getBloque ()
 	{

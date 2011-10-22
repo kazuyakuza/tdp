@@ -4,8 +4,6 @@ import java.awt.Canvas;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.TexturePaint;
 import java.awt.Toolkit;
 import java.awt.Transparency;
 import java.awt.image.BufferStrategy;
@@ -39,6 +37,7 @@ public class Escenario extends Canvas implements Runnable
 	private BufferStrategy bufferStrategy;
 	private BloqueGrafico anterior, actual, siguiente;
 	private boolean actualizar;
+	private int largo, alto;
 	
 	/*CONSTRUCTOR*/
 	
@@ -51,25 +50,29 @@ public class Escenario extends Canvas implements Runnable
 	{
 		super();
 		ventanaPrincipal = vP;
+		largo = ventanaPrincipal.largo();
+		alto = ventanaPrincipal.alto();
 		fondo = null;
 		anterior = null;
 		actual = null;
 		siguiente = null;
 		actualizar = true;
-		
-		metodosGraficos();
 	}
 	
+	/*COMANDOS*/
+	
 	/**
-	 * Métodos Gráficos llamados en el Constructor.
+	 * Contruye Gráficamente al Escenario.
 	 */
-	private void metodosGraficos ()
+	public void inicializarGrafica ()
 	{
 		try
 		{
+			this.setBounds (0, 0, largo, alto);
 			this.setIgnoreRepaint(true);
 			this.createBufferStrategy(2);
 			bufferStrategy = getBufferStrategy();
+			this.requestFocus();
 		
 			//Pone transparente el cursor.
 			BufferedImage cursor = new CargadorSprite().crearCombatible(10, 10, Transparency.BITMASK);
@@ -82,8 +85,6 @@ public class Escenario extends Canvas implements Runnable
 			ventanaPrincipal.mensajeError("Error", e.getMessage(), true);
 		}
 	}
-	
-	/*COMANDOS*/
 	
 	/**
 	 * Agrega el Control c usado por el usuario al escenario.
@@ -107,6 +108,9 @@ public class Escenario extends Canvas implements Runnable
 		try
 		{
 			fondo = cargadorSprite.obtenerSprite(fondoNombre, this);
+			/*Graphics2D g = (Graphics2D) fondo.getGraphics();
+			g.setPaint(new TexturePaint(fondo, new Rectangle(0, 0, fondo.getWidth(), fondo.getHeight())));
+			g.fillRect(0, 0, fondo.getWidth(), fondo.getHeight());*/
 		}
 		catch (CargaRecursoException exception)
 		{
@@ -217,13 +221,11 @@ public class Escenario extends Canvas implements Runnable
 	/**
 	 * Método de actualización del Escenario.
 	 */
-	public void run ()
+	public void run () throws EscenarioIncompletoException
 	{
-		while (actualizar)
-		{
-			imprimirBloque(actual);
-			run();
-		}
+		if ((fondo == null) || (actual == null))
+			throw new EscenarioIncompletoException ("El Escenario no ha sido totalmente inicializado.");
+		imprimirBloque(actual);
 	}
 	
 	/**
@@ -232,17 +234,18 @@ public class Escenario extends Canvas implements Runnable
 	 * @param bloqueGrafico Bloque que contiene los sprites a imprimir.
 	 * @exception EscenarioIncompletoException Si el escenario no ha sido totalmente inicializado.
 	 */
-	public void imprimirBloque (BloqueGrafico bloqueGrafico) throws EscenarioIncompletoException
+	public void imprimirBloque (BloqueGrafico bloqueGrafico)
 	{
-		if ((fondo == null) || (actual == null))
-			throw new EscenarioIncompletoException ("El Escenario no ha sido totalmente inicializado.");
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 		imprimirFondo(g);
-		int difPiso = this.getHeight() - bloqueGrafico.getNivelPiso();
+		int difPiso = alto - (bloqueGrafico.getNivelPiso() * medidaPixelCelda);
 		for (SpriteManager sp: bloqueGrafico.sprites)
 		{
-			g.drawImage(sp.getSpriteActual(), (int) (sp.posicion()[0] * medidaPixelCelda) - difPiso
-					                        , (int) (sp.posicion()[1] * medidaPixelCelda) - difPiso, this);
+			if (sp.isEliminar())
+				bloqueGrafico.eliminarSprite(sp);
+			else
+				g.drawImage(sp.getSpriteActual(), ((int) sp.posicion()[1] * medidaPixelCelda)// - difPiso
+					                            , ((int) sp.posicion()[0] * medidaPixelCelda)/* - difPiso*/, this);
 		}
 		bufferStrategy.show();
 	}
@@ -254,9 +257,7 @@ public class Escenario extends Canvas implements Runnable
 	 */
 	private void imprimirFondo (Graphics2D g)
 	{
-		g = (Graphics2D) fondo.getGraphics();
-		g.setPaint( new TexturePaint(fondo, new Rectangle(0, 0, fondo.getWidth(), fondo.getHeight())));
-		g.fillRect(0, 0, fondo.getWidth(), fondo.getHeight());
+		g.drawImage(fondo, 0, 0, largo, alto, 0, 0, fondo.getWidth(), fondo.getHeight(), this);
 	}
 
 }
