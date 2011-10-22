@@ -30,7 +30,7 @@ public class ControlCentral implements Runnable
 {
 	
 	//Variables de Clase
-	public static final int velocidad = 20;
+	public static final int velocidad = 40;
 	
 	//Variables de Instancia
 	private VentanaPrincipal ventanaPrincipal;
@@ -147,15 +147,13 @@ public class ControlCentral implements Runnable
 			escenario.agregarFondo(nivel.fondo(), cargadorSprite);
 			escenario.setBloqueGraficoActual(bloqueGrafico);
 			
-			
-			
 			//Start Thread's
 			Tescenario.start();
 			Tjugador.start();
 			Tgravedad.start();
 			
 			//Control Thread's
-			controlThreads();
+			//controlThreads();
 		/*}
 		catch (Exception exception)
 		{
@@ -168,12 +166,18 @@ public class ControlCentral implements Runnable
 	 */
 	public void controlThreads ()
 	{
+		long startTime = 0;
 		while (true)
 		{
-			Tjugador.run();
-			Tgravedad.run();
-			Tescenario.run();
-			//esperar();
+			startTime = System.currentTimeMillis();
+			try {
+				Tjugador.sleep(1000/velocidad);
+				Tgravedad.sleep(1000/velocidad);
+			    Tescenario.sleep(1000/velocidad);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -182,7 +186,7 @@ public class ControlCentral implements Runnable
 	 * 
 	 * @param t Thread a pausar.
 	 */
-	public void esperar ()
+	public void esperar (Thread t)
 	{
 		long startTime = System.currentTimeMillis();
 		do

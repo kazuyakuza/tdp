@@ -163,6 +163,13 @@ public class SpriteManager implements ImageObserver
 					posX += 0.5;
 				if (posY != Y)
 					posY += 0.5;
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				actualizar(X,Y);
 			}
 		}
 	}

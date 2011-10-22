@@ -225,7 +225,17 @@ public class Escenario extends Canvas implements Runnable
 	{
 		if ((fondo == null) || (actual == null))
 			throw new EscenarioIncompletoException ("El Escenario no ha sido totalmente inicializado.");
-		imprimirBloque(actual);
+		while (actualizar)
+		{
+			imprimirBloque(actual);
+			
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	/**
@@ -244,8 +254,8 @@ public class Escenario extends Canvas implements Runnable
 			if (sp.isEliminar())
 				bloqueGrafico.eliminarSprite(sp);
 			else
-				g.drawImage(sp.getSpriteActual(), ((int) sp.posicion()[1] * medidaPixelCelda)// - difPiso
-					                            , ((int) sp.posicion()[0] * medidaPixelCelda)/* - difPiso*/, this);
+				g.drawImage(sp.getSpriteActual(), ((int) (sp.posicion()[1] * medidaPixelCelda))// - difPiso
+					                            , ((int) (sp.posicion()[0] * medidaPixelCelda))/* - difPiso*/, this);
 		}
 		bufferStrategy.show();
 	}

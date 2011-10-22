@@ -165,8 +165,16 @@ public class Jugador implements Runnable
 	 */
 	public void run ()
 	{
-		if (!(muerto))
+		while (!(muerto))
+		{
 			actuar();
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	/**

@@ -36,10 +36,17 @@ public class Gravedad implements Runnable
 	 */
 	public void run()
 	{	
-		Iterator<Actor> actores = controlCentral.getActores();
-		while (actores.hasNext())
+		while (true)
 		{
-			afectar(actores.next());
+			Iterator<Actor> actores = controlCentral.getActores();
+			while (actores.hasNext())
+				afectar(actores.next());
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
