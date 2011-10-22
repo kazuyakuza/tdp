@@ -1,17 +1,9 @@
 package ProyectoXnoParaEntrega.Grafico.Sprite;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Composite;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Transparency;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.NoninvertibleTransformException;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
@@ -115,10 +107,12 @@ public class SpriteManager implements ImageObserver
 	{
 		int w = image.getWidth();
 		int h = image.getHeight();
-		Graphics2D g = image.createGraphics();
-		g.drawImage(image, 0, 0, w, h, w, 0, 0, h, this);
+		GraphicsConfiguration gc = image.createGraphics().getDeviceConfiguration();
+		BufferedImage imageInv = gc.createCompatibleImage(w, h, Transparency.BITMASK);
+		Graphics g = imageInv.getGraphics();
+        g.drawImage(image, 0, 0, w, h, w, 0, 0, h, this);
 		g.dispose();
-		return image;
+		return imageInv;
 	}
 	
 	/**
