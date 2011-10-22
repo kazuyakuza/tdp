@@ -26,7 +26,10 @@ public abstract class Actor
 	//private SoundManager soundManager;
 	  //Logica
 	protected Celda celdaActual; 
-	protected boolean bajoGravedad; //Estado que representa cuando el Actor puede ser afectado o no por la Gravedad.
+	protected int PG;//Potencia de la Gravedad.
+					 //Si PG>0, el Actor se esta "elevando". Generalmente realizando la acción arriba.
+					 //Si PG=0, el Actor no es afectado por la Gravedad (está sobre un lugar sólido).
+                     //Si PG<0, el Actor es afectado por la Gravedad, y se produce la acción de caer.
 	
 	/*CONSTRUCTOR*/
 	
@@ -41,7 +44,7 @@ public abstract class Actor
 	{
 		spriteManager = new SpriteManager (nombresSprites, cargadorSprite);
 		celdaActual = null;
-		bajoGravedad = false;
+		PG = 0;
 	}
 	
 	/*COMANDOS*/
@@ -94,13 +97,14 @@ public abstract class Actor
 	}
 	
 	/**
-	 * Setea el estado del Actor, si puede ser afectado o no por la Gravedad, a v.
+	 * Si la Gravedad afecta a este Actor, entonces llamará a este método para afectarlo.
 	 * 
-	 * @param v Nuevo estado del Actor bajo los efectos de la Gravedad.
+	 * @param efecto Efecto de la Gravedad sobre este Actor.
 	 */
-	public void setBajoGravedad (boolean v)
+	public void efectoGravedad (int efecto)
 	{
-		bajoGravedad = v;
+		if (!(PG < 0))
+			PG -= efecto;
 	}
 	
 	/*COMANDOS ABSTRACTOS*/
@@ -162,15 +166,14 @@ public abstract class Actor
 		return celdaActual;
 	}
 	
-	/**
-	 * Devuelve el estado del Actor en cuanto a si es afectable a la Gravedad.
+    /**
+	 * Devuelve la Potencia de la Gravedad sobre este Actor.
 	 * 
-	 * @return True:  si el Actor es afectable por la Gravedad.
-	 *         False: caso contrario.
+	 * @return Potencia de la Gravedad sobre este Actor.
 	 */
-	public boolean bajoGravedad ()
+	public int getPG ()
 	{
-		return bajoGravedad;
+		return PG;
 	}
 
 }

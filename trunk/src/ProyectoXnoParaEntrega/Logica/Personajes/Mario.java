@@ -47,9 +47,7 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	 */
 	public void arriba ()
 	{
-		bajoGravedad = false;
 		saltar();
-		bajoGravedad = true;
 	}
 	
 	/**
@@ -105,6 +103,8 @@ public abstract class Mario extends Actor implements PjSeleccionable
 			 celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
 			 if (!celdaInferior.isOcupada())
 				 moverseAcelda(celdaInferior);
+			 else
+				 PG = 0;
 		}
 		catch (Exception e)
 		{

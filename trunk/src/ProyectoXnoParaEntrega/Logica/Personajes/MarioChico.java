@@ -30,6 +30,8 @@ public class MarioChico extends Mario
 	private static int caminando = 2;
 	private static int saltando = 5;
 	
+	private static int potenciaSalto = 4;
+	
 	/*CONSTRUCTORES*/
 	
 	/**
@@ -55,21 +57,25 @@ public class MarioChico extends Mario
 		Celda celdaSuperior = celdaActual;
 		try 
 		{
-			spriteManager.cambiarSprite(saltando);
-			int i=0;
-			boolean terminar = false;
-			while ((!celdaActual.getBloque().esLimite(celdaActual)) && !terminar && i<4)
+			if (PG == 0)
 			{
-				celdaSuperior = celdaActual.getBloque().getSuperior(celdaActual);
-				if (!celdaSuperior.isOcupada())
+				PG = potenciaSalto;
+				spriteManager.cambiarSprite(saltando);
+				int i=0;
+				boolean terminar = false;
+				while ((!celdaActual.getBloque().esLimite(celdaActual)) && !terminar && i<potenciaSalto)
 				{
-					moverseAcelda(celdaSuperior);
-					i++;
+					celdaSuperior = celdaActual.getBloque().getSuperior(celdaActual);
+					if (!celdaSuperior.isOcupada())
+					{
+						moverseAcelda(celdaSuperior);
+						i++;
+					}
+					else
+						terminar = true;				 
 				}
-				else
-					terminar = true;				 
+				spriteManager.cambiarSprite(quieto);
 			}
-			spriteManager.cambiarSprite(quieto);
 		}
 		catch (Exception e)
 		{

@@ -57,7 +57,8 @@ public class Gravedad implements Runnable
 	 */
 	private void afectar (Actor a)
 	{
-		if (a.bajoGravedad())
+		a.efectoGravedad(1);
+		if (a.getPG() == -1)
 		{
 			a.caer();
 			
