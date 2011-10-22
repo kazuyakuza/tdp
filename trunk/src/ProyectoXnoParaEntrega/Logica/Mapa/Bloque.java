@@ -180,12 +180,31 @@ public class Bloque
 	public boolean debajoDelPiso (int[] posicion) throws PosicionIncorrectaException
 	{
 		verificarPosicion (posicion[0], posicion[1]);
-		return (posicion[0] < nivelPiso);
+		return (posicion[0] > nivelPiso);
+	}
+	
+	/**
+	 * Verifica si la Celda pasada por parámetro está en el Límite del Bloque.
+	 * Es decir, la posicion de la Celda coincide con la primera o última fila, o la primera o última columna.
+	 * 
+	 * @param celda Celda a verificar.
+	 * @return True:  la Celda está en el límite.
+	 *         False: caso contrario.
+	 */
+	public boolean esLimite (Celda celda) throws NullPointerException, PosicionIncorrectaException
+	{
+		verificarCelda (celda);
+		return ((celda.posFila == 0) ||
+				(celda.posFila == (getFilas()-1)) ||
+				(celda.posColumna == 0) ||
+				(celda.posColumna == (getColumnas()-1)));
 	}
 	
 	/**
 	 * Verica si la pisición (x,y) es correcta y pertence al piso del Bloque.
 	 * 
+	 * @param fila Fila de la posición a verificar.
+	 * @param columna Columna de la posición a verificar.
 	 * @exception PosicionIncorrectaException Si se ingresa una posición incorrecta.
 	 */
 	private void verificarPosicion (int fila, int columna) throws PosicionIncorrectaException
@@ -197,6 +216,7 @@ public class Bloque
 	/**
 	 * Verifica si la Celda es correcta.
 	 * 
+	 * @param celda Celda a verificar.
 	 * @exception NullPointerException Si la Celda pasada por parámetro es null.
 	 * @exception PosicionIncorrectaException Si se ingresa una Celda de una posición imposible o incorrecta para este Bloque.
 	 */
@@ -236,7 +256,7 @@ public class Bloque
 	{
 		verificarCelda (celda);
 		if (celda.posColumna == getColumnas()-1)
-		    throw new PosicionIncorrectaException ("La última celda de la fila no tiene siguiente.");
+		    throw new PosicionIncorrectaException ("La última celda de una fila no tiene siguiente.");
     	return ABC[celda.posFila][celda.posColumna + 1];			
 	}
 	
@@ -252,7 +272,7 @@ public class Bloque
 	{
 		verificarCelda (celda);
 		if (celda.posFila == 0)
-			throw new BoundaryViolationException ("La primera celda de la fila no tiene superior.");
+			throw new BoundaryViolationException ("La primera celda de una columna no tiene superior.");
 		return ABC[celda.posFila - 1][celda.posColumna];	
 	}
 	
@@ -268,7 +288,7 @@ public class Bloque
 	{
 		verificarCelda (celda);
 		if (celda.posFila == getFilas()-1)
-			throw new PosicionIncorrectaException ("La ultima celda de la fila no tiene inferior.");
+			throw new PosicionIncorrectaException ("La ultima celda de una columna no tiene inferior.");
 		return ABC[celda.posFila + 1][celda.posColumna];	
 	}
 	

@@ -87,7 +87,7 @@ public class SpriteManager implements ImageObserver
 			invertido = false;
 		}
 		
-		spriteActual = sprites[cambio];
+		spriteActual = sprites[Math.abs(cambio)];
 		
 		if (cambio < 0)
 		{
@@ -160,9 +160,15 @@ public class SpriteManager implements ImageObserver
 			else
 			{
 				if (posX != X)
-					posX += 0.5;
+					if (posX < X)
+						posX += 0.5;
+					else
+						posX -= 0.5;
 				if (posY != Y)
-					posY += 0.5;
+					if (posY < Y)
+						posY += 0.5;
+					else
+						posY -= 0.5;
 				try {
 					Thread.sleep(200);
 				} catch (InterruptedException e) {

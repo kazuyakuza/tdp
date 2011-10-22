@@ -58,7 +58,7 @@ public class MarioChico extends Mario
 			spriteManager.cambiarSprite(saltando);
 			int i=0;
 			boolean terminar = false;
-			while (!terminar || i<4)
+			while ((!celdaActual.getBloque().esLimite(celdaActual)) && !terminar && i<4)
 			{
 				celdaSuperior = celdaActual.getBloque().getSuperior(celdaActual);
 				if (!celdaSuperior.isOcupada())
@@ -89,11 +89,14 @@ public class MarioChico extends Mario
 		Celda celdaAnterior = celdaActual;
 		try 
 		{
-			spriteManager.cambiarSprite(-caminando);
-			celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
-			if (!celdaAnterior.isOcupada())
-				moverseAcelda(celdaAnterior);
-			spriteManager.cambiarSprite(quieto);
+			if (!celdaActual.getBloque().esLimite(celdaActual))
+			{
+				spriteManager.cambiarSprite(-caminando);
+				celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
+				if (!celdaAnterior.isOcupada())
+					moverseAcelda(celdaAnterior);
+				spriteManager.cambiarSprite(-quieto);
+			}
 		}
 		catch (Exception e)
 		{
@@ -113,11 +116,14 @@ public class MarioChico extends Mario
 		Celda celdaSiguiente = celdaActual;
 		try 
 		{
-			spriteManager.cambiarSprite(caminando);
-			celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
-			if (!celdaSiguiente.isOcupada())
-				moverseAcelda(celdaSiguiente);
-			spriteManager.cambiarSprite(quieto);
+			if (!celdaActual.getBloque().esLimite(celdaActual))
+			{
+				spriteManager.cambiarSprite(caminando);
+				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
+				if (!celdaSiguiente.isOcupada())
+					moverseAcelda(celdaSiguiente);
+				spriteManager.cambiarSprite(quieto);
+			}
 		}
 		catch (Exception e)
 		{
