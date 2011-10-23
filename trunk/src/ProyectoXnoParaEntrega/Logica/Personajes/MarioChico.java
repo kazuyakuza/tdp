@@ -120,8 +120,8 @@ public class MarioChico extends Mario
 	public void moverseAderecha () throws AccionActorException
 	{
 		Celda celdaSiguiente = celdaActual;
-		try 
-		{
+		/*try 
+		{*/
 			if (!celdaActual.getBloque().esLimite(celdaActual))
 			{
 				spriteManager.cambiarSprite(caminando);
@@ -130,13 +130,13 @@ public class MarioChico extends Mario
 					moverseAcelda(celdaSiguiente);
 				spriteManager.cambiarSprite(quieto);
 			}
-		}
+		/*}
 		catch (Exception e)
 		{
 			throw new AccionActorException ("Imposible realizar la acción moverAderecha a/desde Celda de posición (" + celdaSiguiente.getPosFila() + "," + celdaSiguiente.getPosColumna() + ")." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e.getMessage());
-		}
+		}*/
 	}
 	
 	/**
@@ -192,8 +192,8 @@ public class MarioChico extends Mario
 	 */
 	public void morir ()
 	{
-		super.morir();
 		spriteManager.cambiarSprite(muerto);
+		super.morir();
 	}
 	
 }

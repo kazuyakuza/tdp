@@ -14,6 +14,7 @@ public class Gravedad implements Runnable
 	
 	//Atributos de Instancia
 	protected ControlCentral controlCentral;
+	protected boolean afectar;
 	
 	/*CONTRUCTOR*/
 	
@@ -25,6 +26,17 @@ public class Gravedad implements Runnable
 	public Gravedad (ControlCentral cc)
 	{
 		controlCentral = cc;
+		afectar = true;
+	}
+	
+	/*COMANDOS*/
+	
+	/**
+	 * 
+	 */
+	public void setAfectar (boolean v)
+	{
+		afectar = v;
 	}
 	
 	/*Métodos en Ejecución*/
@@ -36,7 +48,7 @@ public class Gravedad implements Runnable
 	 */
 	public void run()
 	{	
-		while (true)
+		while (afectar)
 		{
 			Iterator<Actor> actores = controlCentral.getActores();
 			while (actores.hasNext())

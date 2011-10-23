@@ -15,7 +15,7 @@ public class Jugador implements Runnable
 {
 	
 	//Variables de Clase
-	private static int vidasInicial = 5;
+	private static int vidasInicial = 1;
 	private static int maxMonedas = 100;
 	
 	//Variables de Instancia
@@ -79,7 +79,10 @@ public class Jugador implements Runnable
 	{
 		vidas--;
 		if (vidas == 0)
+		{
 			muerto = true;
+			controlCentral.perderNivel();
+		}
 		else
 			controlCentral.reiniciarNivel ();
 			

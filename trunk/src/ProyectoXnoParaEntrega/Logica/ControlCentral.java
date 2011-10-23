@@ -7,6 +7,7 @@ import ProyectoXnoParaEntrega.Grafico.Escenario;
 import ProyectoXnoParaEntrega.Grafico.VentanaPrincipal;
 import ProyectoXnoParaEntrega.Grafico.Sprite.CargadorSprite;
 import ProyectoXnoParaEntrega.Librerias.TDALista.ListaPositionSimple;
+import ProyectoXnoParaEntrega.Librerias.TDALista.Position;
 import ProyectoXnoParaEntrega.Librerias.TDALista.PositionList;
 import ProyectoXnoParaEntrega.Logica.Controles.Control;
 import ProyectoXnoParaEntrega.Logica.Controles.Teclado;
@@ -214,6 +215,14 @@ public class ControlCentral implements Runnable
 	}
 	
 	/**
+	 * 
+	 */
+	public void ganarNivel ()
+	{
+		
+	}
+	
+	/**
 	 * Reinicia el nivel a una posición inicial.
 	 */
 	public void reiniciarNivel ()
@@ -224,9 +233,22 @@ public class ControlCentral implements Runnable
 	/**
 	 * 
 	 */
-	public void ganarNivel ()
+	public void perderNivel ()
 	{
+		Position<Actor> p = actores.first();
+		while (p.element() != jugador.personaje())
+			p = actores.next(p);
+		actores.remove(p);
 		
+		gravedad.setAfectar(false);
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		escenario.setActualizar(false);
+		ventanaPrincipal.mensajeError("Perdiste", "Perdiste", true);
 	}
 
 }

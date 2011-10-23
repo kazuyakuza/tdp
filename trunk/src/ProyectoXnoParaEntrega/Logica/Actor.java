@@ -80,7 +80,9 @@ public abstract class Actor
 	public void moverseAcelda (Celda c)
 	{
 		producirColisiones(c);
+		celdaActual.sacarActor(this);
 		celdaActual = c;
+		celdaActual.agregarActor(this);
 		spriteManager.actualizar(celdaActual.getPosicion());
 	}
 	
@@ -137,11 +139,12 @@ public abstract class Actor
 	 */
 	public void morir()
 	{
-		spriteManager.setEliminar();
+		/*spriteManager.setEliminar();
 		celdaActual.sacarActor(this);
 		
 		spriteManager = null;
 		celdaActual = null;
+		PG = 0;*/
 	}
 	
 	/*CONSULTAS*/
