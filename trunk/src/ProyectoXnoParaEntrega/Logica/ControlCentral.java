@@ -135,12 +135,12 @@ public class ControlCentral implements Runnable
 		//try
 		//{
 			//Inicialización Lógica.
-			Actor llegada = new Llegada(this, cargadorSprite);
-			actores = nivel.inicializarNivel((Actor) jugador.personaje, llegada, cargadorSprite);
+			actores = nivel.inicializarNivel((Actor) jugador.personaje, this, cargadorSprite);
 			
 			//Inicialización Gráfica.
 			Bloque bloqueActual = nivel.getBloqueActual();
 			BloqueGrafico bloqueGrafico = new BloqueGrafico (bloqueActual.getFilas(), bloqueActual.getColumnas());
+			//Agregando Piso
 			bloqueGrafico.setNivelPiso(bloqueActual.getNivelPiso());
 			for (Actor a: actores)
 				bloqueGrafico.agregarSprite(a.spriteManager);

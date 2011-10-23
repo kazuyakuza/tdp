@@ -8,6 +8,8 @@ import ProyectoXnoParaEntrega.Librerias.TDALista.ListaPositionSimple;
 import ProyectoXnoParaEntrega.Librerias.TDALista.Position;
 import ProyectoXnoParaEntrega.Librerias.TDALista.PositionList;
 import ProyectoXnoParaEntrega.Logica.Actor;
+import ProyectoXnoParaEntrega.Logica.NoPersonajes.Estructura;
+import ProyectoXnoParaEntrega.Logica.NoPersonajes.Piso;
 
 /**
  * Representa un espacio en el mapa del Juego.
@@ -68,6 +70,23 @@ public class Celda
 			throw new AccionActorException("Imposible agregar Actor a la celda de posición (" + posFila + "," + posColumna + ")." + "\n"
 					                     + "La celda está totalmente ocupada.");
 		actores.addLast(actor);
+	}
+	
+	/**
+	 * Agrega Estructura a la Celda.
+	 * 
+	 * @param actor Estructura a agregar.
+	 * @exception NullPointerException Si se ingresa un Actor igual a null.
+	 * @exception AccionActorException Si se intenta agregar Estructura a una Celda no totalmente ocupada.
+	 */
+	public void agregarEstructura (Estructura estructura) throws NullPointerException, AccionActorException
+	{
+		if (estructura == null)
+			throw new NullPointerException ("El Actor que está intentando agregar a la Celda es null.");
+		if (!totalmenteOcupada)
+			throw new AccionActorException("Imposible agregar Piso a la celda de posición (" + posFila + "," + posColumna + ")." + "\n"
+					                     + "La celda no está totalmente ocupada.");
+		actores.addLast((Actor) estructura);
 	}
 	
 	/**

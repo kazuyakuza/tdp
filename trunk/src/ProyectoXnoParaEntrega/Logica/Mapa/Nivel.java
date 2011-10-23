@@ -5,6 +5,8 @@ import ProyectoXnoParaEntrega.Grafico.Sprite.CargadorSprite;
 import ProyectoXnoParaEntrega.Librerias.TDALista.ListaPositionSimple;
 import ProyectoXnoParaEntrega.Librerias.TDALista.PositionList;
 import ProyectoXnoParaEntrega.Logica.Actor;
+import ProyectoXnoParaEntrega.Logica.ControlCentral;
+import ProyectoXnoParaEntrega.Logica.NoPersonajes.Piso;
 import ProyectoXnoParaEntrega.Logica.NoPersonajes.Especiales.Llegada;
 import ProyectoXnoParaEntrega.Logica.NoPersonajes.Plataformas.Irrompible;
 
@@ -53,7 +55,7 @@ public class Nivel
 	 * @return Lista de Actores del Nivel creado.
 	 * @exception InicioNivelException Si se produce un error al Iniciar el Nivel.
 	 */
-	public PositionList<Actor> inicializarNivel (Actor actorJugador, Actor llegada, CargadorSprite cargadorSprite) throws InicioNivelException
+	public PositionList<Actor> inicializarNivel (Actor actorJugador, ControlCentral cc, CargadorSprite cargadorSprite) throws InicioNivelException
 	{
 		PositionList<Actor> listaActores = null;
 		//try
@@ -62,7 +64,7 @@ public class Nivel
 			{
 				case 1:
 					   {
-						   listaActores = nivel1(actorJugador, llegada, cargadorSprite);
+						   listaActores = nivel1(actorJugador, cc, cargadorSprite);
 						   break;
 					   }
 				default:
@@ -87,36 +89,62 @@ public class Nivel
 	 * @param cargadorSprite Clase encargada de cargar las imagenes de los Actores.
 	 * @return Lista de Actores del Nivel creado.
 	 */
-	private PositionList<Actor> nivel1 (Actor actor, Actor llegada, CargadorSprite cargadorSprite)
+	private PositionList<Actor> nivel1 (Actor actor, ControlCentral cc, CargadorSprite cargadorSprite)
 	{
+		//Creación de la lista de Actores que estarán en el Nivel.
+		PositionList<Actor> listaActores = new ListaPositionSimple<Actor> ();
+		
 		//Creación Bloque 1 del Nivel. Que es el Bloque de inicio del Nivel.
 		bloqueActual = new Bloque(8, 10);//Nivel de Piso default.
+		//Agregación Piso
+		int aux = 0;
+		while (aux <= 9)
+		{
+			if (aux != 6)
+			{
+				Piso piso = new Piso(cargadorSprite);
+				bloqueActual.ABC[6][aux].agregarEstructura(piso);
+				piso.setCeldaActual(bloqueActual.ABC[6][aux]);
+				listaActores.addFirst(piso);
+			}
+			aux++;
+		}
 		//Agregación Actor del Jugador.
 		bloqueActual.ABC[5][1].agregarActor(actor);
 		actor.setCeldaActual(bloqueActual.ABC[5][1]);
+		listaActores.addFirst(actor);
 		//Agregación Actores no Personjes.
-		Actor plataforma = new Irrompible (cargadorSprite);
-		bloqueActual.ABC[3][3].agregarActor(plataforma);//Plataforma irrompible
+		Irrompible plataforma = new Irrompible (cargadorSprite);
+		bloqueActual.ABC[3][3].setOcupada(true);
+		bloqueActual.ABC[3][3].agregarEstructura(plataforma);//Plataforma irrompible
 		plataforma.setCeldaActual(bloqueActual.ABC[3][3]);
-		bloqueActual.ABC[6][6].setOcupada(false);//Vacio en el Piso.
-		bloqueActual.ABC[7][5].setOcupada(true);//Piso al costado del Vacio.
-		bloqueActual.ABC[7][7].setOcupada(true);//Piso al costado del Vacio.
+		listaActores.addFirst(plataforma);
+		//Vacio en el Piso.
+		bloqueActual.ABC[6][6].setOcupada(false);
+		//Piso al costado del Vacio.
+		bloqueActual.ABC[7][5].setOcupada(true);
+		Piso piso = new Piso(cargadorSprite);
+		bloqueActual.ABC[7][5].agregarEstructura(piso);
+		piso.setCeldaActual(bloqueActual.ABC[7][5]);
+		listaActores.addFirst(piso);
+		//Piso al costado del Vacio.
+		bloqueActual.ABC[7][7].setOcupada(true);
+		Piso piso2 = new Piso(cargadorSprite);
+		bloqueActual.ABC[7][7].agregarEstructura(piso2);
+		piso2.setCeldaActual(bloqueActual.ABC[7][7]);
+		listaActores.addFirst(piso2);
 		//Agregación Principio Mapa
 		bloqueActual.setColumnaOcupada(0, true);
 		//Agregación Llegada
-		/*bloqueActual.ABC[0][9].agregarActor(llegada);
-		bloqueActual.ABC[1][9].agregarActor(llegada);
-		bloqueActual.ABC[2][9].agregarActor(llegada);
-		bloqueActual.ABC[3][9].agregarActor(llegada);
-		bloqueActual.ABC[4][9].agregarActor(llegada);*/
-		bloqueActual.ABC[5][9].agregarActor(llegada);
-		llegada.setCeldaActual(bloqueActual.ABC[5][9]);
-		
-		//Creación de la lista de Actores que estarán en el Nivel y agregación de los Actores a la misma.
-		PositionList<Actor> listaActores = new ListaPositionSimple<Actor> ();
-		listaActores.addFirst(actor);
-		listaActores.addFirst(plataforma);
-		listaActores.addFirst(llegada);
+		aux = 0;
+		while (aux <= 5)
+		{
+			Actor llegada = new Llegada(cc, cargadorSprite);
+			bloqueActual.ABC[aux][9].agregarActor(llegada);
+			llegada.setCeldaActual(bloqueActual.ABC[aux][9]);
+			listaActores.addFirst(llegada);
+			aux++;
+		}
 		
 		fondo = "Fondo1.png";
 		

@@ -71,7 +71,7 @@ public class CargadorSprite extends CargadorRecurso
 		}
 		catch (Exception e)
 		{
-			throw new CargaRecursoException ("Error al Carga un Recurso Imagen: " + e.getMessage());
+			throw new CargaRecursoException ("Error al Cargar un Recurso Imagen: " + e.getMessage());
 		}
 	}
 	

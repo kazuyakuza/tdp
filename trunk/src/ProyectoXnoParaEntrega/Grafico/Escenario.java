@@ -4,6 +4,8 @@ import java.awt.Canvas;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.TexturePaint;
 import java.awt.Toolkit;
 import java.awt.Transparency;
 import java.awt.geom.AffineTransform;
@@ -111,9 +113,9 @@ public class Escenario extends Canvas implements Runnable
 		try
 		{
 			fondo = cargadorSprite.obtenerSprite(fondoNombre, this);
-			/*Graphics2D g = (Graphics2D) fondo.getGraphics();
+			Graphics2D g = (Graphics2D) fondo.getGraphics();
 			g.setPaint(new TexturePaint(fondo, new Rectangle(0, 0, fondo.getWidth(), fondo.getHeight())));
-			g.fillRect(0, 0, fondo.getWidth(), fondo.getHeight());*/
+			g.fillRect(0, 0, fondo.getWidth(), fondo.getHeight());
 		}
 		catch (CargaRecursoException exception)
 		{

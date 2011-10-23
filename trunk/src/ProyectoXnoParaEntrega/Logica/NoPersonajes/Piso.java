@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Logica.NoPersonajes.Plataformas;
+package ProyectoXnoParaEntrega.Logica.NoPersonajes;
 
 import ProyectoXnoParaEntrega.Excepciones.AccionActorException;
 import ProyectoXnoParaEntrega.Excepciones.ColisionException;
@@ -6,26 +6,26 @@ import ProyectoXnoParaEntrega.Grafico.Sprite.CargadorSprite;
 import ProyectoXnoParaEntrega.Logica.Actor;
 
 /**
- * Representa a una Plataforma Irrompible en el Juego.
+ * Representa al Piso en el Juego.
  * 
  * Proyecto X
  * 
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class Irrompible extends Actor implements Plataforma
+public class Piso extends Actor implements Estructura
 {
 	
 	//Variables de Clase
-	private static final String dirRecursos = "Estructuras/Plataformas/";
-	private static final String [] nombresSprites = {dirRecursos + "Empty-Block.gif"};
+	private static final String dirRecursos = "Estructuras/";
+	private static final String [] nombresSprites = {dirRecursos + "Piso.png"};
 
 	/**
 	 * Crea una Plataforma Irrompible.
 	 * 
 	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public Irrompible(CargadorSprite cargadorSprite)
+	public Piso(CargadorSprite cargadorSprite)
 	{
 		super(nombresSprites, cargadorSprite);
 	}
