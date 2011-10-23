@@ -49,38 +49,31 @@ public class Menu extends JPanel
 	 * Inicializa la GUI del Menú.
 	 */
 	private void initGUI ()
-	{
-		//try
-		//{
-			this.setPreferredSize(new Dimension(largo, alto));
-			this.setLayout(null);
-			this.setSize(largo, alto);
-			{
-				NuevoJuego = new JButton();
-				this.add(NuevoJuego);
-				NuevoJuego.setText("Nuevo Juego");
-				NuevoJuego.setBounds((largo/2-botonLargo/2), (alto/2-botonAlto/2-45), botonLargo, botonAlto);
-				NuevoJuego.addActionListener(listenerNuevoJuego());
-			}
-			{
-				Info = new JButton();
-				this.add(Info);
-				Info.setText("Info");
-				Info.setBounds((largo/2-botonLargo/2), (alto/2-botonAlto/2), botonLargo, botonAlto);
-				Info.addActionListener(listenerInfo());
-			}
-			{
-				Salir = new JButton();
-				this.add(Salir);
-				Salir.setText("Salir");
-				Salir.setBounds((largo/2-botonLargo/2), (alto/2-botonAlto/2+45), botonLargo, botonAlto);
-				Salir.addActionListener(listenerSalir());
-			}
-		/*}
-		catch (Exception e)
+	{		
+		this.setPreferredSize(new Dimension(largo, alto));
+		this.setLayout(null);
+		this.setSize(largo, alto);
 		{
-			ventanaPrincipal.mensajeError("Error", e.getMessage(), true);
-		}*/
+			NuevoJuego = new JButton();
+			this.add(NuevoJuego);
+			NuevoJuego.setText("Nuevo Juego");
+			NuevoJuego.setBounds((largo/2-botonLargo/2), (alto/2-botonAlto/2-45), botonLargo, botonAlto);
+			NuevoJuego.addActionListener(listenerNuevoJuego());
+		}
+		{
+			Info = new JButton();
+			this.add(Info);
+			Info.setText("Info");
+			Info.setBounds((largo/2-botonLargo/2), (alto/2-botonAlto/2), botonLargo, botonAlto);
+			Info.addActionListener(listenerInfo());
+		}
+		{
+			Salir = new JButton();
+			this.add(Salir);
+			Salir.setText("Salir");
+			Salir.setBounds((largo/2-botonLargo/2), (alto/2-botonAlto/2+45), botonLargo, botonAlto);
+			Salir.addActionListener(listenerSalir());
+		}		
 	}
 	
 	/**
@@ -106,16 +99,8 @@ public class Menu extends JPanel
             //Método del ActionListener
             public void actionPerformed (ActionEvent event)
             {
-            	//try
-            	//{
-            		ventanaPrincipal.pedirDatosJugador();
-            		ventanaPrincipal.eliminarMenu();
-            	/*}
-            	catch (Exception e)
-            	{
-            		ventanaPrincipal.mensajeError("ERROR", e.getMessage(), true);
-        		}*/
-            	
+            	ventanaPrincipal.pedirDatosJugador();
+            	ventanaPrincipal.eliminarMenu();            	
             }
            };
 	}

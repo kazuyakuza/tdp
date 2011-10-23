@@ -57,41 +57,34 @@ public class PedirDatosJugador extends JPanel
 	 */
 	private void initGUI ()
 	{
-		//try
-		//{
-			this.setPreferredSize(new Dimension(largo, alto));
-			this.setLayout(null);
-			this.setSize(largo, alto);
-			{
-				jLabel = new JLabel();
-				this.add(jLabel);
-				jLabel.setText("Ingrese su Nombre");
-				jLabel.setBounds((largo/2-130), (alto/2-50), 120, 30);
-			}
-			{
-				NombreJugador = new JTextField();
-				this.add(NombreJugador);
-				NombreJugador.setBounds((largo/2+10), (alto/2-50), 200, 30);
-			}
-			{
-				EmpezarJuego = new JButton();
-				this.add(EmpezarJuego);
-				EmpezarJuego.setText("Empezar Juego");
-				EmpezarJuego.setBounds((largo/2-botonLargo-10), (alto/2-botonAlto+20), botonLargo, botonAlto);
-				EmpezarJuego.addActionListener(listenerEmpezarJuego());
-			}
-			{
-				Cancelar = new JButton();
-				this.add(Cancelar);
-				Cancelar.setText("Cancelar");
-				Cancelar.setBounds((largo/2+10), (alto/2-botonAlto+20), botonLargo, botonAlto);
-				Cancelar.addActionListener(listenerCancelar());
-			}
-		/*}
-		catch (Exception e)
+		this.setPreferredSize(new Dimension(largo, alto));
+		this.setLayout(null);
+		this.setSize(largo, alto);
 		{
-			ventanaPrincipal.mensajeError("Error", e.getMessage(), true);
-		}*/
+			jLabel = new JLabel();
+			this.add(jLabel);
+			jLabel.setText("Ingrese su Nombre");
+			jLabel.setBounds((largo/2-130), (alto/2-50), 120, 30);
+		}
+		{
+			NombreJugador = new JTextField();
+			this.add(NombreJugador);
+			NombreJugador.setBounds((largo/2+10), (alto/2-50), 200, 30);
+		}
+		{
+			EmpezarJuego = new JButton();
+			this.add(EmpezarJuego);
+			EmpezarJuego.setText("Empezar Juego");
+			EmpezarJuego.setBounds((largo/2-botonLargo-10), (alto/2-botonAlto+20), botonLargo, botonAlto);
+			EmpezarJuego.addActionListener(listenerEmpezarJuego());
+		}
+		{
+			Cancelar = new JButton();
+			this.add(Cancelar);
+			Cancelar.setText("Cancelar");
+			Cancelar.setBounds((largo/2+10), (alto/2-botonAlto+20), botonLargo, botonAlto);
+			Cancelar.addActionListener(listenerCancelar());
+		}		
 	}
 	
 	/**
@@ -117,18 +110,8 @@ public class PedirDatosJugador extends JPanel
             //Método del ActionListener
             public void actionPerformed (ActionEvent event)
             {
-            	//try
-            	//{
-            		/*if (NombreJugador.getText().equals(""))
-            			throw new StringEmptyException("Falta Ingresar Nombre.");*/
-            		ventanaPrincipal.nuevoJuego(NombreJugador.getText());
-            		ventanaPrincipal.eliminarPedirDatosJugador();
-            	/*}
-            	catch (Exception e)
-            	{
-            		ventanaPrincipal.mensajeError("ERROR", e.getMessage(), true);
-        		}*/
-            	
+            	ventanaPrincipal.nuevoJuego(NombreJugador.getText());
+            	ventanaPrincipal.eliminarPedirDatosJugador();            	
             }
            };
 	}

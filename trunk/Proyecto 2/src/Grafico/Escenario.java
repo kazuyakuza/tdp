@@ -237,8 +237,7 @@ public class Escenario extends Canvas implements Runnable
 			
 			try {
 				Thread.sleep(200);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+			} catch (InterruptedException e) {				
 				e.printStackTrace();
 			}
 		}
@@ -260,8 +259,8 @@ public class Escenario extends Canvas implements Runnable
 			if (sp.isEliminar())
 				bloqueGrafico.eliminarSprite(sp);
 			else
-				g.drawImage(sp.getSpriteActual(), ((int) (sp.posicion()[1] * medidaPixelCelda))// - difPiso
-					                            , ((int) (sp.posicion()[0] * medidaPixelCelda))/* - difPiso*/, this);
+				g.drawImage(sp.getSpriteActual(), ((int) (sp.posicion()[1] * medidaPixelCelda))
+					                            , ((int) (sp.posicion()[0] * medidaPixelCelda)), this);
 		}
 		bufferStrategy.show();
 	}

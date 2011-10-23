@@ -58,27 +58,18 @@ public class Nivel
 	public PositionList<Actor> inicializarNivel (Actor actorJugador, ControlCentral cc, CargadorSprite cargadorSprite) throws InicioNivelException
 	{
 		PositionList<Actor> listaActores = null;
-		//try
-		//{
-			switch (id)
-			{
-				case 1:
-					   {
-						   listaActores = nivel1(actorJugador, cc, cargadorSprite);
-						   break;
-					   }
-				default:
-				{
-					throw new InicioNivelException ("El Nivel indicado no existe.");
-				}
-			}
-		/*}
-		catch (Exception e)
+		switch (id)
 		{
-			throw new InicioNivelException ("Error al Inicializar el Nivel " + id + "." + "\n" +
-					                        "Detalles del Error: " + "\n" +
-					                        e.getMessage());
-		}*/
+			case 1:
+				   {
+					   listaActores = nivel1(actorJugador, cc, cargadorSprite);
+					   break;
+				   }
+			default:
+				   {
+					   throw new InicioNivelException ("El Nivel indicado no existe.");
+				   }
+		}		
 		return listaActores;
 	}
 	
@@ -116,7 +107,7 @@ public class Nivel
 		//Agregación Actores no Personjes.
 		Irrompible plataforma = new Irrompible (cargadorSprite);
 		bloqueActual.ABC[3][3].setOcupada(true);
-		bloqueActual.ABC[3][3].agregarEstructura(plataforma);//Plataforma irrompible
+		bloqueActual.ABC[3][3].agregarEstructura(plataforma);
 		plataforma.setCeldaActual(bloqueActual.ABC[3][3]);
 		listaActores.addFirst(plataforma);
 		//Vacio en el Piso.

@@ -56,39 +56,32 @@ public class ControlCentral implements Runnable
 	 */
 	public ControlCentral (VentanaPrincipal ventana, String nJ, Escenario e)
 	{
-		//try
-		//{
-			Tactual = null;
-			ventanaPrincipal = ventana;
-			escenario = e;
-			
-			cargadorSprite = new CargadorSprite ();
+		Tactual = null;
+		ventanaPrincipal = ventana;
+		escenario = e;
 		
-			Mario PJ = new MarioChico (cargadorSprite);
-			Control c = new Teclado();
-			jugador = new Jugador (nJ, PJ, c, this);
-			PJ.setJugador(jugador);
+		cargadorSprite = new CargadorSprite ();
+		
+		Mario PJ = new MarioChico (cargadorSprite);
+		Control c = new Teclado();
+		jugador = new Jugador (nJ, PJ, c, this);
+		PJ.setJugador(jugador);
 			
-			actores = null;
+		actores = null;
+		
+		nivel = new Nivel(1);
+		
+		gravedad = new Gravedad(this);
 			
-			nivel = new Nivel(1);
+		ventanaPrincipal.agregarEscenario(e);
+		escenario.inicializarGrafica();
+		escenario.agregarControl(c);
+		ventanaPrincipal.repaint();
 			
-			gravedad = new Gravedad(this);
-			
-			ventanaPrincipal.agregarEscenario(e);
-			escenario.inicializarGrafica();
-			escenario.agregarControl(c);
-			ventanaPrincipal.repaint();
-			
-			//Crear y Asignar Threads
-			Tescenario = new Thread(escenario);
-			Tjugador = new Thread (jugador);
-			Tgravedad = new Thread (gravedad);
-		/*}
-		catch (Exception exception)
-		{
-			ventanaPrincipal.mensajeError("Error", exception.getMessage(), true);
-		}*/
+		//Crear y Asignar Threads
+		Tescenario = new Thread(escenario);
+		Tjugador = new Thread (jugador);
+		Tgravedad = new Thread (gravedad);		
 	}
 	
 	/*COMANDOS*/
@@ -125,8 +118,7 @@ public class ControlCentral implements Runnable
 	{
 		PositionList<Actor> a = new ListaPositionSimple<Actor> ();
 		a.addFirst((Actor) jugador.personaje());
-		return a.iterator();
-		//return actores.iterator();
+		return a.iterator();		
 	}
 	
 	/*Métodos en Ejecución*/
@@ -136,69 +128,24 @@ public class ControlCentral implements Runnable
 	 */
 	public void run ()
 	{
-		//try
-		//{
-			//Inicialización Lógica.
-			actores = nivel.inicializarNivel((Actor) jugador.personaje, this, cargadorSprite);
+		actores = nivel.inicializarNivel((Actor) jugador.personaje, this, cargadorSprite);
 			
-			//Inicialización Gráfica.
-			Bloque bloqueActual = nivel.getBloqueActual();
-			BloqueGrafico bloqueGrafico = new BloqueGrafico (bloqueActual.getFilas(), bloqueActual.getColumnas());
-			//Agregando Piso
-			bloqueGrafico.setNivelPiso(bloqueActual.getNivelPiso());
-			for (Actor a: actores)
-				bloqueGrafico.agregarSprite(a.spriteManager);
-			escenario.agregarFondo(nivel.fondo(), cargadorSprite);
-			escenario.setBloqueGraficoActual(bloqueGrafico);
+		//Inicialización Gráfica.
+		Bloque bloqueActual = nivel.getBloqueActual();
+		BloqueGrafico bloqueGrafico = new BloqueGrafico (bloqueActual.getFilas(), bloqueActual.getColumnas());
+		//Agregando Piso
+		bloqueGrafico.setNivelPiso(bloqueActual.getNivelPiso());
+		for (Actor a: actores)
+			bloqueGrafico.agregarSprite(a.spriteManager);
+		escenario.agregarFondo(nivel.fondo(), cargadorSprite);
+		escenario.setBloqueGraficoActual(bloqueGrafico);
 			
-			//Start Thread's
-			Tescenario.start();
-			Tjugador.start();
-			Tgravedad.start();
-			
-			//Control Thread's
-			//controlThreads();
-		/*}
-		catch (Exception exception)
-		{
-			ventanaPrincipal.mensajeError("Error", exception.getMessage(), true);
-		}*/
+		//Start Thread's
+		Tescenario.start();
+		Tjugador.start();
+		Tgravedad.start();		
 	}
-	
-	/**
-	 * 
-	 */
-	/*public void controlThreads ()
-	{
-		long startTime = 0;
-		while (true)
-		{
-			startTime = System.currentTimeMillis();
-			try {
-				Tjugador.sleep(1000/velocidad);
-				Tgravedad.sleep(1000/velocidad);
-			    Tescenario.sleep(1000/velocidad);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}*/
-	
-	/**
-	 * Inidica el tiempo de espera de actualización del Thread ingresado.
-	 * 
-	 * @param t Thread a pausar.
-	 */
-	/*public void esperar (Thread t)
-	{
-		long startTime = System.currentTimeMillis();
-		do
-		{
-			Thread.yield();
-		}
-		while (System.currentTimeMillis()-startTime < (1000/velocidad));
-	}*/
-	
+			
 	/**
 	 * Acción ESC (escape) del Juego.
 	 * 
@@ -259,8 +206,7 @@ public class ControlCentral implements Runnable
 		gravedad.setAfectar(false);
 		try {
 			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+		} catch (InterruptedException e) {			
 			e.printStackTrace();
 		}
 		escenario.setActualizar(false);

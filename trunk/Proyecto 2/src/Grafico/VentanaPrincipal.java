@@ -23,8 +23,8 @@ public class VentanaPrincipal extends JFrame
 {
 	
 	//Variables de Clase
-	private int largo = (320 + 6);//640;
-	private int alto = (256 + 26);//480;
+	private int largo = (320 + 6);
+	private int alto = (256 + 26);
 	
 	private String version = "Versión 0.1";
 	private String[] autores = {"Javier Eduardo Barrocal","Pablo Isaias Chacar"};
@@ -66,19 +66,12 @@ public class VentanaPrincipal extends JFrame
 	 */
 	private void initGUI ()
 	{
-		//try
-		//{
-			setPreferredSize(new Dimension(largo, alto));
-			{
-				mostrarMenu();
-			}
-			setSize(largo, alto);
-			pack();
-		/*}
-		catch (Exception e)
+		setPreferredSize(new Dimension(largo, alto));
 		{
-		    mensajeError("ERROR", e.getMessage(), true);
-		}*/
+			mostrarMenu();
+		}
+		setSize(largo, alto);
+		pack();		
 	}
 	
 	/**

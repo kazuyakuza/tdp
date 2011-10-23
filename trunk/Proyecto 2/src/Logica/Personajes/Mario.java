@@ -97,21 +97,12 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	 */
 	public void caer () throws AccionActorException
 	{
-		Celda celdaInferior = celdaActual;
-		/*try 
-		{*/			 
-			 celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
-			 if (!celdaInferior.isOcupada())
-				 moverseAcelda(celdaInferior);
-			 else
-				 PG = 0;
-		/*}
-		catch (Exception e)
-		{
-			throw new AccionActorException ("Imposible realizar la acción caer a/desde Celda de posición (" + celdaInferior.getPosFila() + "," + celdaInferior.getPosColumna() + ")." + "\n" +
-					                        "Detalles del error:" + "\n" +
-					                        e.getMessage());
-		}*/
+		Celda celdaInferior = celdaActual;				 
+		celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
+		if (!celdaInferior.isOcupada())
+			moverseAcelda(celdaInferior);
+		else
+			PG = 0;		
 	}
 	
 	/**

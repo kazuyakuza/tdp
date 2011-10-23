@@ -50,14 +50,7 @@ public class SpriteManager implements ImageObserver
 	{
 		sprites = new BufferedImage[nombresSprites.length];
 		for (int i=0; i<nombresSprites.length; i++)
-			//try
-			//{
-				sprites[i] = cargadorSprite.obtenerSprite(nombresSprites[i], this);
-			/*}
-			catch (CargaRecursoException exception)
-			{
-				throw new CargaRecursoException (exception.getMessage() + "\n" + "Error al cargar el sprite " + nombresSprites[i] + ".");
-			}*/
+			sprites[i] = cargadorSprite.obtenerSprite(nombresSprites[i], this);			
 		spriteActual = sprites[0];
 		posX = posY = -1;
 		invertido = false;
@@ -139,7 +132,7 @@ public class SpriteManager implements ImageObserver
 			throw new PosicionIncorrectaException ("Posición ingresada incorrecta." + "\n"
 					                             + "No existe posición (" + X + "," + Y +").");
 		if ((posX == -1) && (posY == -1))
-		{//Posición Inicial.
+		{
 			posX = X;
 			posY = Y;
 		}
@@ -164,8 +157,7 @@ public class SpriteManager implements ImageObserver
 						posY -= 0.5;
 				try {
 					Thread.sleep(200);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+				} catch (InterruptedException e) {					
 					e.printStackTrace();
 				}
 				actualizar(X,Y);
