@@ -129,7 +129,7 @@ PjSeleccionable </string>
     <void property="attributes"> 
      <void property="text"> 
       <string>&lt;&lt;Atributos de Clase&gt;&gt;
-- vidasInicial: int = 5;
+- vidasInicial: int = 1;
 - maxMoneda: int = 100;
 &lt;&lt;Atributos de Instancia&gt;&gt;
 # Monedas: int;
@@ -203,16 +203,25 @@ Control</string>
   </void> 
   <void method="addNode"> 
    <object id="ClassNode3" class="com.horstmann.violet.ClassNode"> 
+    <void property="attributes"> 
+     <void property="text"> 
+      <string>&lt;&lt;Atributos de Clase&gt;&gt;
+- velocidad: int = 40;
+&lt;&lt;Atributos de instancia&gt;&gt;
+- Tactual, Tescenario: Thread;
+- Tjugador, Tgravedad: Thread;</string> 
+     </void> 
+    </void> 
     <void property="methods"> 
      <void property="text"> 
       <string>&lt;&lt;Constructor&gt;&gt;
 + crearControl (NombreJugador: String; E: Escenario);
 &lt;&lt;Comandos&gt;&gt;
-+ pausa ();
-+ salir ();
++ aceptar ();
++ ESC ();
 + reiniciarNivel ();
-+ finNivel ();
-+ finJuego ();
++ ganarNivel ();
++ perderNivel ();
 + agregarActor (a: Actor);
 + quitarActor (a: Actor);
 + run(); +
@@ -737,6 +746,7 @@ juego.</string>
 + setOcupada (O: boolean);
 + agregarActor (A: Actor): boolean;
 + sacarActor (A: Actor): boolean;
++ agregarEstructura (estructura: Estructura);
 &lt;&lt;Consultas&gt;&gt;
 + estaOcupada(): boolean;
 + getActores (): Iterador de Actores;
@@ -783,8 +793,8 @@ juego.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1029.6383038173212</double> 
-     <double>2186.0601072485756</double> 
+     <double>1013.6383038173212</double> 
+     <double>2179.0601072485756</double> 
     </void> 
    </object> 
   </void> 
@@ -829,15 +839,15 @@ juego.</string>
     <void property="text"> 
      <void property="text"> 
       <string>Si (totalmenteOcupada == true) entonces
-en Lista de Actores hay una Plataforma.
+en Lista de Actores hay una Plataforma o Estructura.
 No puede haber mas Actores.</string> 
      </void> 
     </void> 
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1566.460355750136</double> 
-     <double>2448.1119083805756</double> 
+     <double>1587.460355750136</double> 
+     <double>2449.1119083805756</double> 
     </void> 
    </object> 
   </void> 
@@ -947,8 +957,8 @@ mostrando en el momento.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>676.2178474652476</double> 
-     <double>290.0499848943824</double> 
+     <double>524.2178474652476</double> 
+     <double>697.0499848943824</double> 
     </void> 
    </object> 
   </void> 
@@ -972,29 +982,6 @@ mostrando en el momento.</string>
     <void method="setLocation"> 
      <double>116.32511306011966</double> 
      <double>2155.6800725997705</double> 
-    </void> 
-   </object> 
-  </void> 
-  <void method="addNode"> 
-   <object class="com.horstmann.violet.NoteNode"> 
-    <void property="text"> 
-     <void property="text"> 
-      <string>darPuntos le asigna al jugador
-los puntos que correspondan
-según el valor que el control
-central reciba de algún actor.
-De la misma manera se opera
-con las vidas a través de
-modificarVidas y con las
-monedas por medio
-de darMonedas.</string> 
-     </void> 
-    </void> 
-   </object> 
-   <object class="java.awt.geom.Point2D$Double"> 
-    <void method="setLocation"> 
-     <double>311.0</double> 
-     <double>629.0</double> 
     </void> 
    </object> 
   </void> 
@@ -1035,26 +1022,8 @@ por el usuario.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>678.0</double> 
-     <double>543.0</double> 
-    </void> 
-   </object> 
-  </void> 
-  <void method="addNode"> 
-   <object class="com.horstmann.violet.NoteNode"> 
-    <void property="text"> 
-     <void property="text"> 
-      <string>El Control Central verifica si el mismo se cae por no encontrarse
-sobre una celda que no tenga &quot;piso&quot; y en caso afirmativo llama
-al método caer() del Actor. Luego verifica si se encuentra en la
-última fila de celdas del bloque para determinar si muere o no.</string> 
-     </void> 
-    </void> 
-   </object> 
-   <object class="java.awt.geom.Point2D$Double"> 
-    <void method="setLocation"> 
-     <double>351.0</double> 
-     <double>189.0</double> 
+     <double>312.0</double> 
+     <double>695.0</double> 
     </void> 
    </object> 
   </void> 
@@ -1151,8 +1120,8 @@ no hace nada
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1348.0</double> 
-     <double>493.0</double> 
+     <double>1352.0</double> 
+     <double>506.0</double> 
     </void> 
    </object> 
   </void> 
@@ -1171,8 +1140,8 @@ no hace nada
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>1353.0</double> 
-     <double>322.0</double> 
+     <double>1347.0</double> 
+     <double>346.0</double> 
     </void> 
    </object> 
   </void> 
@@ -1300,8 +1269,8 @@ gano.</string>
    </object> 
    <object class="java.awt.geom.Point2D$Double"> 
     <void method="setLocation"> 
-     <double>687.0</double> 
-     <double>481.0</double> 
+     <double>682.0</double> 
+     <double>453.0</double> 
     </void> 
    </object> 
   </void> 
@@ -1493,6 +1462,22 @@ Estructura</string>
     <void method="setLocation"> 
      <double>1863.0</double> 
      <double>2067.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.NoteNode"> 
+    <void property="text"> 
+     <void property="text"> 
+      <string>Caer () y Morir ()
+no hacen nada</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1747.0</double> 
+     <double>2182.0</double> 
     </void> 
    </object> 
   </void> 

@@ -34,6 +34,10 @@ Irrompible: Son las plataformas que no se rompen ante cualquier colisión.
 
 Llegada: Representa a un punto de llegada que al ser alcanzado por un PjSeleccionable (colisionado) hace ganar el nivel a su jugador.
 
+Estructura: Simboliza a estructuras físicas del juego.
+
+Piso: Representa al Piso en el Juego, evita a los actores caer por el efecto de la gravedad.
+
 Nivel: Representa a los niveles del juego, permite generar a los mismos. Cada uno contiene un mapa propio y puede acceder al bloque actual donde se encuentra Mario.
 
 Mapa: Simboliza al mundo lógico de cada nivel del juego, están compuestos por muchos bloques que en conjunto conforman al escenario, se encarga de administrar dichos
