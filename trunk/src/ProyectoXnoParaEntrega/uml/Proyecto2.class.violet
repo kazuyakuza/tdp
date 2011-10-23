@@ -1106,10 +1106,16 @@ no hace nada
   </void> 
   <void method="addNode"> 
    <object id="ClassNode16" class="com.horstmann.violet.ClassNode"> 
+    <void property="attributes"> 
+     <void property="text"> 
+      <string># afectar: boolean;</string> 
+     </void> 
+    </void> 
     <void property="methods"> 
      <void property="text"> 
       <string>+ run(); +
-# afectar (a: Actor);</string> 
+# afectar (a: Actor);
++ setAfectar (v: boolean);</string> 
      </void> 
     </void> 
     <void property="name"> 
