@@ -53,6 +53,16 @@ public class Irrompible extends Actor implements Plataforma
 	{
 		/*No hace nada, nunca ocurre.*/
 	}
+	
+	/**
+	 * Realiza la acción de morir del Actor.
+	 * 
+	 * No tiene ningún efecto con Plataforma Irrompible.
+	 */
+	public void morir()
+	{
+		/*No hace nada, nunca ocurre.*/
+	}
 
 	/**
 	 * Realiza la acción de colisionar con otro Actor.

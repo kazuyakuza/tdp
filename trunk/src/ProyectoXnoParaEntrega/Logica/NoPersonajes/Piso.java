@@ -53,6 +53,16 @@ public class Piso extends Actor implements Estructura
 	{
 		/*No hace nada, nunca ocurre.*/
 	}
+	
+	/**
+	 * Realiza la acción de morir del Actor.
+	 * 
+	 * No tiene ningún efecto con Piso.
+	 */
+	public void morir()
+	{
+		/*No hace nada, nunca ocurre.*/
+	}
 
 	/**
 	 * Realiza la acción de colisionar con otro Actor.

@@ -66,6 +66,16 @@ public class Llegada extends Actor
 	}
 	
 	/**
+	 * Si la Gravedad afecta a este Actor, entonces llamará a este método para afectarlo.
+	 * 
+	 * @param efecto Efecto de la Gravedad sobre este Actor.
+	 */
+	public void efectoGravedad (int efecto)
+	{
+		PG = 0;
+	}
+	
+	/**
 	 * Realiza la Acción caer, producida por el efecto de la Gravedad.
 	 * No tiene ningún efecto con Llegada.
 	 * 
