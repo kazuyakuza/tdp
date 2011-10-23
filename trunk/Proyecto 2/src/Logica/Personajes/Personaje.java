@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Logica.Personajes;
+package ProyectoX.Logica.Personajes;
 
 
 /**

@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Excepciones;
+package ProyectoX.Excepciones;
 
 /**
  * Excepción producida en una Colisión entre dos Actores.

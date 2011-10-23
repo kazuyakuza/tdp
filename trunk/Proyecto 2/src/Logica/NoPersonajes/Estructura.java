@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Logica.NoPersonajes;
+package ProyectoX.Logica.NoPersonajes;
 
 public interface Estructura {
 

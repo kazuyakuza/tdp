@@ -1,8 +1,11 @@
-package ProyectoXnoParaEntrega.Logica.Personajes;
+package ProyectoX.Logica.Personajes;
 
-import ProyectoXnoParaEntrega.Excepciones.AccionActorException;
-import ProyectoXnoParaEntrega.Grafico.Sprite.CargadorSprite;
-import ProyectoXnoParaEntrega.Logica.Mapa.Celda;
+import java.util.Iterator;
+
+import ProyectoX.Excepciones.AccionActorException;
+import ProyectoX.Grafico.Sprite.CargadorSprite;
+import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.Mapa.Celda;
 
 
 /**
@@ -19,12 +22,12 @@ public class MarioChico extends Mario
 	//Atributos de Clase
 	private static final String dirRecursos = "Mario/";
 	private static final String [] nombresSprites = //En este arreglo se encuentran todas las rutas a las imagenes correspondientes a MarioChico, la ubicación en los índices es:
-	                                                {dirRecursos + "Mario - dead.gif", //0: Mario muerto
-		                                             dirRecursos + "Mario.gif",        //1: Mario quieto
-		                                             dirRecursos + "Mario - Walk1.gif",//2: Mario caminando1
-		                                             dirRecursos + "Mario - Walk2.gif",//3: Mario caminando2
-		                                             dirRecursos + "Mario - Walk3.gif",//4: Mario caminando3
-		                                             dirRecursos + "Mario - Jump.gif"};//5: Mario saltando
+	                                                {dirRecursos + "Mario-Dead.gif", //0: Mario muerto
+		                                             dirRecursos + "Mario.gif",      //1: Mario quieto
+		                                             dirRecursos + "Mario-Walk1.gif",//2: Mario caminando1
+		                                             dirRecursos + "Mario-Walk2.gif",//3: Mario caminando2
+		                                             dirRecursos + "Mario-Walk3.gif",//4: Mario caminando3
+		                                             dirRecursos + "Mario-Jump.gif"};//5: Mario saltando
 	private static int muerto = 0;
 	private static int quieto = 1;
 	private static int caminando = 2;
@@ -119,15 +122,24 @@ public class MarioChico extends Mario
 	 */
 	public void moverseAderecha () throws AccionActorException
 	{
-		Celda celdaSiguiente = celdaActual;		
-		if (!celdaActual.getBloque().esLimite(celdaActual))
+		Celda celdaSiguiente = celdaActual;
+		try 
 		{
-			spriteManager.cambiarSprite(caminando);
-			celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
-			if (!celdaSiguiente.isOcupada())
-				moverseAcelda(celdaSiguiente);
-			spriteManager.cambiarSprite(quieto);
-		}		
+			if (!celdaActual.getBloque().esLimite(celdaActual))
+			{
+				spriteManager.cambiarSprite(caminando);
+				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
+				if (!celdaSiguiente.isOcupada())
+					moverseAcelda(celdaSiguiente);
+				spriteManager.cambiarSprite(quieto);
+			}
+		}
+		catch (Exception e)
+		{
+			throw new AccionActorException ("Imposible realizar la acción moverAderecha a/desde Celda de posición (" + celdaSiguiente.getPosFila() + "," + celdaSiguiente.getPosColumna() + ")." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e.getMessage());
+		}
 	}
 	
 	/**
@@ -158,6 +170,18 @@ public class MarioChico extends Mario
 	public void accionB () throws AccionActorException
 	{
 		
+	}
+	
+	/**
+	 * Realiza las colisiones del Actor actual con los Actores que se encuentran en la Celda c.
+	 * 
+	 * @param c Celda con los Actores a colisionar con el Actor actual. 
+	 */
+	protected void producirColisiones (Celda c)
+	{
+		Iterator <Actor> actores = c.getActores();
+		while (actores.hasNext())
+			actores.next().colisionarPj(this);		
 	}
 	
 	/**

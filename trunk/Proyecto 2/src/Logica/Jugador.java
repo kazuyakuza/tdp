@@ -1,7 +1,7 @@
-package ProyectoXnoParaEntrega.Logica;
+package ProyectoX.Logica;
 
-import ProyectoXnoParaEntrega.Logica.Controles.Control;
-import ProyectoXnoParaEntrega.Logica.Personajes.PjSeleccionable;
+import ProyectoX.Logica.Controles.Control;
+import ProyectoX.Logica.Personajes.PjSeleccionable;
 
 /**
  * Representa a la Persona Jugador que juega el Juego.
@@ -171,10 +171,14 @@ public class Jugador implements Runnable
 		while (!(muerto))
 		{
 			actuar();
-			try {
+
+			try
+			{
 				Thread.sleep(200);
-			} catch (InterruptedException e) {				
-				e.printStackTrace();
+			}
+			catch (InterruptedException e)
+			{
+				controlCentral.mensajeError("Error", e.getMessage(), true);
 			}
 		}
 	}

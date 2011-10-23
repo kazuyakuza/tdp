@@ -1,15 +1,14 @@
-package ProyectoXnoParaEntrega.Logica.Mapa;
+package ProyectoX.Logica.Mapa;
 
 import java.util.Iterator;
 
-import ProyectoXnoParaEntrega.Excepciones.AccionActorException;
-import ProyectoXnoParaEntrega.Excepciones.PosicionIncorrectaException;
-import ProyectoXnoParaEntrega.Librerias.TDALista.ListaPositionSimple;
-import ProyectoXnoParaEntrega.Librerias.TDALista.Position;
-import ProyectoXnoParaEntrega.Librerias.TDALista.PositionList;
-import ProyectoXnoParaEntrega.Logica.Actor;
-import ProyectoXnoParaEntrega.Logica.NoPersonajes.Estructura;
-import ProyectoXnoParaEntrega.Logica.NoPersonajes.Piso;
+import ProyectoX.Excepciones.AccionActorException;
+import ProyectoX.Excepciones.PosicionIncorrectaException;
+import ProyectoX.Librerias.TDALista.ListaPositionSimple;
+import ProyectoX.Librerias.TDALista.Position;
+import ProyectoX.Librerias.TDALista.PositionList;
+import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.NoPersonajes.Estructura;
 
 /**
  * Representa un espacio en el mapa del Juego.
@@ -67,25 +66,25 @@ public class Celda
 		if (actor == null)
 			throw new NullPointerException ("El Actor que está intentando agregar a la Celda es null.");
 		if (totalmenteOcupada)
-			throw new AccionActorException("Imposible agregar Actor a la celda de posición (" + posFila + "," + posColumna + ")." + "\n"
-					                     + "La celda está totalmente ocupada.");
+			throw new AccionActorException("Imposible agregar Actor a la celda de posición (" + posFila + "," + posColumna + ")." + "\n" +
+					                       "La celda está totalmente ocupada.");
 		actores.addLast(actor);
 	}
 	
 	/**
 	 * Agrega Estructura a la Celda.
 	 * 
-	 * @param actor Estructura a agregar.
-	 * @exception NullPointerException Si se ingresa un Actor igual a null.
-	 * @exception AccionActorException Si se intenta agregar Estructura a una Celda no totalmente ocupada.
+	 * @param estructura Estructura a agregar.
+	 * @exception NullPointerException Si se ingresa una Estructura igual a null.
+	 * @exception AccionActorException Si se intenta agregar una Estructura a una Celda no totalmente ocupada.
 	 */
 	public void agregarEstructura (Estructura estructura) throws NullPointerException, AccionActorException
 	{
 		if (estructura == null)
 			throw new NullPointerException ("El Actor que está intentando agregar a la Celda es null.");
 		if (!totalmenteOcupada)
-			throw new AccionActorException("Imposible agregar Piso a la celda de posición (" + posFila + "," + posColumna + ")." + "\n"
-					                     + "La celda no está totalmente ocupada.");
+			throw new AccionActorException("Imposible agregar Piso a la celda de posición (" + posFila + "," + posColumna + ")." + "\n" +
+					                       "La celda no está totalmente ocupada.");
 		actores.addLast((Actor) estructura);
 	}
 	
@@ -95,14 +94,17 @@ public class Celda
 	 * @param actor Actor a sacar de la Celda.
 	 * @return Actor sacado de la Celda.
 	 * @exception NullPointerException Si se ingresa un Actor igual a null.
+	 * @exception NullPointerException Si se ingresa un Actor que no pertenece a la Celda.
 	 */
-	public Actor sacarActor (Actor actor) throws NullPointerException
+	public Actor sacarActor (Actor actor) throws NullPointerException, AccionActorException
 	{
 		if (actor == null)
-			throw new NullPointerException ("El Actor que está intentando agregar a la Celda es null.");
+			throw new NullPointerException ("El Actor que está intentando sacar de la Celda (" + posFila + "," + posColumna + ") es null.");
 		Position<Actor> p = actores.first();
-		while (p.element() != actor)
+		while ((p != actores.last()) && (p.element() != actor))
 			p = actores.next(p);
+		if (p.element() != actor)
+			throw new AccionActorException ("El Actor que está intentando sacar de la Celda (" + posFila + "," + posColumna + ") no pertenece a la misma.");
 		return actores.remove(p);
 	}
 	

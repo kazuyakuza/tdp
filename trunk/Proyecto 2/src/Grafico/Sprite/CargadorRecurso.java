@@ -1,11 +1,11 @@
-package ProyectoXnoParaEntrega.Grafico.Sprite;
+package ProyectoX.Grafico.Sprite;
 
 import java.net.URL;
 
-import ProyectoXnoParaEntrega.Excepciones.CargaRecursoException;
+import ProyectoX.Excepciones.CargaRecursoException;
 
 /**
- * Clase utilizada para cargar Recursos del Juego.
+ * Clase utilizada para cargar Recursos.
  * 
  * Proyecto X
  * 
@@ -16,7 +16,7 @@ public abstract class CargadorRecurso
 {
 	
 	//Variables de Clase
-	private String dirRecursos = "ProyectoXnoParaEntrega/Recursos/";
+	private String dirRecursos = "ProyectoX/Recursos/";
 	
 	/*COMANDOS*/
 	
@@ -25,6 +25,7 @@ public abstract class CargadorRecurso
 	 * 
 	 * @param nom Nombre del recurso a devolver.
 	 * @return Recurso de nombre nom.
+	 * @exception CargaRecursoException Si se produce un error al cargar el recurso solicitado.
 	 */
 	public Object obtenerRecurso (String nom) throws CargaRecursoException
 	{
@@ -37,11 +38,18 @@ public abstract class CargadorRecurso
 	 * 
 	 * @param dir Dirección del recurso a cargar.
 	 * @return Recurso que está en la dirección dir.
+	 * @exception CargaRecursoException Si se produce un error al cargar el recurso solicitado. O si la dirección ingresada es incorrecta y genera una URL null.
 	 */
 	private Object cargarRecurso (String dir) throws CargaRecursoException
 	{
 		URL url = null;
 		url = getClass().getClassLoader().getResource(dir);
+		
+		if (url == null)
+			throw new CargaRecursoException ("Error al Cargar el Recurso de Dirección: " + dir + "\n" +
+                                             "Detalles del error:" + "\n" +
+                                             "La dirección ingresada genera una una URL null.");
+		
 		return cargarRecurso(url);
 	}
 	

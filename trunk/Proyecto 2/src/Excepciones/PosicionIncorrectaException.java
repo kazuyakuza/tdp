@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Excepciones;
+package ProyectoX.Excepciones;
 
 /**
  * Excepción producida al ingresar una posición incorrecta o no debida.

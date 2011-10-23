@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Logica.Personajes;
+package ProyectoX.Logica.Personajes;
 
 /**
  * Contiene las acciones de un Personaje Seleccionable.

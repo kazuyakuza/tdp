@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Excepciones;
+package ProyectoX.Excepciones;
 
 /**
  * Excepción producida por un String vacío que no debería serlo.

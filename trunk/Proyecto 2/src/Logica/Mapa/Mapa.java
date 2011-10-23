@@ -1,6 +1,6 @@
-package ProyectoXnoParaEntrega.Logica.Mapa;
+package ProyectoX.Logica.Mapa;
 
-import ProyectoXnoParaEntrega.Excepciones.BoundaryViolationException;
+import ProyectoX.Excepciones.BoundaryViolationException;
 
 /**
  * Representa la parte Jugable del Juego.

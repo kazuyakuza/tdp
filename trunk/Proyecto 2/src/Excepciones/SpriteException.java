@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Excepciones;
+package ProyectoX.Excepciones;
 
 /**
  * Excepción producida al intentar cargar o manipular un Sprite.

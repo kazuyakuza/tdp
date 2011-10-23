@@ -1,13 +1,14 @@
-package ProyectoXnoParaEntrega.Grafico;
+package ProyectoX.Grafico;
 
-import ProyectoXnoParaEntrega.Excepciones.PosicionIncorrectaException;
-import ProyectoXnoParaEntrega.Grafico.Sprite.SpriteManager;
-import ProyectoXnoParaEntrega.Librerias.TDALista.ListaPositionSimple;
-import ProyectoXnoParaEntrega.Librerias.TDALista.Position;
-import ProyectoXnoParaEntrega.Librerias.TDALista.PositionList;
+import ProyectoX.Excepciones.PosicionIncorrectaException;
+import ProyectoX.Excepciones.SpriteException;
+import ProyectoX.Grafico.Sprite.SpriteManager;
+import ProyectoX.Librerias.TDALista.ListaPositionSimple;
+import ProyectoX.Librerias.TDALista.Position;
+import ProyectoX.Librerias.TDALista.PositionList;
 
 /**
- * Representación un bloque gráfico de un nivel del Juego.
+ * Representación un bloque gráfico de sprites.
  * 
  * Proyecto X
  * 
@@ -26,7 +27,7 @@ public class BloqueGrafico
 	/*CONSTRUCTORES*/
 	
 	/**
-	 * Crea un bloqueGrafico de dimensiones mX y mY.
+	 * Crea un BloqueGráfico de dimensiones mX y mY.
 	 * 
 	 * @param mX Máximo X (Largo).
 	 * @param mY Máximo Y (Alto).
@@ -35,7 +36,7 @@ public class BloqueGrafico
 	{
 		maxX = mX;
 		maxY = mY;
-		nivelPiso = maxY;
+		nivelPiso = maxY - 2;
 		sprites = new ListaPositionSimple<SpriteManager> ();
 	}
 	
@@ -45,19 +46,22 @@ public class BloqueGrafico
 	 * Agrega un Sprite al Bloque.
 	 * 
 	 * @param sp Sprite a agregar.
+	 * @exception PosicionIncorrectaException Si la posición del SpriteManager a ingresar no corresponde con las posiciones posibles de este BloqueGráfico.
 	 */
 	public void agregarSprite (SpriteManager sp) throws PosicionIncorrectaException
 	{
 		if ((sp.posicion()[0] > maxX) || (sp.posicion()[1] > maxY))
-			throw new PosicionIncorrectaException ("Posición ingresada incorrecta." + "\n"
-                                                 + "No existe posición (" + sp.posicion()[0] + "," + sp.posicion()[1] +").");
+			throw new PosicionIncorrectaException ("Posición ingresada incorrecta." + "\n" +
+                                                   "No existe posición (" + sp.posicion()[0] + "," + sp.posicion()[1] +")." + "\n" +
+                                                   "maxX = " + maxX + " maxY = " + maxY);
 		sprites.addLast(sp);
 	}
 	
 	/**
-	 * Agrega los Sprites al Bloque.
+	 * Agrega los Sprites al BloqueGráfico.
 	 * 
 	 * @param sps Sprites a agregar.
+	 * @exception PosicionIncorrectaException Si la posición del SpriteManager a ingresar no corresponde con las posiciones posibles de este BloqueGráfico.
 	 */
 	public void agregarSprites (PositionList<SpriteManager> sps) throws PosicionIncorrectaException
 	{
@@ -66,15 +70,18 @@ public class BloqueGrafico
 	}
 	
 	/**
-	 * Elimina un Sprite del Bloque.
+	 * Elimina un Sprite del BloqueGráfico.
 	 * 
 	 * @param sp Sprite a Eliminar.
+	 * @exception SpriteException Si se ingresa un SpriteManager que no pertenece al BloqueGrafico.
 	 */
-	public void eliminarSprite (SpriteManager sp)
+	public void eliminarSprite (SpriteManager sp) throws SpriteException
 	{
 		Position<SpriteManager> aux = sprites.first();
-		while (aux.element() != sp)
+		while ((aux != sprites.last()) && (aux.element() != sp))
 			aux = sprites.next(aux);
+		if (aux.element() != sp)
+			throw new SpriteException ("El SpriteManager que se intenta eliminar no pertenece al BloqueGrafico actual.");
 		sprites.remove(aux);
 	}
 	

@@ -1,12 +1,10 @@
-package ProyectoXnoParaEntrega.Logica;
+package ProyectoX.Logica;
 
-import java.util.Iterator;
-
-import ProyectoXnoParaEntrega.Grafico.Sprite.CargadorSprite;
-import ProyectoXnoParaEntrega.Grafico.Sprite.SpriteManager;
-import ProyectoXnoParaEntrega.Logica.Mapa.Celda;
-import ProyectoXnoParaEntrega.Excepciones.AccionActorException;
-import ProyectoXnoParaEntrega.Excepciones.ColisionException;
+import ProyectoX.Excepciones.AccionActorException;
+import ProyectoX.Excepciones.ColisionException;
+import ProyectoX.Grafico.Sprite.CargadorSprite;
+import ProyectoX.Grafico.Sprite.SpriteManager;
+import ProyectoX.Logica.Mapa.Celda;
 
 /**
  * Representa a todos los objetos virtuales que pueden desarrolar una "actuación" dentro del juego.
@@ -91,12 +89,7 @@ public abstract class Actor
 	 * 
 	 * @param c Celda con los Actores a colisionar con el Actor actual. 
 	 */
-	private void producirColisiones (Celda c)
-	{
-		Iterator <Actor> actores = c.getActores();
-		while (actores.hasNext())
-			actores.next().colisionarPj(this);		
-	}
+	protected abstract void producirColisiones (Celda c);
 	
 	/**
 	 * Si la Gravedad afecta a este Actor, entonces llamará a este método para afectarlo.

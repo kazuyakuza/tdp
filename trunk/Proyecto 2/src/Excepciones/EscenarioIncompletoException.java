@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Excepciones;
+package ProyectoX.Excepciones;
 
 /**
  * Excepción producida al manipular un Escenario incompleto.

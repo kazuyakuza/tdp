@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Librerias.TDALista;
+package ProyectoX.Librerias.TDALista;
 
 /**
  * Posicion Invalida Exception: Excepción en tiempo de ejecución provocada al intentar asignar una posición inválida.

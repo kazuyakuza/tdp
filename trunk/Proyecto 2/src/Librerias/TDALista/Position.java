@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Librerias.TDALista;
+package ProyectoX.Librerias.TDALista;
 
 /**
  * Interface Position: Establece las operaciones necesarias para un TDA position.

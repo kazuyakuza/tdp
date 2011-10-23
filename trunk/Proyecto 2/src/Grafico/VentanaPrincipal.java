@@ -1,6 +1,5 @@
-package ProyectoXnoParaEntrega.Grafico;
+package ProyectoX.Grafico;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -8,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import ProyectoXnoParaEntrega.Logica.ControlCentral;
+import ProyectoX.Logica.ControlCentral;
 
 /**
  * Representa la Ventana Principal del juego donde se ejecuta el mismo.
@@ -23,11 +22,14 @@ public class VentanaPrincipal extends JFrame
 {
 	
 	//Variables de Clase
-	private int largo = (320 + 6);
-	private int alto = (256 + 26);
+	private int largo = (320 + 6);//640;
+	private int alto = (256 + 26);//480;
 	
+	@SuppressWarnings("unused")
 	private String version = "Versión 0.1";
+	@SuppressWarnings("unused")
 	private String[] autores = {"Javier Eduardo Barrocal","Pablo Isaias Chacar"};
+	@SuppressWarnings("unused")
 	private String infoExtra = "";
 	private String tituloJuego = "Mario TDP 2011";
 	
@@ -66,12 +68,19 @@ public class VentanaPrincipal extends JFrame
 	 */
 	private void initGUI ()
 	{
-		setPreferredSize(new Dimension(largo, alto));
+		try
 		{
-			mostrarMenu();
+			setPreferredSize(new Dimension(largo, alto));
+			{
+				mostrarMenu();
+			}
+			setSize(largo, alto);
+			pack();
 		}
-		setSize(largo, alto);
-		pack();		
+		catch (Exception e)
+		{
+		    mensajeError("ERROR", e.getMessage(), true);
+		}
 	}
 	
 	/**
@@ -141,6 +150,7 @@ public class VentanaPrincipal extends JFrame
 	{
 		jPanelEscenario = new JPanel();
 		jPanelEscenario.setPreferredSize(new Dimension(largo,alto));
+		jPanelEscenario.setSize(largo, alto);
 		jPanelEscenario.setLayout (null);
 		jPanelEscenario.add(escenario);
 		this.setContentPane(jPanelEscenario);

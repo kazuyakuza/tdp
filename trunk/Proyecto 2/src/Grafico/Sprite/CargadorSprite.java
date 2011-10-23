@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Grafico.Sprite;
+package ProyectoX.Grafico.Sprite;
 
 import java.awt.Graphics;
 import java.awt.GraphicsConfiguration;
@@ -10,10 +10,10 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import ProyectoXnoParaEntrega.Excepciones.CargaRecursoException;
+import ProyectoX.Excepciones.CargaRecursoException;
 
 /**
- * Clase utilizada para cargar Sprites (imágenes del Juego).
+ * Clase utilizada para cargar Sprites (imágenes).
  * 
  * Proyecto X
  * 
@@ -34,6 +34,7 @@ public class CargadorSprite extends CargadorRecurso
 	 * @param nombre Nombre del archivo del Sprite.
 	 * @param io ImageObserver para el Sprite a cargar.
 	 * @return Sprite cargado.
+	 * @exception CargaRecursoException Si se produce un error al cargar el Sprite solicitado.
 	 */
 	public BufferedImage obtenerSprite (String nombre, ImageObserver io) throws CargaRecursoException
 	{
@@ -49,6 +50,7 @@ public class CargadorSprite extends CargadorRecurso
 	 * 
 	 * @param nom Nombre del recurso a devolver.
 	 * @return Recurso de nombre nom.
+	 * @exception CargaRecursoException Si se produce un error al cargar el recurso solicitado.
 	 */
 	public Object obtenerRecurso (String nom) throws CargaRecursoException
 	{
@@ -71,7 +73,9 @@ public class CargadorSprite extends CargadorRecurso
 		}
 		catch (Exception e)
 		{
-			throw new CargaRecursoException ("Error al Cargar un Recurso Imagen: " + e.getMessage());
+			throw new CargaRecursoException ("Error al Cargar el Recurso Imagen: " + url.getFile() + "\n" +
+					                         "Detalles del error:" + "\n" +
+					                         e.getMessage());
 		}
 	}
 	

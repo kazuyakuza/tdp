@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Librerias.TDALista;
+package ProyectoX.Librerias.TDALista;
 
 import java.util.Iterator;
 

@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Logica.Controles;
+package ProyectoX.Logica.Controles;
 
 import java.awt.event.KeyEvent;
 

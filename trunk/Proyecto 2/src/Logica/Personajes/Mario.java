@@ -1,13 +1,11 @@
-package ProyectoXnoParaEntrega.Logica.Personajes;
+package ProyectoX.Logica.Personajes;
 
-import java.util.Iterator;
-
-import ProyectoXnoParaEntrega.Excepciones.AccionActorException;
-import ProyectoXnoParaEntrega.Excepciones.ColisionException;
-import ProyectoXnoParaEntrega.Grafico.Sprite.CargadorSprite;
-import ProyectoXnoParaEntrega.Logica.Actor;
-import ProyectoXnoParaEntrega.Logica.Jugador;
-import ProyectoXnoParaEntrega.Logica.Mapa.Celda;
+import ProyectoX.Excepciones.AccionActorException;
+import ProyectoX.Excepciones.ColisionException;
+import ProyectoX.Grafico.Sprite.CargadorSprite;
+import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.Jugador;
+import ProyectoX.Logica.Mapa.Celda;
 
 /**
  * Representa al tipo de Personaje Mario del juego.
@@ -97,12 +95,21 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	 */
 	public void caer () throws AccionActorException
 	{
-		Celda celdaInferior = celdaActual;				 
-		celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
-		if (!celdaInferior.isOcupada())
-			moverseAcelda(celdaInferior);
-		else
-			PG = 0;		
+		Celda celdaInferior = celdaActual;
+		try 
+		{			 
+			 celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
+			 if (!celdaInferior.isOcupada())
+				 moverseAcelda(celdaInferior);
+			 else
+				 PG = 0;
+		}
+		catch (Exception e)
+		{
+			throw new AccionActorException ("Imposible realizar la acción caer a/desde Celda de posición (" + celdaInferior.getPosFila() + "," + celdaInferior.getPosColumna() + ")." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e.getMessage());
+		}
 	}
 	
 	/**

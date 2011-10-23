@@ -1,9 +1,10 @@
-package ProyectoXnoParaEntrega.Logica.NoPersonajes;
+package ProyectoX.Logica.NoPersonajes;
 
-import ProyectoXnoParaEntrega.Excepciones.AccionActorException;
-import ProyectoXnoParaEntrega.Excepciones.ColisionException;
-import ProyectoXnoParaEntrega.Grafico.Sprite.CargadorSprite;
-import ProyectoXnoParaEntrega.Logica.Actor;
+import ProyectoX.Excepciones.AccionActorException;
+import ProyectoX.Excepciones.ColisionException;
+import ProyectoX.Grafico.Sprite.CargadorSprite;
+import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.Mapa.Celda;
 
 /**
  * Representa al Piso en el Juego.
@@ -30,7 +31,40 @@ public class Piso extends Actor implements Estructura
 		super(nombresSprites, cargadorSprite);
 	}
 	
-	/*COMANDOS*/
+	/*COMANDOS IMPLEMENTADOS*/
+	
+	/**
+	 * Realiza la acción de colisionar con otro Actor a.
+	 * No tiene ningún efecto con este Actor.
+	 * 
+	 * @param a Actor con el que se va a colisionar.
+	 * @exception ColisionException Si se produce algún error en la colisión. 
+	 */
+	public void colisionar (Actor a) throws ColisionException
+	{
+		/*No hace nada, no tiene efecto sobre otros Actores.*/
+	}
+	
+	/**
+	 * Realiza la acción de colisionar con un Personaje Seleccionable de un Jugador.
+	 * 
+	 * @param actorJugador Actor con el que se va a colisionar.
+	 * @exception ColisionException Si se produce algún error en la colisión.
+	 */
+	public void colisionarPj (Actor actorJugador) throws ColisionException
+	{
+		/*No hace nada, no tiene efecto sobre otros Actores.*/
+	}
+	
+	/**
+	 * Realiza las colisiones del Actor actual con los Actores que se encuentran en la Celda c.
+	 * 
+	 * @param c Celda con los Actores a colisionar con el Actor actual. 
+	 */
+	protected void producirColisiones(Celda c)
+	{
+		/*No hace nada, nunca ocurre.*/	
+	}
 	
 	/**
 	 * Si la Gravedad afecta a este Actor, entonces llamará a este método para afectarlo.
@@ -42,14 +76,13 @@ public class Piso extends Actor implements Estructura
 		PG = 0;
 	}
 	
-	/*COMANDOS IMPLEMENTADOS*/
-
 	/**
 	 * Realiza la Acción caer, producida por el efecto de la Gravedad.
+	 * No tiene ningún efecto en este Actor.
 	 * 
 	 * @exception AccionActorException Si se produce algún error al caer.
 	 */
-	public void caer() throws AccionActorException
+	public void caer () throws AccionActorException
 	{
 		/*No hace nada, nunca ocurre.*/
 	}
@@ -57,31 +90,11 @@ public class Piso extends Actor implements Estructura
 	/**
 	 * Realiza la acción de morir del Actor.
 	 * 
-	 * No tiene ningún efecto con Piso.
+	 * No tiene ningún efecto en este Actor.
 	 */
 	public void morir()
 	{
 		/*No hace nada, nunca ocurre.*/
-	}
-
-	/**
-	 * Realiza la acción de colisionar con otro Actor.
-	 * 
-	 * @exception ColisionException Si se produce algún error en la colisión.
-	 */
-	public void colisionar (Actor a) throws ColisionException
-	{
-		/*No hace nada, no tiene efecto sobre Actores que no sean Personajes.*/
-	}
-	
-	/**
-	 * Realiza la acción de colisionar con otro Personaje Seleccionable.
-	 * 
-	 * @exception ColisionException Si se produce algún error en la colisión.
-	 */
-	public void colisionarPj (Actor actorJugador) throws ColisionException
-	{
-		/*No hace nada, no tiene efecto sobre Actores que no sean Personajes.*/
 	}
 
 }

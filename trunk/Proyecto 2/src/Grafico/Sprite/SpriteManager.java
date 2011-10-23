@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Grafico.Sprite;
+package ProyectoX.Grafico.Sprite;
 
 import java.awt.Graphics;
 import java.awt.GraphicsConfiguration;
@@ -7,12 +7,12 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
-import ProyectoXnoParaEntrega.Excepciones.CargaRecursoException;
-import ProyectoXnoParaEntrega.Excepciones.PosicionIncorrectaException;
-import ProyectoXnoParaEntrega.Excepciones.SpriteException;
+import ProyectoX.Excepciones.CargaRecursoException;
+import ProyectoX.Excepciones.PosicionIncorrectaException;
+import ProyectoX.Excepciones.SpriteException;
 
 /**
- * Controla su Sprite cargado.
+ * Controla los Sprites cargados.
  * 
  * Proyecto X
  * 
@@ -33,7 +33,7 @@ public class SpriteManager implements ImageObserver
 	private boolean eliminar; //True:  el sprite debe ser eliminado.
 	                          //False: caso contrario.
 	private double posX, posY; //Posición Actual del Sprite en el Escenario.
-	                           //(si posX=-1 y posY=-1, entonces no se ha asignado una posición aún)
+	                           //Si posX=-1 y posY=-1, entonces no se ha asignado una posición aún.
 	
 	/*CONSTRUCTOR*/
 	
@@ -50,7 +50,15 @@ public class SpriteManager implements ImageObserver
 	{
 		sprites = new BufferedImage[nombresSprites.length];
 		for (int i=0; i<nombresSprites.length; i++)
-			sprites[i] = cargadorSprite.obtenerSprite(nombresSprites[i], this);			
+			try
+			{
+				sprites[i] = cargadorSprite.obtenerSprite(nombresSprites[i], this);
+			}
+			catch (CargaRecursoException exception)
+			{
+				throw new CargaRecursoException (exception.getMessage() + "\n" +
+						                         "Error al cargar el sprite de nombre " + nombresSprites[i] + ".");
+			}
 		spriteActual = sprites[0];
 		posX = posY = -1;
 		invertido = false;
@@ -109,7 +117,7 @@ public class SpriteManager implements ImageObserver
 	}
 	
 	/**
-	 * Actualiza ls posición del sprite a la posición pasada por parámetro.
+	 * Actualiza la posición del sprite a la posición pasada por parámetro.
 	 * 
 	 * @param posicion Arreglo de dos componenete con posicion[0] = Nueva posición X, y posicion[1] = Nueva posición Y.
 	 * @exception PosicionIncorrectaException Si se ingresa una posición incorrecta.
@@ -132,7 +140,7 @@ public class SpriteManager implements ImageObserver
 			throw new PosicionIncorrectaException ("Posición ingresada incorrecta." + "\n"
 					                             + "No existe posición (" + X + "," + Y +").");
 		if ((posX == -1) && (posY == -1))
-		{
+		{//Posición Inicial.
 			posX = X;
 			posY = Y;
 		}
@@ -155,11 +163,15 @@ public class SpriteManager implements ImageObserver
 						posY += 0.5;
 					else
 						posY -= 0.5;
-				try {
+				try
+				{
 					Thread.sleep(200);
-				} catch (InterruptedException e) {					
-					e.printStackTrace();
 				}
+				catch (InterruptedException e)
+				{
+					throw new SpriteException(e.getMessage());
+				}
+				
 				actualizar(X,Y);
 			}
 		}

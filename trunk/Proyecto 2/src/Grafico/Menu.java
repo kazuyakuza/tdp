@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Grafico;
+package ProyectoX.Grafico;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -49,31 +49,38 @@ public class Menu extends JPanel
 	 * Inicializa la GUI del Menú.
 	 */
 	private void initGUI ()
-	{		
-		this.setPreferredSize(new Dimension(largo, alto));
-		this.setLayout(null);
-		this.setSize(largo, alto);
+	{
+		try
 		{
-			NuevoJuego = new JButton();
-			this.add(NuevoJuego);
-			NuevoJuego.setText("Nuevo Juego");
-			NuevoJuego.setBounds((largo/2-botonLargo/2), (alto/2-botonAlto/2-45), botonLargo, botonAlto);
-			NuevoJuego.addActionListener(listenerNuevoJuego());
+			this.setPreferredSize(new Dimension(largo, alto));
+			this.setLayout(null);
+			this.setSize(largo, alto);
+			{
+				NuevoJuego = new JButton();
+				this.add(NuevoJuego);
+				NuevoJuego.setText("Nuevo Juego");
+				NuevoJuego.setBounds((largo/2-botonLargo/2), (alto/2-botonAlto/2-45), botonLargo, botonAlto);
+				NuevoJuego.addActionListener(listenerNuevoJuego());
+			}
+			{
+				Info = new JButton();
+				this.add(Info);
+				Info.setText("Info");
+				Info.setBounds((largo/2-botonLargo/2), (alto/2-botonAlto/2), botonLargo, botonAlto);
+				Info.addActionListener(listenerInfo());
+			}
+			{
+				Salir = new JButton();
+				this.add(Salir);
+				Salir.setText("Salir");
+				Salir.setBounds((largo/2-botonLargo/2), (alto/2-botonAlto/2+45), botonLargo, botonAlto);
+				Salir.addActionListener(listenerSalir());
+			}
 		}
+		catch (Exception e)
 		{
-			Info = new JButton();
-			this.add(Info);
-			Info.setText("Info");
-			Info.setBounds((largo/2-botonLargo/2), (alto/2-botonAlto/2), botonLargo, botonAlto);
-			Info.addActionListener(listenerInfo());
+			ventanaPrincipal.mensajeError("Error", e.getMessage(), true);
 		}
-		{
-			Salir = new JButton();
-			this.add(Salir);
-			Salir.setText("Salir");
-			Salir.setBounds((largo/2-botonLargo/2), (alto/2-botonAlto/2+45), botonLargo, botonAlto);
-			Salir.addActionListener(listenerSalir());
-		}		
 	}
 	
 	/**
@@ -82,6 +89,10 @@ public class Menu extends JPanel
 	public void limpiar ()
 	{
 		this.removeAll();
+		NuevoJuego = null;
+		Info = null;
+		Salir = null;
+		ventanaPrincipal = null;
 	}
 	
 	/*Listeners*/
@@ -99,8 +110,16 @@ public class Menu extends JPanel
             //Método del ActionListener
             public void actionPerformed (ActionEvent event)
             {
-            	ventanaPrincipal.pedirDatosJugador();
-            	ventanaPrincipal.eliminarMenu();            	
+            	try
+            	{
+            		ventanaPrincipal.pedirDatosJugador();
+            		ventanaPrincipal.eliminarMenu();
+            	}
+            	catch (Exception e)
+            	{
+            		ventanaPrincipal.mensajeError("ERROR", e.getMessage(), true);
+        		}
+            	
             }
            };
 	}

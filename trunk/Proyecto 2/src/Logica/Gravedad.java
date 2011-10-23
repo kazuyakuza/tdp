@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Logica;
+package ProyectoX.Logica;
 
 import java.util.Iterator;
 
@@ -53,11 +53,14 @@ public class Gravedad implements Runnable
 			Iterator<Actor> actores = controlCentral.getActores();
 			while (actores.hasNext())
 				afectar(actores.next());
-			try {
+			
+			try
+			{
 				Thread.sleep(200);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			}
+			catch (InterruptedException e)
+			{
+				controlCentral.mensajeError("Error", e.getMessage(), true);
 			}
 		}
 	}

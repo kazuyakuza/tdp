@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Grafico;
+package ProyectoX.Grafico;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import ProyectoXnoParaEntrega.Excepciones.StringEmptyException;
+import ProyectoX.Excepciones.StringEmptyException;
 
 /**
  * Representa el Panel donde se piden los Datos del Jugador para el juego.
@@ -57,34 +57,41 @@ public class PedirDatosJugador extends JPanel
 	 */
 	private void initGUI ()
 	{
-		this.setPreferredSize(new Dimension(largo, alto));
-		this.setLayout(null);
-		this.setSize(largo, alto);
+		try
 		{
-			jLabel = new JLabel();
-			this.add(jLabel);
-			jLabel.setText("Ingrese su Nombre");
-			jLabel.setBounds((largo/2-130), (alto/2-50), 120, 30);
+			this.setPreferredSize(new Dimension(largo, alto));
+			this.setLayout(null);
+			this.setSize(largo, alto);
+			{
+				jLabel = new JLabel();
+				this.add(jLabel);
+				jLabel.setText("Ingrese su Nombre");
+				jLabel.setBounds((largo/2-130), (alto/2-50), 120, 30);
+			}
+			{
+				NombreJugador = new JTextField();
+				this.add(NombreJugador);
+				NombreJugador.setBounds((largo/2+10), (alto/2-50), 200, 30);
+			}
+			{
+				EmpezarJuego = new JButton();
+				this.add(EmpezarJuego);
+				EmpezarJuego.setText("Empezar Juego");
+				EmpezarJuego.setBounds((largo/2-botonLargo-10), (alto/2-botonAlto+20), botonLargo, botonAlto);
+				EmpezarJuego.addActionListener(listenerEmpezarJuego());
+			}
+			{
+				Cancelar = new JButton();
+				this.add(Cancelar);
+				Cancelar.setText("Cancelar");
+				Cancelar.setBounds((largo/2+10), (alto/2-botonAlto+20), botonLargo, botonAlto);
+				Cancelar.addActionListener(listenerCancelar());
+			}
 		}
+		catch (Exception e)
 		{
-			NombreJugador = new JTextField();
-			this.add(NombreJugador);
-			NombreJugador.setBounds((largo/2+10), (alto/2-50), 200, 30);
+			ventanaPrincipal.mensajeError("Error", e.getMessage(), true);
 		}
-		{
-			EmpezarJuego = new JButton();
-			this.add(EmpezarJuego);
-			EmpezarJuego.setText("Empezar Juego");
-			EmpezarJuego.setBounds((largo/2-botonLargo-10), (alto/2-botonAlto+20), botonLargo, botonAlto);
-			EmpezarJuego.addActionListener(listenerEmpezarJuego());
-		}
-		{
-			Cancelar = new JButton();
-			this.add(Cancelar);
-			Cancelar.setText("Cancelar");
-			Cancelar.setBounds((largo/2+10), (alto/2-botonAlto+20), botonLargo, botonAlto);
-			Cancelar.addActionListener(listenerCancelar());
-		}		
 	}
 	
 	/**
@@ -93,6 +100,11 @@ public class PedirDatosJugador extends JPanel
 	public void limpiar ()
 	{
 		this.removeAll();
+		EmpezarJuego = null;
+		Cancelar = null;
+		jLabel = null;
+		NombreJugador = null;
+		ventanaPrincipal = null;
 	}
 	
 	/*Listeners*/
@@ -110,8 +122,22 @@ public class PedirDatosJugador extends JPanel
             //Método del ActionListener
             public void actionPerformed (ActionEvent event)
             {
-            	ventanaPrincipal.nuevoJuego(NombreJugador.getText());
-            	ventanaPrincipal.eliminarPedirDatosJugador();            	
+            	try
+            	{
+            		if (NombreJugador.getText().equals(""))
+            			throw new StringEmptyException("Falta Ingresar Nombre.");
+            		ventanaPrincipal.nuevoJuego(NombreJugador.getText());
+            		ventanaPrincipal.eliminarPedirDatosJugador();
+            	}
+            	catch (StringEmptyException sE)
+            	{
+            		ventanaPrincipal.mensajeError("Error", "Debe Ingresar su nombre", false);
+            	}
+            	catch (Exception e)
+            	{
+            		ventanaPrincipal.mensajeError("ERROR", e.getMessage(), true);
+        		}
+            	
             }
            };
 	}

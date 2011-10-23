@@ -1,6 +1,6 @@
-package ProyectoXnoParaEntrega;
+package ProyectoX;
 
-import ProyectoXnoParaEntrega.Grafico.VentanaPrincipal;
+import ProyectoX.Grafico.VentanaPrincipal;
 
 /**
  * Proyecto X
@@ -14,8 +14,8 @@ public class Main {
 	 * Inicializa el Juego.
 	 */
 	public static void main(String[] args)
-	{		
-		new VentanaPrincipal ();		
+	{
+		new VentanaPrincipal ();
 	}
 
 }

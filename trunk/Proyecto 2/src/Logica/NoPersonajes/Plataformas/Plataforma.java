@@ -1,6 +1,6 @@
-package ProyectoXnoParaEntrega.Logica.NoPersonajes.Plataformas;
+package ProyectoX.Logica.NoPersonajes.Plataformas;
 
-import ProyectoXnoParaEntrega.Logica.NoPersonajes.Estructura;
+import ProyectoX.Logica.NoPersonajes.Estructura;
 
 
 /**

@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Grafico;
+package ProyectoX.Grafico;
 
 import java.awt.Canvas;
 import java.awt.Cursor;
@@ -8,18 +8,14 @@ import java.awt.Rectangle;
 import java.awt.TexturePaint;
 import java.awt.Toolkit;
 import java.awt.Transparency;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.NoninvertibleTransformException;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
-import ProyectoXnoParaEntrega.Excepciones.CargaRecursoException;
-import ProyectoXnoParaEntrega.Excepciones.EscenarioIncompletoException;
-import ProyectoXnoParaEntrega.Excepciones.SpriteException;
-import ProyectoXnoParaEntrega.Grafico.Sprite.CargadorSprite;
-import ProyectoXnoParaEntrega.Grafico.Sprite.SpriteManager;
-import ProyectoXnoParaEntrega.Logica.Actor;
-import ProyectoXnoParaEntrega.Logica.Controles.Control;
+import ProyectoX.Excepciones.CargaRecursoException;
+import ProyectoX.Excepciones.EscenarioIncompletoException;
+import ProyectoX.Grafico.Sprite.CargadorSprite;
+import ProyectoX.Grafico.Sprite.SpriteManager;
+import ProyectoX.Logica.Controles.Control;
 
 /**
  * Representación gráfica del lugar donde acontecen todas las situaciones del juego.
@@ -42,7 +38,8 @@ public class Escenario extends Canvas implements Runnable
 	private BufferedImage fondo;
 	private BufferStrategy bufferStrategy;
 	private BloqueGrafico anterior, actual, siguiente;
-	private boolean actualizar;
+	private boolean actualizar; //Indica si el Escenario debe actualizarce o no.
+	                            //Si deja de actualizarce, el Thread creado para este Escenario concluye.
 	private int largo, alto;
 	
 	/*CONSTRUCTOR*/
@@ -76,15 +73,11 @@ public class Escenario extends Canvas implements Runnable
 		{
 			this.setBounds (0, 0, largo, alto);
 			this.setIgnoreRepaint(true);
+			this.requestFocus();
 			this.createBufferStrategy(2);
 			bufferStrategy = getBufferStrategy();
-			this.requestFocus();
 		
-			//Pone transparente el cursor.
-			BufferedImage cursor = new CargadorSprite().crearCombatible(10, 10, Transparency.BITMASK);
-			Toolkit t = Toolkit.getDefaultToolkit();
-			Cursor c = t.createCustomCursor(cursor, new Point(5,5), "null");
-			this.setCursor(c);
+			transparentarCursor();
 		}
 		catch (Exception e)
 		{
@@ -93,7 +86,18 @@ public class Escenario extends Canvas implements Runnable
 	}
 	
 	/**
-	 * Agrega el Control c usado por el usuario al escenario.
+	 * Pone transparente el cursor.
+	 */
+	private void transparentarCursor ()
+	{
+		BufferedImage cursor = new CargadorSprite().crearCombatible(10, 10, Transparency.BITMASK);
+		Toolkit t = Toolkit.getDefaultToolkit();
+		Cursor c = t.createCustomCursor(cursor, new Point(5,5), "null");
+		this.setCursor(c);
+	}
+	
+	/**
+	 * Agrega el Control c usado por el usuario al Escenario.
 	 * 
 	 * @param c Control del usuario.
 	 */
@@ -120,7 +124,9 @@ public class Escenario extends Canvas implements Runnable
 		}
 		catch (CargaRecursoException exception)
 		{
-			throw new CargaRecursoException (exception.getMessage() + "\n" + "Error al cargar el fondo " + fondoNombre + ".");
+			throw new CargaRecursoException ("Error al cargar el fondo " + fondoNombre + "." + "\n" +
+					                         "Detalles del Error:" + "\n" +
+					                         exception.getMessage());
 		}
 	}
 	
@@ -226,19 +232,26 @@ public class Escenario extends Canvas implements Runnable
 	
 	/**
 	 * Método de actualización del Escenario.
+	 * 
+	 * @exception EscenarioIncompletoException Si el Escenario no ha sido totalmente inicializado.
 	 */
 	public void run () throws EscenarioIncompletoException
 	{
 		if ((fondo == null) || (actual == null))
-			throw new EscenarioIncompletoException ("El Escenario no ha sido totalmente inicializado.");
+			throw new EscenarioIncompletoException ("El Escenario no ha sido totalmente inicializado." + "\n" +
+					                                "(fondo == null) -> " + (fondo == null) + "\n" +
+					                                "(actual == null) -> " + (actual == null));
 		while (actualizar)
 		{
 			imprimirBloque(actual);
 			
-			try {
+			try
+			{
 				Thread.sleep(200);
-			} catch (InterruptedException e) {				
-				e.printStackTrace();
+			}
+			catch (InterruptedException e)
+			{
+				ventanaPrincipal.mensajeError("ERROR", e.getMessage(), true);
 			}
 		}
 	}
@@ -247,20 +260,19 @@ public class Escenario extends Canvas implements Runnable
 	 * Imprime en el Escenario el bloque pasado por parámetro.
 	 * 
 	 * @param bloqueGrafico Bloque que contiene los sprites a imprimir.
-	 * @exception EscenarioIncompletoException Si el escenario no ha sido totalmente inicializado.
 	 */
 	public void imprimirBloque (BloqueGrafico bloqueGrafico)
 	{
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 		imprimirFondo(g);
-		int difPiso = alto - (bloqueGrafico.getNivelPiso() * medidaPixelCelda);
+		//int difPiso = alto - (bloqueGrafico.getNivelPiso() * medidaPixelCelda);
 		for (SpriteManager sp: bloqueGrafico.sprites)
 		{
 			if (sp.isEliminar())
 				bloqueGrafico.eliminarSprite(sp);
 			else
-				g.drawImage(sp.getSpriteActual(), ((int) (sp.posicion()[1] * medidaPixelCelda))
-					                            , ((int) (sp.posicion()[0] * medidaPixelCelda)), this);
+				g.drawImage(sp.getSpriteActual(), ((int) (sp.posicion()[1] * medidaPixelCelda))// - difPiso
+					                            , ((int) (sp.posicion()[0] * medidaPixelCelda))/* - difPiso*/, this);
 		}
 		bufferStrategy.show();
 	}

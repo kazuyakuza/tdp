@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Librerias.TDALista;
+package ProyectoX.Librerias.TDALista;
 
 /**
  * No Existe Elemento Exception: Excepción en tiempo de ejecución provocada al intentar pedir elemento siguiente de una posición null.

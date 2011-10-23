@@ -1,7 +1,7 @@
-package ProyectoXnoParaEntrega.Logica.Mapa;
+package ProyectoX.Logica.Mapa;
 
-import ProyectoXnoParaEntrega.Excepciones.BoundaryViolationException;
-import ProyectoXnoParaEntrega.Excepciones.PosicionIncorrectaException;
+import ProyectoX.Excepciones.BoundaryViolationException;
+import ProyectoX.Excepciones.PosicionIncorrectaException;
 
 /**
  * Representa una parte de la totalidad del Mapa del juego.
@@ -224,8 +224,14 @@ public class Bloque
 	{
 		if (celda == null)
 			throw new NullPointerException ("La celda es nula.");
-		if ((celda.posFila < 0) || (celda.posFila >= getFilas()) || (celda.posColumna < 0) || (celda.posColumna >= getColumnas()))
+		try
+		{
+			verificarPosicion(celda.posFila, celda.posColumna);
+		}
+		catch (PosicionIncorrectaException e)
+		{
 			throw new PosicionIncorrectaException ("La posición de la Celda ingresada (" + celda.posFila + "," + celda.posColumna +") no corresponde con el Bloque actual.");
+		}
 	}
 	
 	/**

@@ -1,4 +1,4 @@
-package ProyectoXnoParaEntrega.Librerias.TDALista;
+package ProyectoX.Librerias.TDALista;
 
 /**
  * Clase Nodo con elemento de tipo Genérico que implementa la interface Position.
