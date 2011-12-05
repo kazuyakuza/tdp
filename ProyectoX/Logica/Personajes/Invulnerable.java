@@ -16,6 +16,7 @@ import ProyectoX.Logica.Actor;
  */
 public class Invulnerable extends DecoracionCaracteristica
 {
+	
 	//Atributos de Instancia
 	protected Timer timer;
 	
@@ -37,7 +38,7 @@ public class Invulnerable extends DecoracionCaracteristica
 			{
 				mario.producirColisiones(mario.getCeldaActual());
 				mario.setCaracteristica(componente);
-				mario = null;
+				//mario = null;
 				timer.stop();
 			}
 		});		

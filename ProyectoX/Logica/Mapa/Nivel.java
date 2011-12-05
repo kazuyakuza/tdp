@@ -1,14 +1,12 @@
 package ProyectoX.Logica.Mapa;
 
-import ProyectoX.Excepciones.AccionActorException;
+import java.util.Random;
+
 import ProyectoX.Excepciones.InicioNivelException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Librerias.TDALista.ListaPositionSimple;
-import ProyectoX.Librerias.TDALista.Position;
 import ProyectoX.Librerias.TDALista.PositionList;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.ControlCentral;
-import ProyectoX.Logica.NoPersonajes.Estructura;
 import ProyectoX.Logica.NoPersonajes.Moneda;
 import ProyectoX.Logica.NoPersonajes.Piso;
 import ProyectoX.Logica.NoPersonajes.Especiales.Llegada;
@@ -16,15 +14,18 @@ import ProyectoX.Logica.NoPersonajes.Especiales.Vacio;
 import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialMonedas;
 import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialPowerUp;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Irrompible;
+import ProyectoX.Logica.NoPersonajes.Plataformas.Plataforma;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
+import ProyectoX.Logica.NoPersonajes.PowerUps.BombaNuclear;
 import ProyectoX.Logica.NoPersonajes.PowerUps.Estrella;
-import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
+import ProyectoX.Logica.NoPersonajes.PowerUps.HongoVerde;
 import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
+import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
 import ProyectoX.Logica.Personajes.Enemigo.Goomba;
-import ProyectoX.Logica.Personajes.Enemigo.KoopaTroopa;
 import ProyectoX.Logica.Personajes.Enemigo.KTNormal;
+import ProyectoX.Logica.Personajes.Enemigo.KoopaTroopa;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**
@@ -47,12 +48,11 @@ public class Nivel
 	protected int id; //Identificación del Nivel (1,2,3,4...)
 	protected String fondo;
 	private PositionList<Actor> actores; //Lista de todos los Actores en el Nivel actual.
-	private PositionList<Llegada> llegadas; //Lista de todos los Actores Llegada en el Nivel actual.
-	private PositionList<Vacio> vacios; //Lista de todos los Actores Vacio en el Nivel actual.
-	private PositionList<Estructura> estructuras; //Lista de todos los Actores Estructura en el Nivel actual.
-	private PositionList<EspecialPowerUp> especialesPowerUp; //Lista de todos los Actores EspecialPowerUp en el Nivel actual.
-	private PositionList<PowerUp> powerUps; //Lista de todos los Actores PowerUp en el Nivel actual.
+	private PositionList<PjSeleccionable> pjs;  //Lista de todos los Actores PjSeleccionable en el Nivel actual.
 	private PositionList<Enemigo> enemigos; //Lista de todos los Actores Enemigo en el Nivel actual.
+	private PositionList<Plataforma> plataformas; //Lista de todos los Actores Plataforma en el Nivel actual.
+	private PositionList<EspecialPowerUp> especialesPowerUp; //Lista de todos los Actores Plataforma EspecialPowerUp en el Nivel actual.
+	private PositionList<PowerUp> powerUps; //Lista de todos los Actores PowerUp en el Nivel actual.
 	private PositionList<afectableXgravedad> caibles; //Lista de todos los Actores afectables por la Gravedad.
 	
 	/*CONSTRUCTOR*/
@@ -70,12 +70,11 @@ public class Nivel
 		fondo = null;
 		
 		actores = new ListaPositionSimple<Actor> ();
-		llegadas = new ListaPositionSimple<Llegada> ();
-		vacios = new ListaPositionSimple<Vacio> ();
-		estructuras = new ListaPositionSimple<Estructura> ();
+		pjs = new ListaPositionSimple<PjSeleccionable> ();
+		enemigos = new ListaPositionSimple<Enemigo> ();
+		plataformas = new ListaPositionSimple<Plataforma> ();
 		especialesPowerUp = new ListaPositionSimple<EspecialPowerUp> ();
 		powerUps = new ListaPositionSimple<PowerUp> ();
-		enemigos = new ListaPositionSimple<Enemigo> ();
 		caibles = new ListaPositionSimple<afectableXgravedad> ();
 	}
 	
@@ -86,10 +85,9 @@ public class Nivel
 	 * 
 	 * @param actorJugador Actor del Jugador del Juego.
 	 * @param cc ControlCentral del Juego para los Actores que lo requieran.
-	 * @param cargadorSprite Clase encargada de cargar las imagenes de los Actores.
 	 * @throws InicioNivelException Si se produce un error al Iniciar el Nivel.
 	 */
-	public void inicializarNivel (Actor actorJugador, ControlCentral cc, CargadorSprite cargadorSprite) throws InicioNivelException
+	public void inicializarNivel (Actor actorJugador, ControlCentral cc) throws InicioNivelException
 	{
 		try
 		{
@@ -97,12 +95,12 @@ public class Nivel
 			{
 				case 0:
            			   {
-           				   nivelTest(actorJugador, cc, cargadorSprite);
+           				   nivelTest(actorJugador, cc);
            				   break;
 					   }
 				case 1:
 					   {
-						   nivel1(actorJugador, cc, cargadorSprite);
+						   nivel1(actorJugador, cc);
 						   break;
 					   }
 				default:
@@ -125,9 +123,8 @@ public class Nivel
 	 * 
 	 * @param actorJugador Actor del Jugador del Juego.
 	 * @param cc ControlCentral del Juego para los Actores que lo requieran.
-	 * @param cargadorSprite Clase encargada de cargar las imagenes de los Actores.
 	 */
-	private void nivelTest (Actor actor, ControlCentral cc, CargadorSprite cargadorSprite)
+	private void nivelTest (Actor actor, ControlCentral cc)
 	{
 		fondo = "Fondo2.png";
 		
@@ -138,57 +135,52 @@ public class Nivel
 		
 		mapa.setBloque(0, 0, bloqueActual);
 		
+		//Agregación Techo
+		bloqueActual.setFilaOcupada(0, true);
+		
 		//Agregación Piso
 		int aux = 0;
 		while (aux < 40)
 		{
-			/*if (aux != 6)
-			{*/
-				Piso piso = new Piso(cargadorSprite);
-				bloqueActual.ABC[11][aux].agregarEstructura(piso);
-				piso.setCeldaActual(bloqueActual.ABC[11][aux]);
-				actores.addFirst(piso);
-				estructuras.addFirst(piso);
-			//}
+			Piso piso = new Piso();
+			bloqueActual.ABC[11][aux].agregarEstructura(piso);
+			piso.setCeldaActual(bloqueActual.ABC[11][aux]);
+			actores.addFirst(piso);
 			aux++;
 		}
 		
-		//Agregación Actor del Jugador.
-		bloqueActual.ABC[10][1].agregarActor(actor);
-		actor.setCeldaActual(bloqueActual.ABC[10][1]);
-		actores.addFirst(actor);
-		caibles.addFirst((afectableXgravedad) actor);
+		//Agregación SubSuelo
+		bloqueActual.setFilaOcupada(12, true);
 		
 		//Agregación Actores Enemigos.
-		/*
-		aux = 0;
-		while (aux < 9)
+		/*aux = 0;
+		while (aux < 1)
 		{
-			Goomba goomba = new Goomba (cargadorSprite);
-			bloqueActual.ABC[1][10 + aux].agregarActor(goomba);
-			goomba.setCeldaActual(bloqueActual.ABC[1][10 + aux]);
+			Goomba goomba = new Goomba ();
+			bloqueActual.ABC[10][10 + aux].agregarActor(goomba);
+			goomba.setCeldaActual(bloqueActual.ABC[10][10 + aux]);
 			actores.addFirst(goomba);
 			enemigos.addFirst(goomba);
-			caibles.addFirst((afectableXgravedad) goomba);
+			caibles.addFirst(goomba);
 			aux++;
 		}*/
 		
-		/*Goomba goomba = new Goomba (cargadorSprite);
-		bloqueActual.ABC[1][10].agregarActor(goomba);
-		goomba.setCeldaActual(bloqueActual.ABC[1][10]);
+		/*Goomba goomba = new Goomba ();
+		bloqueActual.ABC[10][10].agregarActor(goomba);
+		goomba.setCeldaActual(bloqueActual.ABC[10][10]);
 		actores.addFirst(goomba);
 		enemigos.addFirst(goomba);
-		caibles.addFirst((afectableXgravedad) goomba);
+		caibles.addFirst(goomba);
 		
-		KoopaTroopa kt1 = new KoopaTroopa (new KTNormal(), cargadorSprite);
-		bloqueActual.ABC[3][3].agregarActor(kt1);
-		kt1.setCeldaActual(bloqueActual.ABC[3][3]);
+		KoopaTroopa kt1 = new KoopaTroopa (new KTNormal());
+		bloqueActual.ABC[10][15].agregarActor(kt1);
+		kt1.setCeldaActual(bloqueActual.ABC[10][15]);
 		actores.addFirst(kt1);		
 		enemigos.addFirst(kt1);		
 		caibles.addFirst(kt1);*/
 		
 		/*
-		KoopaTroopa kt2 = new KoopaTroopa (new KTCaparazon(), cargadorSprite);
+		KoopaTroopa kt2 = new KoopaTroopa (new KTCaparazon());
 		bloqueActual.ABC[4][4].agregarActor(kt2);
 		kt2.setCeldaActual(bloqueActual.ABC[4][4]);
 		actores.addFirst(kt2);
@@ -197,112 +189,118 @@ public class Nivel
 		*/
 		
 		//Agregacion de un power up.
-		PowerUp powerUp = new SuperHongo(cargadorSprite);
-		bloqueActual.ABC[3][7].agregarActor(powerUp);
-		powerUp.setCeldaActual(bloqueActual.ABC[3][7]);
-		actores.addLast(powerUp);
-		powerUps.addLast(powerUp);
-		caibles.addLast((afectableXgravedad) powerUp);
+		/*PowerUp hongo = new SuperHongo();
+		bloqueActual.ABC[1][1].agregarActor(hongo);
+		hongo.setCeldaActual(bloqueActual.ABC[1][1]);
+		actores.addFirst(hongo);
+		powerUps.addFirst(hongo);
+		caibles.addFirst(hongo);*/
 		
-		PowerUp flor = new FlorFuego(cargadorSprite);
+		/*PowerUp flor = new FlorFuego();
 		bloqueActual.ABC[3][8].agregarActor(flor);
 		flor.setCeldaActual(bloqueActual.ABC[3][8]);
-		actores.addLast(flor);
-		powerUps.addLast(flor);
-		caibles.addLast((afectableXgravedad) flor);
+		actores.addFirst(flor);
+		powerUps.addFirst(flor);
+		caibles.addFirst(flor);*/
 		
-		/*PowerUp bomba = new Estrella(cargadorSprite);
+		/*
+		PowerUp bomba = new Estrella();
 		bloqueActual.ABC[8][6].agregarActor(bomba);
 		bomba.setCeldaActual(bloqueActual.ABC[8][6]);
-		actores.addLast(bomba);
-		powerUps.addLast(bomba);
-		caibles.addLast((afectableXgravedad) bomba);*/
+		actores.addFirst(bomba);
+		powerUps.addFirst(bomba);
+		caibles.addFirst(bomba);
+		*/
 		
-		Moneda moneda1 = new Moneda(cargadorSprite);
+		Moneda moneda1 = new Moneda();
 		bloqueActual.ABC[8][8].agregarActor(moneda1);
 		moneda1.setCeldaActual(bloqueActual.ABC[8][8]);
-		actores.addLast(moneda1);
-		
-		Moneda moneda2 = new Moneda(cargadorSprite);
+		actores.addFirst(moneda1);	
+
+		Moneda moneda2 = new Moneda();
 		bloqueActual.ABC[10][8].agregarActor(moneda2);
-		moneda2.setCeldaActual(bloqueActual.ABC[10][8]);		
-		actores.addLast(moneda2);
+		moneda2.setCeldaActual(bloqueActual.ABC[10][8]);	
+		actores.addFirst(moneda2);
 		
 		
 		//Agregación Actores no Personjes.
 		aux = 6;
 		while (aux < 12)
 		{
-			Irrompible plataforma = new Irrompible (cargadorSprite);
+			Irrompible plataforma = new Irrompible ();
 			bloqueActual.ABC[7][aux].setOcupada(true);
 			bloqueActual.ABC[7][aux].agregarEstructura(plataforma);//Plataforma irrompible
 			plataforma.setCeldaActual(bloqueActual.ABC[7][aux]);
 			actores.addFirst(plataforma);
-			estructuras.addFirst(plataforma);
+			plataformas.addFirst(plataforma);
 			aux++;
 		}
 		
-		EspecialPowerUp plataformaPUP = new EspecialPowerUp (new SuperHongo(cargadorSprite), cc, true, cargadorSprite);
+		/*Irrompible plataforma = new Irrompible ();
+		bloqueActual.ABC[10][9].setOcupada(true);
+		bloqueActual.ABC[10][9].agregarEstructura(plataforma);//Plataforma irrompible
+		plataforma.setCeldaActual(bloqueActual.ABC[10][9]);
+		actores.addFirst(plataforma);
+		plataformas.addFirst(plataforma);
+		Irrompible plataforma2 = new Irrompible ();
+		bloqueActual.ABC[10][19].setOcupada(true);
+		bloqueActual.ABC[10][19].agregarEstructura(plataforma2);//Plataforma irrompible
+		plataforma2.setCeldaActual(bloqueActual.ABC[10][19]);
+		actores.addFirst(plataforma2);
+		plataformas.addFirst(plataforma2);*/
+
+		EspecialPowerUp plataformaPUP = new EspecialPowerUp (new SuperHongo(), cc, true);
 		bloqueActual.ABC[7][5].setOcupada(true);
 		bloqueActual.ABC[7][5].agregarEstructura(plataformaPUP);
 		plataformaPUP.setCeldaActual(bloqueActual.ABC[7][5]);
 		actores.addFirst(plataformaPUP);
-		estructuras.addFirst(plataformaPUP);
+		plataformas.addFirst(plataformaPUP);
 		especialesPowerUp.addFirst(plataformaPUP);
 		
-		EspecialMonedas plataformaM = new EspecialMonedas (3, cargadorSprite);
+		EspecialPowerUp plataformaPUP3= new EspecialPowerUp (new HongoVerde(), cc, true);
+		bloqueActual.ABC[7][15].setOcupada(true);
+		bloqueActual.ABC[7][15].agregarEstructura(plataformaPUP3);
+		plataformaPUP3.setCeldaActual(bloqueActual.ABC[7][15]);
+		actores.addFirst(plataformaPUP3);
+		plataformas.addFirst(plataformaPUP3);
+		especialesPowerUp.addFirst(plataformaPUP3);
+		
+		EspecialMonedas plataformaM = new EspecialMonedas (3);
 		bloqueActual.ABC[7][13].setOcupada(true);
 		bloqueActual.ABC[7][13].agregarEstructura(plataformaM);
 		plataformaM.setCeldaActual(bloqueActual.ABC[7][13]);
 		actores.addFirst(plataformaM);
-		estructuras.addFirst(plataformaM);
+		plataformas.addFirst(plataformaM);
 		
-		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(cargadorSprite), cc, false, cargadorSprite);
-		bloqueActual.ABC[8][14].setOcupada(true);
-		bloqueActual.ABC[8][14].agregarEstructura(plataformaPUP2);
-		plataformaPUP2.setCeldaActual(bloqueActual.ABC[8][14]);
+		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(), cc, false);
+		bloqueActual.ABC[7][14].setOcupada(true);
+		bloqueActual.ABC[7][14].agregarEstructura(plataformaPUP2);
+		plataformaPUP2.setCeldaActual(bloqueActual.ABC[7][14]);
 		actores.addFirst(plataformaPUP2);
-		estructuras.addFirst(plataformaPUP2);
+		plataformas.addFirst(plataformaPUP2);
 		especialesPowerUp.addFirst(plataformaPUP2);
-		
-		Rompible rompible = new Rompible (cargadorSprite);
-		bloqueActual.ABC[8][12].setOcupada(true);
-		bloqueActual.ABC[8][12].agregarEstructura(rompible);
-		rompible.setCeldaActual(bloqueActual.ABC[8][12]);
+		/*
+		/*Rompible rompible = new Rompible ();
+		bloqueActual.ABC[7][12].setOcupada(true);
+		bloqueActual.ABC[7][12].agregarEstructura(rompible);
+		rompible.setCeldaActual(bloqueActual.ABC[7][12]);
 		actores.addFirst(rompible);
-		estructuras.addFirst(rompible);
+		plataformas.addFirst(rompible);
 		
-		Rompible r1 = new Rompible (cargadorSprite);
-		bloqueActual.ABC[8][2].setOcupada(true);
-		bloqueActual.ABC[8][2].agregarEstructura(r1);
-		r1.setCeldaActual(bloqueActual.ABC[8][2]);
+		Rompible r1 = new Rompible ();
+		bloqueActual.ABC[7][2].setOcupada(true);
+		bloqueActual.ABC[7][2].agregarEstructura(r1);
+		r1.setCeldaActual(bloqueActual.ABC[7][2]);
 		actores.addFirst(r1);
-		estructuras.addFirst(r1);
+		plataformas.addFirst(r1);
 		
-		Rompible r2 = new Rompible (cargadorSprite);
-		bloqueActual.ABC[8][3].setOcupada(true);
-		bloqueActual.ABC[8][3].agregarEstructura(r2);
-		r2.setCeldaActual(bloqueActual.ABC[8][3]);
+		Rompible r2 = new Rompible ();
+		bloqueActual.ABC[7][3].setOcupada(true);
+		bloqueActual.ABC[7][3].agregarEstructura(r2);
+		r2.setCeldaActual(bloqueActual.ABC[7][3]);
 		actores.addFirst(r2);
-		estructuras.addFirst(r2);
-		
-		
-		//Vacio en el Piso.
-		//bloqueActual.ABC[6][6].setOcupada(false);
-		
-		//Piso al costado del Vacio.
-		/*bloqueActual.ABC[7][5].setOcupada(true);
-		Piso piso = new Piso(cargadorSprite);
-		bloqueActual.ABC[7][5].agregarEstructura(piso);
-		piso.setCeldaActual(bloqueActual.ABC[7][5]);
-		listaActores.addFirst(piso);*/
-		
-		//Piso al costado del Vacio.
-		/*bloqueActual.ABC[7][7].setOcupada(true);
-		Piso piso2 = new Piso(cargadorSprite);
-		bloqueActual.ABC[7][7].agregarEstructura(piso2);
-		piso2.setCeldaActual(bloqueActual.ABC[7][7]);
-		listaActores.addFirst(piso2);*/
+		plataformas.addFirst(r2);
+		*/
 		
 		//Agregación Principio Mapa
 		bloqueActual.setColumnaOcupada(0, true);
@@ -310,16 +308,12 @@ public class Nivel
 		//Agregación Final Mapa
 		bloqueActual.setColumnaOcupada(39, true);
 		
-		//Agregación Llegada
-		/*aux = 0;
-		while (aux <= 5)
-		{
-			Actor llegada = new Llegada(cc, cargadorSprite);
-			bloqueActual.ABC[aux][9].agregarActor(llegada);
-			llegada.setCeldaActual(bloqueActual.ABC[aux][9]);
-			listaActores.addFirst(llegada);
-			aux++;
-		}*/
+		//Agregación Actor del Jugador.
+		bloqueActual.ABC[10][1].agregarActor(actor);
+		actor.setCeldaActual(bloqueActual.ABC[10][1]);
+		actores.addFirst(actor);
+		pjs.addFirst((PjSeleccionable) actor);
+		caibles.addFirst ((afectableXgravedad)actor);
 	}
 	
 	/**
@@ -327,27 +321,26 @@ public class Nivel
 	 * 
 	 * @param actorJugador Actor del Jugador del Juego.
 	 * @param cc ControlCentral del Juego para los Actores que lo requieran.
-	 * @param cargadorSprite Clase encargada de cargar las imagenes de los Actores.
 	 */
-	private void nivel1 (Actor actor, ControlCentral cc, CargadorSprite cargadorSprite)
+	private void nivel1 (Actor actor, ControlCentral cc)
 	{
 		fondo = "Fondo2.png";
 		
 		mapa = new Mapa (this, 1, 1);
 		
 		//Creación Bloque 1 del Nivel. Que es el Bloque de inicio del Nivel.
-		bloqueActual = new Bloque(mapa, 0, 0, 14, 80);//Nivel de Piso default.
+		bloqueActual = new Bloque(mapa, 0, 0, 15, 80);//Nivel de Piso default.
+		bloqueActual.setNivelPiso(12);
 		
 		mapa.setBloque(0, 0, bloqueActual);
 		
 		//Agregación Principio Mapa
 		bloqueActual.setColumnaOcupada(2, true);
 		
-		//Agregación Actor del Jugador.
-		bloqueActual.ABC[11][5].agregarActor(actor);
-		actor.setCeldaActual(bloqueActual.ABC[11][5]);
-		actores.addFirst(actor);
-		caibles.addFirst((afectableXgravedad) actor);
+		//Agregación SubSuelo
+		bloqueActual.setFilaOcupada(14, true);
+		
+		//Agregación Actores no Personjes.
 		
 		//Agregación Piso
 		int aux = 0;
@@ -356,246 +349,377 @@ public class Nivel
 		{
 			if ((aux != 14) && ((aux < 27) || (aux > 30)))
 			{
-				Piso piso = new Piso(cargadorSprite);
+				Piso piso = new Piso();
 				bloqueActual.ABC[12][aux].setOcupada(true);
 				bloqueActual.ABC[12][aux].agregarEstructura(piso);
 				piso.setCeldaActual(bloqueActual.ABC[12][aux]);
 				actores.addFirst(piso);
-				estructuras.addFirst(piso);
 			}
 			else
 				bloqueActual.ABC[12][aux].setOcupada(false);
 			aux++;
 		}
 		
-		//Agregación Actores no Personjes.
-		
 		//Vacio en el Piso.
-		Vacio vacio1 = new Vacio (cargadorSprite);
+		Vacio vacio1 = new Vacio ();
 		bloqueActual.ABC[13][14].agregarActor(vacio1);
 		vacio1.setCeldaActual(bloqueActual.ABC[13][14]);
-		actores.addLast(vacio1);
+		actores.addFirst(vacio1);
 		//Piso al costado del Vacio.
-		Piso piso1 = new Piso(cargadorSprite);
+		Piso piso1 = new Piso();
 		bloqueActual.ABC[13][13].setOcupada(true);
 		bloqueActual.ABC[13][13].agregarEstructura(piso1);
 		piso1.setCeldaActual(bloqueActual.ABC[13][13]);
 		actores.addFirst(piso1);
-		estructuras.addFirst(piso1);
-		Piso piso2 = new Piso(cargadorSprite);
+		Piso piso2 = new Piso();
 		bloqueActual.ABC[13][15].setOcupada(true);
 		bloqueActual.ABC[13][15].agregarEstructura(piso2);
 		piso2.setCeldaActual(bloqueActual.ABC[13][15]);
 		actores.addFirst(piso2);
-		estructuras.addFirst(piso2);
 		
+		//Vacio en el Piso.
 		aux = 27;
 		while (aux <= 30)
 		{
-			Vacio vacio2 = new Vacio (cargadorSprite);
+			Vacio vacio2 = new Vacio ();
 			bloqueActual.ABC[13][aux].agregarActor(vacio2);
 			vacio2.setCeldaActual(bloqueActual.ABC[13][aux]);
-			actores.addLast(vacio2);
+			actores.addFirst(vacio2);
 			aux++;
 		}
 		//Piso al costado del Vacio.
-		Piso p1 = new Piso(cargadorSprite);
+		Piso p1 = new Piso();
 		bloqueActual.ABC[13][26].setOcupada(true);
 		bloqueActual.ABC[13][26].agregarEstructura(p1);
 		p1.setCeldaActual(bloqueActual.ABC[13][26]);
 		actores.addFirst(p1);
-		estructuras.addFirst(p1);
-		Piso p2 = new Piso(cargadorSprite);
+		Piso p2 = new Piso();
 		bloqueActual.ABC[13][31].setOcupada(true);
 		bloqueActual.ABC[13][31].agregarEstructura(p2);
 		p2.setCeldaActual(bloqueActual.ABC[13][31]);
 		actores.addFirst(p2);
-		estructuras.addFirst(p2);
+		
+		//Irrompibles
+		Irrompible plataforma0 = new Irrompible ();
+		bloqueActual.ABC[5][9].setOcupada(true);
+		bloqueActual.ABC[5][9].agregarEstructura(plataforma0);
+		plataforma0.setCeldaActual(bloqueActual.ABC[5][9]);
+		actores.addFirst(plataforma0);
+		plataformas.addFirst(plataforma0);
 		
 		//Irrompibles
 		aux = 6; aux2 = 24;
-		while ((aux <= 11) && (aux2 >= 18))
+		while ((aux <= 11) && (aux2 > 18))
 		{
-			Irrompible plataforma = new Irrompible (cargadorSprite);
+			Irrompible plataforma = new Irrompible ();
 			bloqueActual.ABC[aux][aux2].setOcupada(true);
-			bloqueActual.ABC[aux][aux2].agregarEstructura(plataforma);//Plataforma irrompible
+			bloqueActual.ABC[aux][aux2].agregarEstructura(plataforma);
 			plataforma.setCeldaActual(bloqueActual.ABC[aux][aux2]);
 			actores.addFirst(plataforma);
-			estructuras.addFirst(plataforma);
+			plataformas.addFirst(plataforma);
 			aux2--;
-			Irrompible plataforma2 = new Irrompible (cargadorSprite);
+			Irrompible plataforma2 = new Irrompible ();
 			bloqueActual.ABC[aux][aux2].setOcupada(true);
-			bloqueActual.ABC[aux][aux2].agregarEstructura(plataforma2);//Plataforma irrompible
+			bloqueActual.ABC[aux][aux2].agregarEstructura(plataforma2);
 			plataforma2.setCeldaActual(bloqueActual.ABC[aux][aux2]);
 			actores.addFirst(plataforma2);
-			estructuras.addFirst(plataforma2);
-			aux2--;
+			plataformas.addFirst(plataforma2);
 			aux++;
 		}
+		
+		//Irrompibles
 		aux = 26;
 		while (aux <= 30)
 		{
-			Irrompible plataforma = new Irrompible (cargadorSprite);
+			Irrompible plataforma = new Irrompible ();
 			bloqueActual.ABC[6][aux].setOcupada(true);
-			bloqueActual.ABC[6][aux].agregarEstructura(plataforma);//Plataforma irrompible
+			bloqueActual.ABC[6][aux].agregarEstructura(plataforma);
 			plataforma.setCeldaActual(bloqueActual.ABC[6][aux]);
 			actores.addFirst(plataforma);
-			estructuras.addFirst(plataforma);
+			plataformas.addFirst(plataforma);
 			aux++;
 		}
-		aux = 6;
+		
+		//Irrompibles
+		aux = 3;
 		while (aux <= 11)
 		{
-			Irrompible plataforma = new Irrompible (cargadorSprite);
+			Irrompible plataforma = new Irrompible ();
 			bloqueActual.ABC[aux][31].setOcupada(true);
-			bloqueActual.ABC[aux][31].agregarEstructura(plataforma);//Plataforma irrompible
+			bloqueActual.ABC[aux][31].agregarEstructura(plataforma);
 			plataforma.setCeldaActual(bloqueActual.ABC[aux][31]);
 			actores.addFirst(plataforma);
-			estructuras.addFirst(plataforma);
+			plataformas.addFirst(plataforma);
 			aux++;
 		}
-		Irrompible plataforma = new Irrompible (cargadorSprite);
-		bloqueActual.ABC[5][9].setOcupada(true);
-		bloqueActual.ABC[5][9].agregarEstructura(plataforma);//Plataforma irrompible
-		plataforma.setCeldaActual(bloqueActual.ABC[5][9]);
+		
+		//Irrompibles
+		Irrompible plataforma = new Irrompible ();
+		bloqueActual.ABC[11][26].setOcupada(true);
+		bloqueActual.ABC[11][26].agregarEstructura(plataforma);
+		plataforma.setCeldaActual(bloqueActual.ABC[11][26]);
 		actores.addFirst(plataforma);
-		estructuras.addFirst(plataforma);
+		plataformas.addFirst(plataforma);
 		
-		Rompible r1 = new Rompible (cargadorSprite);
-		bloqueActual.ABC[9][8].setOcupada(true);
-		bloqueActual.ABC[9][8].agregarEstructura(r1);
-		r1.setCeldaActual(bloqueActual.ABC[9][8]);
-		actores.addFirst(r1);
-		estructuras.addFirst(r1);
+		//Irrompibles
+		Irrompible plataforma2 = new Irrompible ();
+		bloqueActual.ABC[6][37].setOcupada(true);
+		bloqueActual.ABC[6][37].agregarEstructura(plataforma2);
+		plataforma2.setCeldaActual(bloqueActual.ABC[6][37]);
+		actores.addFirst(plataforma2);
+		plataformas.addFirst(plataforma2);
 		
-		EspecialPowerUp plataformaPUP = new EspecialPowerUp (new SuperHongo(cargadorSprite), cc, true, cargadorSprite);
+		//EspecialPowerUp
+		EspecialPowerUp plataformaPUP = new EspecialPowerUp (new SuperHongo(), cc, true);
 		bloqueActual.ABC[9][9].setOcupada(true);
 		bloqueActual.ABC[9][9].agregarEstructura(plataformaPUP);
 		plataformaPUP.setCeldaActual(bloqueActual.ABC[9][9]);
 		actores.addFirst(plataformaPUP);
-		estructuras.addFirst(plataformaPUP);
+		plataformas.addFirst(plataformaPUP);
 		especialesPowerUp.addFirst(plataformaPUP);
 		
-		Rompible r2 = new Rompible (cargadorSprite);
-		bloqueActual.ABC[9][10].setOcupada(true);
-		bloqueActual.ABC[9][10].agregarEstructura(r2);
-		r2.setCeldaActual(bloqueActual.ABC[9][10]);
-		actores.addFirst(r2);
-		estructuras.addFirst(r2);
+		 int cantMonedas = 0; 
+		do cantMonedas = new Random ().nextInt(6); while (cantMonedas == 0);
+		EspecialMonedas plataformaM0 = new EspecialMonedas (cantMonedas);
+		bloqueActual.ABC[9][34].setOcupada(true);
+		bloqueActual.ABC[9][34].agregarEstructura(plataformaM0);
+		plataformaM0.setCeldaActual(bloqueActual.ABC[9][34]);
+		actores.addFirst(plataformaM0);
+		plataformas.addFirst(plataformaM0);
 		
-		aux = 34;
+		aux = 35;PowerUp pw = null;
 		while (aux <= 39)
 		{
 			if ((aux%2) == 0)
 			{
-				EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(cargadorSprite), cc, false, cargadorSprite);
-				bloqueActual.ABC[8][14].setOcupada(true);
-				bloqueActual.ABC[8][14].agregarEstructura(plataformaPUP2);
-				plataformaPUP2.setCeldaActual(bloqueActual.ABC[8][14]);
+				switch (aux)
+				{
+					case 34: pw = new SuperHongo(); break;
+					case 36: pw = new BombaNuclear(cc); break;
+					default: pw = new Estrella(); break;
+				}
+				EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (pw, cc, false);
+				bloqueActual.ABC[9][aux].setOcupada(true);
+				bloqueActual.ABC[9][aux].agregarEstructura(plataformaPUP2);
+				plataformaPUP2.setCeldaActual(bloqueActual.ABC[9][aux]);
 				actores.addFirst(plataformaPUP2);
-				estructuras.addFirst(plataformaPUP2);
+				plataformas.addFirst(plataformaPUP2);
 				especialesPowerUp.addFirst(plataformaPUP2);
 			}
 			else
 			{
-				EspecialMonedas plataformaM = new EspecialMonedas (3, cargadorSprite);
-				bloqueActual.ABC[7][13].setOcupada(true);
-				bloqueActual.ABC[7][13].agregarEstructura(plataformaM);
-				plataformaM.setCeldaActual(bloqueActual.ABC[7][13]);
+				do cantMonedas = new Random ().nextInt(6); while (cantMonedas == 0);
+				EspecialMonedas plataformaM = new EspecialMonedas (cantMonedas);
+				bloqueActual.ABC[9][aux].setOcupada(true);
+				bloqueActual.ABC[9][aux].agregarEstructura(plataformaM);
+				plataformaM.setCeldaActual(bloqueActual.ABC[9][aux]);
 				actores.addFirst(plataformaM);
-				estructuras.addFirst(plataformaM);
+				plataformas.addFirst(plataformaM);
 			}
 			aux++;
 		}
 		
+		aux = 36;
+		while (aux <= 38)
+		{
+			EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new SuperHongo(), cc, true);
+			bloqueActual.ABC[4][aux].setOcupada(true);
+			bloqueActual.ABC[4][aux].agregarEstructura(plataformaPUP2);
+			plataformaPUP2.setCeldaActual(bloqueActual.ABC[4][aux]);
+			actores.addFirst(plataformaPUP2);
+			plataformas.addFirst(plataformaPUP2);
+			especialesPowerUp.addFirst(plataformaPUP2);
+			aux += 2;			
+		}
+		
+		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new HongoVerde(), cc, false);
+		bloqueActual.ABC[3][37].setOcupada(true);
+		bloqueActual.ABC[3][37].agregarEstructura(plataformaPUP2);
+		plataformaPUP2.setCeldaActual(bloqueActual.ABC[3][37]);
+		actores.addFirst(plataformaPUP2);
+		plataformas.addFirst(plataformaPUP2);
+		especialesPowerUp.addFirst(plataformaPUP2);
+				
 		aux = 46;
 		while (aux <= 56)
 		{
 			if ((aux%2) == 0)
 			{
-				Rompible rompible = new Rompible (cargadorSprite);
-				bloqueActual.ABC[8][12].setOcupada(true);
-				bloqueActual.ABC[8][12].agregarEstructura(rompible);
-				rompible.setCeldaActual(bloqueActual.ABC[8][12]);
+				Rompible rompible = new Rompible ();
+				bloqueActual.ABC[8][aux].setOcupada(true);
+				bloqueActual.ABC[8][aux].agregarEstructura(rompible);
+				rompible.setCeldaActual(bloqueActual.ABC[8][aux]);
 				actores.addFirst(rompible);
-				estructuras.addFirst(rompible);
+				plataformas.addFirst(rompible);
 			}
 			else
 			{
-				EspecialMonedas plataformaM = new EspecialMonedas (3, cargadorSprite);
-				bloqueActual.ABC[7][13].setOcupada(true);
-				bloqueActual.ABC[7][13].agregarEstructura(plataformaM);
-				plataformaM.setCeldaActual(bloqueActual.ABC[7][13]);
+				do cantMonedas = new Random ().nextInt(6); while (cantMonedas == 0);
+				EspecialMonedas plataformaM = new EspecialMonedas (cantMonedas);
+				bloqueActual.ABC[8][aux].setOcupada(true);
+				bloqueActual.ABC[8][aux].agregarEstructura(plataformaM);
+				plataformaM.setCeldaActual(bloqueActual.ABC[8][aux]);
 				actores.addFirst(plataformaM);
-				estructuras.addFirst(plataformaM);
+				plataformas.addFirst(plataformaM);
 			}
 			aux++;
 		}
+		
+		Rompible r4 = new Rompible ();
+		bloqueActual.ABC[7][56].setOcupada(true);
+		bloqueActual.ABC[7][56].agregarEstructura(r4);
+		r4.setCeldaActual(bloqueActual.ABC[7][56]);
+		actores.addFirst(r4);
+		plataformas.addFirst(r4);
+		
+		Rompible r3 = new Rompible ();
+		bloqueActual.ABC[7][46].setOcupada(true);
+		bloqueActual.ABC[7][46].agregarEstructura(r3);
+		r3.setCeldaActual(bloqueActual.ABC[7][46]);
+		actores.addFirst(r3);
+		plataformas.addFirst(r3);
+		
+		Rompible r5 = new Rompible ();
+		bloqueActual.ABC[8][39].setOcupada(true);
+		bloqueActual.ABC[8][39].agregarEstructura(r5);
+		r5.setCeldaActual(bloqueActual.ABC[8][39]);
+		actores.addFirst(r5);
+		plataformas.addFirst(r5);
+		
+		Rompible r6 = new Rompible ();
+		bloqueActual.ABC[8][34].setOcupada(true);
+		bloqueActual.ABC[8][34].agregarEstructura(r6);
+		r6.setCeldaActual(bloqueActual.ABC[8][34]);
+		actores.addFirst(r6);
+		plataformas.addFirst(r6);
+		
+		Rompible r2 = new Rompible ();
+		bloqueActual.ABC[9][10].setOcupada(true);
+		bloqueActual.ABC[9][10].agregarEstructura(r2);
+		r2.setCeldaActual(bloqueActual.ABC[9][10]);
+		actores.addFirst(r2);
+		plataformas.addFirst(r2);
+		
+		Rompible r1 = new Rompible ();
+		bloqueActual.ABC[9][8].setOcupada(true);
+		bloqueActual.ABC[9][8].agregarEstructura(r1);
+		r1.setCeldaActual(bloqueActual.ABC[9][8]);
+		actores.addFirst(r1);
+		plataformas.addFirst(r1);
 		
 		//Agregación Actores Enemigos.
 		
-		aux = 11;
-		while (aux <= 13)
+		//Goombas
+		aux = 48;
+		while (aux <= 54)
 		{
-			if (aux != 12)
-			{
-				Goomba goomba = new Goomba (cargadorSprite);
-				bloqueActual.ABC[11][aux].agregarActor(goomba);
-				goomba.setCeldaActual(bloqueActual.ABC[11][aux]);
-				actores.addFirst(goomba);
-				enemigos.addFirst(goomba);
-				caibles.addFirst((afectableXgravedad) goomba);
-			}
-			aux++;
+			Goomba goomba = new Goomba ();
+			bloqueActual.ABC[7][aux].agregarActor(goomba);
+			goomba.setCeldaActual(bloqueActual.ABC[7][aux]);
+			actores.addFirst(goomba);
+			enemigos.addFirst(goomba);
+			caibles.addFirst(goomba);
+			aux++;aux++;
 		}
 		
-		Goomba goomba = new Goomba (cargadorSprite);
-		bloqueActual.ABC[11][25].agregarActor(goomba);
-		goomba.setCeldaActual(bloqueActual.ABC[11][25]);
-		actores.addFirst(goomba);
-		enemigos.addFirst(goomba);
-		caibles.addFirst((afectableXgravedad) goomba);
-		
-		KoopaTroopa kt1 = new KoopaTroopa (new KTNormal(), cargadorSprite);
-		bloqueActual.ABC[11][37].agregarActor(kt1);
-		kt1.setCeldaActual(bloqueActual.ABC[11][37]);
-		actores.addFirst(kt1);		
-		enemigos.addFirst(kt1);		
-		caibles.addFirst(kt1);
-		
-		KoopaTroopa kt2 = new KoopaTroopa (new KTNormal(), cargadorSprite);
+		//KoopaTroopas
+		KoopaTroopa kt2 = new KoopaTroopa (new KTNormal());
 		bloqueActual.ABC[11][42].agregarActor(kt2);
 		kt2.setCeldaActual(bloqueActual.ABC[11][42]);
 		actores.addFirst(kt2);
 		enemigos.addFirst(kt2);
 		caibles.addFirst(kt2);
 		
+		KoopaTroopa kt1 = new KoopaTroopa (new KTNormal());
+		bloqueActual.ABC[11][37].agregarActor(kt1);
+		kt1.setCeldaActual(bloqueActual.ABC[11][37]);
+		actores.addFirst(kt1);		
+		enemigos.addFirst(kt1);		
+		caibles.addFirst(kt1);
+		
+		KoopaTroopa kt3 = new KoopaTroopa (new KTNormal());
+		bloqueActual.ABC[8][37].agregarActor(kt3);
+		kt3.setCeldaActual(bloqueActual.ABC[8][37]);
+		actores.addFirst(kt3);		
+		enemigos.addFirst(kt3);		
+		caibles.addFirst(kt3);
+		
+		Goomba goomba = new Goomba ();
+		bloqueActual.ABC[11][25].agregarActor(goomba);
+		goomba.setCeldaActual(bloqueActual.ABC[11][25]);
+		actores.addFirst(goomba);
+		enemigos.addFirst(goomba);
+		caibles.addFirst(goomba);
+		
+		//Goombas
+		aux = 11;
+		while (aux <= 13)
+		{
+			if (aux != 12)
+			{
+				Goomba goomba0 = new Goomba ();
+				bloqueActual.ABC[11][aux].agregarActor(goomba0);
+				goomba0.setCeldaActual(bloqueActual.ABC[11][aux]);
+				actores.addFirst(goomba0);
+				enemigos.addFirst(goomba0);
+				caibles.addFirst(goomba0);
+			}
+			aux++;
+		}
+		
 		//Agregación Monedas
 		aux = 20;
 		while (aux <= 24)
 		{
-			Moneda moneda1 = new Moneda(cargadorSprite);
+			Moneda moneda1 = new Moneda();
 			bloqueActual.ABC[11][aux].agregarActor(moneda1);
 			moneda1.setCeldaActual(bloqueActual.ABC[11][aux]);
-			actores.addLast(moneda1);
+			actores.addFirst(moneda1);
 			aux++;
 		}
 		aux = 21;
-		while (aux <= 24)
+		while (aux <= 30)
 		{
-			Moneda moneda1 = new Moneda(cargadorSprite);
+			Moneda moneda1 = new Moneda();
 			bloqueActual.ABC[10][aux].agregarActor(moneda1);
 			moneda1.setCeldaActual(bloqueActual.ABC[10][aux]);
-			actores.addLast(moneda1);
+			actores.addFirst(moneda1);
 			aux++;
 		}
 		aux = 22;
-		while (aux <= 24)
+		while (aux <= 30)
 		{
-			Moneda moneda1 = new Moneda(cargadorSprite);
+			Moneda moneda1 = new Moneda();
 			bloqueActual.ABC[9][aux].agregarActor(moneda1);
 			moneda1.setCeldaActual(bloqueActual.ABC[9][aux]);
-			actores.addLast(moneda1);
+			actores.addFirst(moneda1);
+			aux++;
+		}
+		aux = 23;
+		while (aux <= 30)
+		{
+			Moneda moneda1 = new Moneda();
+			bloqueActual.ABC[8][aux].agregarActor(moneda1);
+			moneda1.setCeldaActual(bloqueActual.ABC[8][aux]);
+			actores.addFirst(moneda1);
+			aux++;
+		}
+		aux = 24;
+		while (aux <= 30)
+		{
+			Moneda moneda1 = new Moneda();
+			bloqueActual.ABC[7][aux].agregarActor(moneda1);
+			moneda1.setCeldaActual(bloqueActual.ABC[7][aux]);
+			actores.addFirst(moneda1);
+			aux++;
+		}
+		aux = 8;
+		while (aux <= 10)
+		{
+			Moneda moneda1 = new Moneda();
+			bloqueActual.ABC[8][aux].agregarActor(moneda1);
+			moneda1.setCeldaActual(bloqueActual.ABC[8][aux]);
+			actores.addFirst(moneda1);
 			aux++;
 		}
 		
@@ -603,15 +727,25 @@ public class Nivel
 		aux = 0;
 		while (aux <= 11)
 		{
-			Actor llegada = new Llegada(cc, cargadorSprite);
+			Actor llegada = new Llegada(cc);
 			bloqueActual.ABC[aux][65].agregarActor(llegada);
 			llegada.setCeldaActual(bloqueActual.ABC[aux][65]);
 			actores.addFirst(llegada);
 			aux++;
 		}
 		
+		//Agregación Techo Mapa
+		bloqueActual.setFilaOcupada(0, true);
+		
 		//Agregación Final Mapa
 		bloqueActual.setColumnaOcupada(69, true);
+		
+		//Agregación Actor del Jugador.
+		bloqueActual.ABC[11][5].agregarActor(actor);
+		actor.setCeldaActual(bloqueActual.ABC[11][5]);
+		actores.addFirst(actor);
+		pjs.addFirst((PjSeleccionable) actor);
+		caibles.addFirst((afectableXgravedad) actor);
 	}
 	
 	/**
@@ -622,206 +756,6 @@ public class Nivel
 	public void setBloqueActual (Bloque bloque)
 	{
 		bloqueActual = bloque;
-	}
-	
-	/**
-	 * Agrega PowerUp al nivel.
-	 * 
-	 * @param pwUp PowerUp a agregar.
-	 * @throws NullPointerException Si se ingresa un PowerUp igual a null.
-	 * @throws AccionActorException Si se intenta agregar un PowerUp a una Celda totalmente ocupada.
-	 */
-	public void agregarPowerUp (PowerUp pwUp) throws NullPointerException, AccionActorException
-	{
-		if (pwUp == null)
-			throw new NullPointerException ("Celda.agregarActor()" + "\n" +
-                                            "El Actor que está intentando agregar a la Celda es null.");
-		
-		actores.addLast(pwUp);
-		powerUps.addLast(pwUp);
-		caibles.addLast(pwUp);
-	}
-	
-	/**
-	 * Elimina el Actor actor del Nivel.
-	 * 
-	 * Si el actor que se quiere eliminar es:
-	 * Estructura => llamar a eliminarEstructura, y no a este método.
-	 * EspecialPowerUp => llamar a eliminarEspecialPowerUp, y no a este método.
-	 * PowerUp => llamar a eliminarPowerUp, y no a este método.
-	 * Enemigo => llamar a eliminarEnemigo, y no a este método.
-	 * 
-	 * Si además el actor es afectableXgravedad, entonces llamar a eliminarCaible, antes de llamar a alguno de los antes mencionados.
-	 * 
-	 * @param actor Actor a eliminar.
-	 * @throws NullPointerException Si actor es igual a null.
-	 * @throws AccionActorException Si se intenta eliminar un Actor que no pertenece al Nivel.
-	 */
-	public void eliminarActor (Actor actor) throws NullPointerException, AccionActorException
-	{
-		if (actor == null)
-			throw new NullPointerException ("Nivel.eliminarActor()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " es null.");
-		if (actores.isEmpty())
-			throw new AccionActorException ("Nivel.eliminarActor()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo." + "\n" +
-                                            "El nivel no tiene actores.");
-		
-		Position<Actor> p = actores.first();
-		while ((p != actores.last()) && (p.element() != actor))
-			p = actores.next(p);
-		if (p.element() != actor)
-			throw new AccionActorException ("Nivel.eliminarActor()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo.");
-		actores.remove(p);
-	}
-	
-	/**
-	 * Elimina la Estructura estructura del Nivel.
-	 * 
-	 * Se elimina automáticamente de la lista de actores.
-	 * NO LLAMAR eliminarActor.
-	 * 
-	 * @param estructura Estructura a eliminar.
-	 * @throws NullPointerException Si estructura es igual a null.
-	 * @throws AccionActorException Si se intenta eliminar una Estructura que no pertenece al Nivel.
-	 */
-	public void eliminarEstructura (Estructura estructura) throws NullPointerException, AccionActorException
-	{
-		if (estructura == null)
-			throw new NullPointerException ("Nivel.eliminarEstructura()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " es null.");
-		if (estructuras.isEmpty())
-			throw new AccionActorException ("Nivel.eliminarEstructura()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo." + "\n" +
-                                            "El nivel no tiene actores.");
-		
-		Position<Estructura> p = estructuras.first();
-		while ((p != estructuras.last()) && (p.element() != estructura))
-			p = estructuras.next(p);
-		if (p.element() != estructura)
-			throw new AccionActorException ("Nivel.eliminarEstructura()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo.");
-		estructuras.remove(p);
-		eliminarActor((Actor) estructura);
-	}
-	
-	/**
-	 * Elimina el EspecialPowerUp especialPowerUp del Nivel.
-	 * 
-	 * Se elimina automáticamente de la lista de estructuras.
-	 * NO LLAMAR eliminarEstructura.
-	 * 
-	 * @param especialPowerUp EspecialPowerUp a eliminar.
-	 * @throws NullPointerException Si especialPowerUp es igual a null.
-	 * @throws AccionActorException Si se intenta eliminar un especialPowerUp que no pertenece al Nivel.
-	 */
-	public void eliminarEspecialPowerUp (EspecialPowerUp especialPowerUp) throws NullPointerException, AccionActorException
-	{
-		if (especialPowerUp == null)
-			throw new NullPointerException ("Nivel.eliminarEspecialPowerUp()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " es null.");
-		if (especialesPowerUp.isEmpty())
-			throw new AccionActorException ("Nivel.eliminarEspecialPowerUp()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo." + "\n" +
-                                            "El nivel no tiene actores.");
-		
-		Position<EspecialPowerUp> p = especialesPowerUp.first();
-		while ((p != especialesPowerUp.last()) && (p.element() != especialPowerUp))
-			p = especialesPowerUp.next(p);
-		if (p.element() != especialPowerUp)
-			throw new AccionActorException ("Nivel.eliminarEspecialPowerUp()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo.");
-		especialesPowerUp.remove(p);
-		eliminarEstructura((Estructura) especialPowerUp);
-	}
-	
-	/**
-	 * Elimina el PowerUp powerUp del Nivel.
-	 * 
-	 * Se elimina automáticamente de la lista de actores.
-	 * NO LLAMAR eliminarActor.
-	 * 
-	 * @param powerUp PowerUp a eliminar.
-	 * @throws NullPointerException Si powerUp es igual a null.
-	 * @throws AccionActorException Si se intenta eliminar un PowerUp que no pertenece al Nivel.
-	 */
-	public void eliminarPowerUp (PowerUp powerUp) throws NullPointerException, AccionActorException
-	{
-		if (powerUp == null)
-			throw new NullPointerException ("Nivel.eliminarPowerUp()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " es null.");
-		if (powerUps.isEmpty())
-			throw new AccionActorException ("Nivel.eliminarPowerUp()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo." + "\n" +
-                                            "El nivel no tiene actores.");
-		
-		Position<PowerUp> p = powerUps.first();
-		while ((p != powerUps.last()) && (p.element() != powerUp))
-			p = powerUps.next(p);
-		if (p.element() != powerUp)
-			throw new AccionActorException ("Nivel.eliminarPowerUp()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo.");
-		powerUps.remove(p);
-		eliminarActor(powerUp);
-	}
-	
-	/**
-	 * Elimina el Enemigo enemigo del Nivel.
-	 * 
-	 * Se elimina automáticamente de la lista de actores.
-	 * NO LLAMAR eliminarActor.
-	 * 
-	 * @param enemigo Enemigo a eliminar.
-	 * @throws NullPointerException Si enemigo es igual a null.
-	 * @throws AccionActorException Si se intenta eliminar un Enemigo que no pertenece al Nivel.
-	 */
-	public void eliminarEnemigo (Enemigo enemigo) throws NullPointerException, AccionActorException
-	{
-		if (enemigo == null)
-			throw new NullPointerException ("Nivel.eliminarEnemigo()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " es null.");
-		if (enemigos.isEmpty())
-			throw new AccionActorException ("Nivel.eliminarEnemigo()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo." + "\n" +
-                                            "El nivel no tiene actores.");
-		
-		Position<Enemigo> p = enemigos.first();
-		while ((p != enemigos.last()) && (p.element() != enemigo))
-			p = enemigos.next(p);
-		if (p.element() != enemigo)
-			throw new AccionActorException ("Nivel.eliminarEnemigo()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo.");
-		enemigos.remove(p);
-		eliminarActor((Actor) enemigo);
-	}
-	
-	/**
-	 * Elimina el Actor Caible caible del Nivel.
-	 * 
-	 * Se debe también llamar al Eliminar especifico para ese Actor. (eliminarPowerUp(), eliminarEnemigo(), etc.)
-	 * 
-	 * @param caible Actor Caible a eliminar.
-	 * @throws NullPointerException Si caible es igual a null.
-	 * @throws AccionActorException Si se intenta eliminar un Actor Caible que no pertenece al Nivel.
-	 */
-	public void eliminarCaible (afectableXgravedad caible) throws NullPointerException, AccionActorException
-	{
-		if (caible == null)
-			throw new NullPointerException ("Nivel.eliminarCaible()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " es null.");
-		if (caibles.isEmpty())
-			throw new AccionActorException ("Nivel.eliminarCaible()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo." + "\n" +
-                                            "El nivel no tiene actores.");
-		
-		Position<afectableXgravedad> p = caibles.first();
-		while ((p != caibles.last()) && (p.element() != caible))
-			p = caibles.next(p);
-		if (p.element() != caible)
-			throw new AccionActorException ("Nivel.eliminarCaible()" + "\n" +
-                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo.");
-		caibles.remove(p);
 	}
 	
 	/*CONSULTAS*/
@@ -868,36 +802,36 @@ public class Nivel
 	}
 	
 	/**
-	 * Devuelve la Lista de Llegadas.
+	 * Devuelve la Lista de PersonajesSeleccionables.
 	 * 
 	 * @param cc Verificación de que es solicitado por un ControlCentral.
-	 * @return Lista de Llegadas.
+	 * @return Lista de PersonajesSeleccionables.
 	 */
-	public PositionList<Llegada> getLlegadas (ControlCentral cc)
+	public PositionList<PjSeleccionable> getPJs (ControlCentral cc)
 	{
-		return llegadas;
+		return pjs;
 	}
 	
 	/**
-	 * Devuelve la Lista de Vacios.
+	 * Devuelve la Lista de Enemigos.
 	 * 
 	 * @param cc Verificación de que es solicitado por un ControlCentral.
-	 * @return Lista de Vacios.
+	 * @return Lista de Enemigos.
 	 */
-	public PositionList<Vacio> getVacios (ControlCentral cc)
+	public PositionList<Enemigo> getEnemigos (ControlCentral cc)
 	{
-		return vacios;
+		return enemigos;
 	}
 	
 	/**
-	 * Devuelve la Lista de Estructuras.
+	 * Devuelve la Lista de Plataformas.
 	 * 
 	 * @param cc Verificación de que es solicitado por un ControlCentral.
-	 * @return Lista de Estructuras.
+	 * @return Lista de Plataformas.
 	 */
-	public PositionList<Estructura> getEstructuras (ControlCentral cc)
+	public PositionList<Plataforma> getPlataformas (ControlCentral cc)
 	{
-		return estructuras;
+		return plataformas;
 	}
 	
 	/**
@@ -920,17 +854,6 @@ public class Nivel
 	public PositionList<PowerUp> getPowerUps (ControlCentral cc)
 	{
 		return powerUps;
-	}
-	
-	/**
-	 * Devuelve la Lista de Enemigos.
-	 * 
-	 * @param cc Verificación de que es solicitado por un ControlCentral.
-	 * @return Lista de Enemigos.
-	 */
-	public PositionList<Enemigo> getEnemigos (ControlCentral cc)
-	{
-		return enemigos;
 	}
 	
 	/**

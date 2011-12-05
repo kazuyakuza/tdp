@@ -2,7 +2,9 @@ package ProyectoX.Logica.Personajes;
 
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
+import ProyectoX.Logica.Responsabilidades.Posicionable;
 
 /**
  * Representa a Mario en estado MarioGrande (cuando Mario toma el Super Hongo) del juego.
@@ -14,6 +16,7 @@ import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
  */
 public class MarioGrande extends Caracteristica
 {
+	
 	//Atributos de Clase
 	private static final String dirRecursos = "Mario/";
 	private static final String [] nombresSprites = //En este arreglo se encuentran todas las rutas a las imagenes correspondientes a MarioGrande, la ubicación en los índices es:
@@ -28,6 +31,9 @@ public class MarioGrande extends Caracteristica
 	//Numeros de los Sprites.
 	protected static int agachado = 6;
 	
+	//Atribtuos de Instancia
+	protected Celda celdaGrande;
+	
 	/*CONSTRUCTORES*/
 	
 	/**
@@ -38,6 +44,8 @@ public class MarioGrande extends Caracteristica
 	public MarioGrande (Mario pj)
 	{
 		super(pj);
+		celdaGrande = mario.getCeldaActual().getSuperior();		
+		celdaGrande.agregarActor(mario);			
 	}
 	
 	/*COMANDOS IMPLEMENTADOS*/
@@ -53,7 +61,28 @@ public class MarioGrande extends Caracteristica
 			mario.getSpriteManager().cambiarSprite(-agachado);
 		else
 			mario.getSpriteManager().cambiarSprite(agachado);
-		//Quitar la última celda de la lista de celdas actuales.
+		try
+		{
+			if (!this.agachado())
+			{
+				celdaGrande.sacarActor(mario);		
+				celdaGrande = null;
+			}
+		}
+		catch (Exception e)
+		{e.printStackTrace();}
+	}
+	
+	/**
+	 * Realiza la acción de pararse.
+	 */
+	public void pararse ()
+	{
+		if (this.agachado())
+		{
+			celdaGrande = mario.getCeldaActual().getSuperior();		
+			celdaGrande.agregarActor(mario);
+		}
 	}
 	
 	/**
@@ -99,7 +128,7 @@ public class MarioGrande extends Caracteristica
 	public void serDañado (Actor a)
 	{
 		mario.setCaracteristica(new MarioChico(mario));
-		mario.setCaracteristica(new Invulnerable (mario.getCaracteristica(), 5000));
+		mario.setCaracteristica(new Invulnerable (mario.getCaracteristica(), 3000));
 		((Invulnerable)mario.getCaracteristica()).empezar();
 		mario.getJugador().getControlCentral().cambiarPlataformasSuperHongo();
 		mario = null;
@@ -134,6 +163,219 @@ public class MarioGrande extends Caracteristica
 	public int multiplicadorBonus ()
 	{
 		return 5;
+	}
+	
+	/**
+	 * Calcula un vector que representa la distancia más cercana de Mario al Actor a en el eje cartesiano.
+	 * El vector es de tamñano 2 (x,y). 
+	 * En el índice 0 se ubica la distancia de Mario al Actor a en el eje x. Si el valor es positivo, el Actor se encuentra a la derecha de Mario, sino a la izquierda.	 * 
+	 * En el índice 1 se ubica la distancia de Mario al Actor a en el eje y. Si el valor es positivo, el Actor se encuentra por encima (arriba) de Mario, sino por debajo (abajo).
+	 * 
+	 * @param a Actor Posicionable que se utiliza para calcular la distancia hacia Mario.
+	 * @return un arreglo de dos componentes (x,y) que contiene la distancia más cercana de Mario hacia el Actor a en el eje cartesinano.
+	 */
+	public int[] vectorDistancia (Posicionable a)
+	{
+		int [] vector = new int[2];		
+		if ( mario.getCeldaActual().distancia(a.getCeldaActual()) <= celdaGrande.distancia(a.getCeldaActual()) )
+		{//Si la celda inferior de Mario (celdaActual) es la más cercana al Actor.
+			vector = super.vectorDistancia(a);
+		}
+		else 
+		{//Sino, la celda más cercana de Mario al Actor es la celda superior (celdaGrande). 
+			vector[0] = a.getCeldaActual().getPosColumna() - celdaGrande.getPosColumna();
+			vector[1] = celdaGrande.getPosFila() - a.getCeldaActual().getPosFila();
+		}
+		return vector;
+	}
+	
+	/**
+	 * Verifica si Mario se encuentra agachado.
+	 * @return verdadero si Mario está agachado, falso, en caso contrario.
+	 */
+	protected boolean agachado()
+	{		
+		return celdaGrande == null;
+	}
+	
+	/*METODOS REDEFINIDOS*/
+	
+	/**
+	 * Realiza la Acción Caer, producida por el efecto de la Gravedad.
+	 * 
+	 * @throws AccionActorException Si se produce un error al caer.
+	 */
+	public void caer () throws AccionActorException
+	{			
+		super.caer();			
+	}
+	
+	/**
+	 * Mario realiza la acción de saltar.
+	 * 
+	 * @throws AccionActorException Si se produce algún error al saltar.
+	 */
+	public void saltar () throws AccionActorException
+	{
+		Celda celdaSuperior = celdaGrande;
+		try
+		{
+			if (!this.agachado())
+			{
+				if (condicionSaltar())
+				{					
+					if (mario.miraIzq())
+						mario.getSpriteManager().cambiarSprite(-saltando);
+					else
+						mario.getSpriteManager().cambiarSprite(saltando);
+					if (celdaGrande.haySuperior())
+					{
+						celdaSuperior = celdaGrande.getSuperior();
+						mario.producirColisiones(celdaSuperior);
+						if (!celdaSuperior.isOcupada())
+						{					
+							mario.setPG(mario.getPG()+1);
+							this.PS++;
+							this.actualizarCelda(celdaGrande);
+						}
+					}
+				}
+				else
+					if ((mario.getPG() != -1) && (mario.getCeldaActual().getInferior().isOcupada()))
+						PS = 0;
+			}
+		}
+		catch (NullPointerException e1)
+		{
+			throw new AccionActorException ("MarioGrande.saltar()" + "\n" +
+                                            "Imposible realizar la acción caer." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e1.getMessage());
+		}
+		catch (Exception e2)
+		{
+			throw new AccionActorException ("MarioGrande.saltar()" + "\n" +
+                                            "Imposible realizar la acción saltar a/desde Celda de posición (" + celdaSuperior.getPosFila() + "," + celdaSuperior.getPosColumna() + ")." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e2.getMessage());
+		}
+	}
+	
+	/**
+	 * Mario realiza la acción de moverse hacia la izquierda.
+	 * 
+	 * @throws AccionActorException Si se produce algún error al moverse a izquierda.
+	 */
+	public void moverseAizquierda () throws AccionActorException
+	{
+		Celda celdaAnterior = celdaGrande;
+		try 
+		{
+			if ( !this.agachado())
+			{
+				if (mario.getCeldaActual() == null)
+					throw new NullPointerException ("La celdaActual del Actor es null.");
+				
+				if (celdaGrande.hayAnterior() && mario.getCeldaActual().hayAnterior())
+				{
+					mario.mirarIzq(true);
+					if (mario.getCeldaActual().getInferior().isOcupada())
+					{
+						mario.getSpriteManager().cambiarSprite(-caminando);
+						mario.getSpriteManager().setGif(cantSpritesCaminando());
+					}
+					celdaAnterior = mario.getCeldaActual().getAnterior();
+					if (!celdaGrande.getAnterior().isOcupada() && !celdaAnterior.isOcupada())
+					{
+						mario.producirColisiones (celdaGrande.getAnterior());
+						mario.moverseAcelda (celdaAnterior);					
+					}
+				}
+			}
+		}
+		catch (NullPointerException e1)
+		{
+			throw new AccionActorException ("MarioGrande.moverseAizquierda()" + "\n" +
+                                            "Imposible realizar la acción moverAizquierda." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e1.getMessage());
+		}
+		catch (Exception e2)
+		{
+			throw new AccionActorException ("MarioGrande.moverseAizquierda()" + "\n" +
+                                            "Imposible realizar la acción moverAizquierda a/desde Celda de posición (" + celdaAnterior.getPosFila() + "," + celdaAnterior.getPosColumna() + ")." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e2.getMessage());
+		}
+	}
+	
+	/**
+	 * Mario realiza la acción de moverse hacia la derecha.
+	 * 
+	 * 
+	 * @throws AccionActorException Si se produce algún error al moverse a derecha.
+	 */
+	public void moverseAderecha () throws AccionActorException
+	{		
+		Celda celdaSiguiente = celdaGrande;
+		try 
+		{						
+			if ( !this.agachado())
+			{
+				if (mario.getCeldaActual() == null)
+					throw new NullPointerException ("La celdaActual del Actor es null.");
+				
+				if (celdaGrande.haySiguiente() && mario.getCeldaActual().haySiguiente())
+				{
+					mario.mirarIzq(false);
+					if (mario.getCeldaActual().getInferior().isOcupada())
+					{
+						mario.getSpriteManager().cambiarSprite(caminando);
+						mario.getSpriteManager().setGif(cantSpritesCaminando());
+					}
+					celdaSiguiente = mario.getCeldaActual().getSiguiente();
+					if (!celdaGrande.getSiguiente().isOcupada() && !celdaSiguiente.isOcupada())
+					{
+						mario.producirColisiones(celdaGrande.getSiguiente());
+						mario.moverseAcelda(celdaSiguiente);
+					}
+				}
+			}
+		}
+		catch (NullPointerException e1)
+		{
+			throw new AccionActorException ("MarioGrande.moverseAderecha()" + "\n" +
+                                            "Imposible realizar la acción moverAderecha." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e1.getMessage());
+		}
+		catch (Exception e2)
+		{
+			throw new AccionActorException ("MarioGrande.moverseAderecha()" + "\n" +
+                                            "Imposible realizar la acción moverAderecha a/desde Celda de posición (" + celdaSiguiente.getPosFila() + "," + celdaSiguiente.getPosColumna() + ")." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e2.getMessage());
+		}
+	}
+		
+	/**
+	 * Modifica la Celda actual del actor por la Celda c.
+	 * @param c es la nueva Celda para el Actor.
+	 * @throws NullPointerException si c es null.
+	 */
+	protected void actualizarCelda (Celda c) throws NullPointerException
+	{
+		if (c == null)
+			throw new NullPointerException ("Actor.ActualizarCelda()" + "\n" +
+                                            "Imposible moverse a la Celda c. c es null");
+		
+		super.actualizarCelda(c);
+		if (!this.agachado())
+		{
+			celdaGrande.sacarActor(mario);
+			celdaGrande = c.getSuperior();
+			celdaGrande.agregarActor(mario);
+		}		
 	}
 	
 }

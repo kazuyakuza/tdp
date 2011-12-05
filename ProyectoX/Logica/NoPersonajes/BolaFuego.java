@@ -3,10 +3,11 @@ package ProyectoX.Logica.NoPersonajes;
 import java.util.Iterator;
 
 import ProyectoX.Excepciones.AccionActorException;
-import ProyectoX.Excepciones.ColisionException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
+import ProyectoX.Librerias.Threads.UpNeeder;
+import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
@@ -20,7 +21,7 @@ import ProyectoX.Logica.Responsabilidades.Movible;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class BolaFuego extends Actor implements Movible//, afectableXgravedad
+public class BolaFuego extends Actor implements Movible
 {
 	//Variables de Clase
 	private static final String dirRecursos = "Objetos/";
@@ -39,8 +40,10 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 	private static int cantFramesExplotando = 4;
 	
 	//Variables de Instancia
-	protected Mario mario;
-	//protected IA miIA;
+	protected Mario mario;	
+	
+	//Actualizador
+	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
 	
 	//Prioridades en UpNeeder
 	//0 = morir (explotar)
@@ -48,13 +51,13 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 
 	/**
 	 * Crea una Plataforma Irrompible.
-	 * 
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public BolaFuego(Mario pj, CargadorSprite cargadorSprite) 
+	public BolaFuego(Mario pj) 
 	{
-		super(nombresSprites, cargadorSprite);
-		mario = pj;		
+		super(nombresSprites);
+		mario = pj;
+		upNeeder = new UpNeeder (1);
+		Updater.getUpdater().addUpNeeder(upNeeder);
 		spriteManager.cambiarSprite(enMovimiento);
 		spriteManager.rotarGif(cantFramesMovimiento);
 	}
@@ -107,35 +110,16 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 		while (actores.hasNext())
 			actores.next().colisionarBola(this);
 	}
-	
-	/**
-	 * Si la Gravedad afecta a este Actor, entonces llamará a este método para afectarlo.
-	 * 
-	 * @param efecto Efecto de la Gravedad sobre este Actor.
-	 */
-	/*public void efectoGravedad (int efecto)
-	{
-		PG = 0;
-	}*/
-	
-	/**
-	 * Realiza la Acción caer, producida por el efecto de la Gravedad.
-	 * No tiene ningún efecto en este Actor.
-	 * 
-	 * @throws AccionActorException Si se produce algún error al caer.
-	 */
-	/*public void caer () throws AccionActorException
-	{*/
-		/*No hace nada, nunca ocurre.*/
-	//}
-	
+			
 	/**
 	 * Realiza la acción de morir del Actor.
 	 */
 	public void morir()
-	{
-		celdaActual.getBloque().getMapa().getNivel().eliminarActor(this);
-		super.morir();
+	{		
+		ActualizadorNivel.act().eliminarActor(this);		
+		super.morir();		
+		upNeeder.notUpdate();
+		upNeeder = null;
 	}
 	
 	/**
@@ -151,9 +135,9 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (celdaActual.getBloque().hayAnterior(celdaActual))
-			{				
-				celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
+			if (celdaActual.hayAnterior())
+			{
+				celdaAnterior = celdaActual.getAnterior();
 				if (!celdaAnterior.isOcupada())
 				{
 					moverseAcelda(celdaAnterior);
@@ -172,11 +156,27 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 					if (celdaAnterior.getActores().hasNext()) //Si hay un Actor que está ocupando totalmente la Celda anterior.
 						explotar();
 					else
-						morir();
+					{
+						if (! upNeeder.hayWorkerPrioridad(0))
+							upNeeder.addWorker(0, new Worker ()
+							{
+								public void work() throws Exception
+								{
+									morir();
+								}
+							});
+					}
 				}
 			}
 			else
-				morir();
+				if (! upNeeder.hayWorkerPrioridad(0))
+					upNeeder.addWorker(0, new Worker ()
+					{
+						public void work() throws Exception
+						{
+							morir();
+						}
+					});
 		}
 		catch (NullPointerException e1)
 		{
@@ -207,9 +207,9 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (celdaActual.getBloque().haySiguiente(celdaActual))
-			{	
-				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
+			if (celdaActual.haySiguiente())
+			{
+				celdaSiguiente = celdaActual.getSiguiente();
 				if (!celdaSiguiente.isOcupada())
 				{
 					moverseAcelda(celdaSiguiente);
@@ -228,11 +228,27 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 					if (celdaSiguiente.getActores().hasNext()) //Si hay un Actor que está ocupando totalmente la siguiente Celda.
 						explotar();
 					else
-						morir();
+					{
+						if (! upNeeder.hayWorkerPrioridad(0))
+							upNeeder.addWorker(0, new Worker ()
+							{
+								public void work() throws Exception
+								{
+									morir();
+								}
+							});
+					}
 				}
 			}
 			else
-				morir();
+				if (! upNeeder.hayWorkerPrioridad(0))
+					upNeeder.addWorker(0, new Worker ()
+					{
+						public void work() throws Exception
+						{
+							morir();
+						}
+					});
 		}
 		catch (NullPointerException e1)
 		{

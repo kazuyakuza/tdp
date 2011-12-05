@@ -1,6 +1,5 @@
 package ProyectoX.Logica.NoPersonajes;
 
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
@@ -22,12 +21,10 @@ public class Piso extends Actor implements Estructura
 
 	/**
 	 * Crea una Plataforma Irrompible.
-	 * 
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public Piso(CargadorSprite cargadorSprite)
+	public Piso()
 	{
-		super(nombresSprites, cargadorSprite);
+		super(nombresSprites);
 	}
 	
 	/*COMANDOS IMPLEMENTADOS*/

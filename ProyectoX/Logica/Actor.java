@@ -1,11 +1,7 @@
 package ProyectoX.Logica;
 
 import ProyectoX.Excepciones.ColisionException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Grafico.Sprite.SpriteManager;
-import ProyectoX.Librerias.TDALista.ListaPositionSimple;
-import ProyectoX.Librerias.TDALista.PositionList;
-import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.Personajes.Mario;
@@ -28,33 +24,26 @@ public abstract class Actor implements Posicionable
 	  //Grafica y Sonido
 	protected SpriteManager spriteManager;
 	//private SoundManager soundManager;
-	  //Actualizador
-	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
 	  //Logica
-	protected Celda celdaActual;
+	protected Celda celdaActual;	
 	
 	/*CONSTRUCTOR*/
 	
 	/**
 	 * Recibe los nombres de los Sprites para el Actor actual, y crea el SpriteManager.
-	 * El SpriteManager carga los sprites con el CargadorSprite pasado por parámetro.
+	 * El SpriteManager carga los sprites.
 	 * 
 	 * @param nombresSprites Nombres de los archivos de las imagenes del Sprite para este Actor.
-	 * @param cargadorSprite Clase para cargar los sprites.
-	 * @throws NullPointerException Si nombresSprites es null, o cargadorSprite es null.
+	 * @throws NullPointerException Si nombresSprites es null.
 	 */
-	protected Actor (String[] nombresSprites, CargadorSprite cargadorSprite)
+	protected Actor (String[] nombresSprites)
 	{
 		if ((nombresSprites == null) || (nombresSprites.length == 0))
 			throw new NullPointerException ("Actor." + "\n" +
 					                        "Imposible crear Actor. nombresSprites es null.");
-		if (cargadorSprite == null)
-			throw new NullPointerException ("Actor." + "\n" +
-                                            "Imposible crear Actor. cargadorSprite es null.");
 		
-		spriteManager = new SpriteManager (nombresSprites, cargadorSprite);
-		upNeeder = new UpNeeder (5);
-		celdaActual = null;
+		spriteManager = new SpriteManager (nombresSprites);
+		celdaActual = null;		
 	}
 	
 	/*COMANDOS*/
@@ -104,11 +93,24 @@ public abstract class Actor implements Posicionable
 			throw new NullPointerException ("Actor.moverseAcelda()" + "\n" +
                                             "Imposible moverse a la Celda c. c es null");
 		
-		producirColisiones(c);
-		celdaActual.sacarActor(this);
-		celdaActual = c;
-		celdaActual.agregarActor(this);
-		spriteManager.actualizar(celdaActual.getPosicion());
+		this.producirColisiones(c);
+		this.actualizarCelda(c);
+	}
+	
+	/**
+	 * Modifica la Celda actual del actor por la Celda c, actualizando su ubicación.
+	 * @param c es la nueva Celda para el Actor.
+	 * @throws NullPointerException si c es null.
+	 */
+	protected void actualizarCelda (Celda c) throws NullPointerException
+	{
+		if (c == null)
+			throw new NullPointerException ("Actor.ActualizarCelda()" + "\n" +
+                                            "Imposible moverse a la Celda c. c es null");
+		
+		celdaActual.sacarActor(this);		
+		this.setCeldaActual(c);
+		celdaActual.agregarActor(this);	
 	}
 	
 	/**
@@ -151,16 +153,19 @@ public abstract class Actor implements Posicionable
 	/**
 	 * Realiza la acción de morir del Actor.
 	 */
-	public void morir ()
+	public void morir () throws NullPointerException
 	{
-		spriteManager.setEliminar();
-		celdaActual.sacarActor(this);
+		if (spriteManager == null)
+			throw new NullPointerException ("Actor.morir()" + "\n" +
+					                        "Imposible morir. SpriteManager es null.");
+		if (celdaActual == null)
+			throw new NullPointerException ("Actor.morir()" + "\n" +
+					                        "Imposible morir. CeldaActual es null.");
 		
+		spriteManager.setEliminar();		
+		celdaActual.sacarActor(this);		
 		spriteManager = null;
 		celdaActual = null;
-		
-		upNeeder.notUpdate();
-		upNeeder = null;
 	}
 	
 	/**
@@ -208,29 +213,6 @@ public abstract class Actor implements Posicionable
 	public Celda getCeldaActual ()
 	{
 		return celdaActual;
-	}
-	
-	/**
-	 * Devuelve el UpNeeder del Actor.
-	 * 
-	 * @return UpNeeder del Actor.
-	 */
-	public UpNeeder getUpNeeder ()
-	{
-		return upNeeder;
-	}
-	
-	/**
-	 * Devuelve el UpNeeder del Actor junto con el UpNeeder del SpriteManager.
-	 * 
-	 * @return UpNeeder del Actor junto con el UpNeeder del SpriteManager.
-	 */
-	public PositionList<UpNeeder> getUpNeeders ()
-	{
-		PositionList<UpNeeder> r = new ListaPositionSimple<UpNeeder> ();
-		r.addFirst(upNeeder);
-		r.addFirst(spriteManager.getUpNeeder());
-		return r;
 	}
 
 }

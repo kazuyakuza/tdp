@@ -5,7 +5,6 @@ import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Personajes.Mario;
-import ProyectoX.Logica.Personajes.PjSeleccionable;
 
 public class KTNormal extends CaracteristicaKT
 {
@@ -51,21 +50,17 @@ public class KTNormal extends CaracteristicaKT
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (celdaActual.getBloque().hayAnterior(celdaActual))
+			if (celdaActual.hayAnterior())
 			{
-				koopa.getSpriteManager().cambiarSprite(movimiento);
-				celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
+				if (koopa.mov)
+					koopa.getSpriteManager().cambiarSprite(movimiento);
+				else
+					koopa.getSpriteManager().cambiarSprite(quieto);
+				koopa.mov = !koopa.mov;
+				
+				celdaAnterior = celdaActual.getAnterior();
 				if (!celdaAnterior.isOcupada())
 					koopa.moverseAcelda(celdaAnterior);
-				
-				if (! koopa.getUpNeeder().hayWorkerPrioridad(3))
-					koopa.getUpNeeder().addWorker(3, new Worker ()
-                    {
-                    	public void work() throws Exception
-                    	{
-                    		koopa.getSpriteManager().cambiarSprite(quieto);
-                    	}
-                    });
 			}
 			
 		}
@@ -99,21 +94,17 @@ public class KTNormal extends CaracteristicaKT
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (celdaActual.getBloque().haySiguiente(celdaActual))
+			if (celdaActual.haySiguiente())
 			{
-				koopa.getSpriteManager().cambiarSprite(-movimiento);
-				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
+				if (koopa.mov)
+					koopa.getSpriteManager().cambiarSprite(-movimiento);
+				else
+					koopa.getSpriteManager().cambiarSprite(-quieto);
+				koopa.mov = !koopa.mov;
+				
+				celdaSiguiente = celdaActual.getSiguiente();
 				if (!celdaSiguiente.isOcupada())
 					koopa.moverseAcelda(celdaSiguiente);
-				
-				if (! koopa.getUpNeeder().hayWorkerPrioridad(3))
-                    koopa.getUpNeeder().addWorker(3, new Worker ()
-                    {
-                    	public void work() throws Exception
-                    	{
-                    		koopa.getSpriteManager().cambiarSprite(-quieto);
-                    	}
-                    });
 			}
 		}
 		catch (NullPointerException e1)
@@ -152,16 +143,14 @@ public class KTNormal extends CaracteristicaKT
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
 	public void colisionarPj (final Mario mario) throws ColisionException, NullPointerException
-	{
-		Celda celdaActual = koopa.getCeldaActual();
-		if (celdaActual.getBloque().getSuperior(celdaActual) == mario.getCeldaActual())
+	{		
+		if (koopa.colisionArriba(mario))
 		{			
 			if (! koopa.getUpNeeder().hayWorkerPrioridad(0))
 				koopa.getUpNeeder().addWorker(0, new Worker ()
 				{
 					public void work() throws Exception
-					{
-						//koopa.morir();
+					{						
 						koopa.setCaracteristicaKT(new KTCaparazon (koopa));
 						koopa = null;
 					}

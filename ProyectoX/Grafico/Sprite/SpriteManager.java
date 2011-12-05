@@ -12,7 +12,9 @@ import ProyectoX.Excepciones.CargaRecursoException;
 import ProyectoX.Excepciones.PosicionIncorrectaException;
 import ProyectoX.Excepciones.SpriteException;
 import ProyectoX.Grafico.BloqueGrafico;
+import ProyectoX.Librerias.Threads.EmptyUpNeederException;
 import ProyectoX.Librerias.Threads.UpNeeder;
+import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.ControlCentral;
 
@@ -32,10 +34,13 @@ import ProyectoX.Logica.ControlCentral;
 public class SpriteManager implements ImageObserver
 {
 	
+	//Variables de Clase
+	private final int medidaPixelCelda = 32;//Medida de un lado en pixeles de una celda en el Escenario.
+                                            //Celda = si se dividiera el Escenario usando una matriz, cada celda tendría una medida de lado en pixeles.
+	
 	//Variables de Instancia
-	private BloqueGrafico bloqueGrafico; //BloqueGrafico al que pertenece el SpriteManager actual.
+	protected BloqueGrafico bloqueGrafico; //BloqueGrafico al que pertenece el SpriteManager actual.
 	private UpNeeder upNeeder; //UpNeeder del SpriteManager para completar operaciones.
-	private CargadorSprite cargadorSprite;
 	private BufferedImage spriteActual;
 	private BufferedImage[] sprites; //Guarda las imagenes posibles para este sprite, donde:
 	                                 //[0] es la imagen intermedia. "mirando hacia fuera de la pantalla"
@@ -63,14 +68,13 @@ public class SpriteManager implements ImageObserver
 	 * Inicializa la posición en (-1,-1)
 	 * 
 	 * @param nombreSprites Nombres de los archivos de las imagenes para este sprite.
-	 * @param cargadorSprite Cargador de Sprite para cargar la imagen.
 	 * @throws CargaRecursoException Error al cargar el Sprite.
 	 */
-	public SpriteManager (String[] nombresSprites, CargadorSprite cargadorSprite) throws CargaRecursoException
+	public SpriteManager (String[] nombresSprites) throws CargaRecursoException
 	{
 		bloqueGrafico = null;
-		upNeeder = new UpNeeder(5);
-		this.cargadorSprite = cargadorSprite;
+		upNeeder = new UpNeeder(1);
+		Updater.getUpdater().addUpNeeder(upNeeder);
 		cargarSprites(nombresSprites);
 		posX = posY = -1;
 		difX = difY = 0;
@@ -84,15 +88,20 @@ public class SpriteManager implements ImageObserver
 	 * y establece como spriteActual al primer sprite [0].
 	 * 
 	 * @param nombreSprites Nombres de los archivos de las imagenes para este sprite.
+	 * @throws NullPointerException Su nombreSprites es null.
 	 * @throws CargaRecursoException Error al cargar el Sprite.
 	 */
-	public void cargarSprites (String[] nombresSprites) throws CargaRecursoException
+	public void cargarSprites (String[] nombresSprites) throws NullPointerException, CargaRecursoException
 	{
+		if (nombresSprites == null)
+			throw new NullPointerException ("SpriteManager.cargarSprites()" + "\n" +
+					                        "Imposible cargar sprite. Nombre sprites es null.");
+		
 		sprites = new BufferedImage[nombresSprites.length];
 		for (int i=0; i<nombresSprites.length; i++)
 			try
 			{
-				sprites[i] = cargadorSprite.obtenerSprite(nombresSprites[i], this);
+				sprites[i] = CargadorSprite.getCargador().obtenerSprite(nombresSprites[i], this);
 			}
 			catch (CargaRecursoException exception)
 			{
@@ -101,6 +110,7 @@ public class SpriteManager implements ImageObserver
 						                         "Detalles del Eror:" + "\n" +
 						                         exception.getMessage());
 			}
+			
 		spriteActual = sprites[0];
 
 		invertido = false;
@@ -114,6 +124,8 @@ public class SpriteManager implements ImageObserver
 	 * Cambio < 0 "mirando hacia la izquierda"
 	 * Cambio = 0 "mirando hacia fuera de la pantalla"
 	 * Cambio > 0 "mirando hacia la derecha"
+	 * 
+	 * Setea al sprite como no gif.
 	 * 
 	 * @param cambio Numero del sprite a cambiar.
 	 * @throws SpriteException Si se ingresa un valor erróneo de cambio de sprite.
@@ -168,8 +180,8 @@ public class SpriteManager implements ImageObserver
 	{
 		Color color = null;
 		int r,g,b;
-		for(int i = 0; i < spriteActual.getWidth(); i++)
-			for(int j=0; j < spriteActual.getHeight();j++)
+		for (int i = 0; i < spriteActual.getWidth(); i++)
+			for (int j = 0; j < spriteActual.getHeight(); j++)
 				if (spriteActual.getRGB(i, j) != 0)
 				{
 					//se obtiene el color del pixel
@@ -218,13 +230,14 @@ public class SpriteManager implements ImageObserver
 	 * 
 	 * @param X Nueva posición X.
 	 * @param Y Nueva posición Y.
-	 * @throws PosicionIncorrectaException Si se ingresa una posición incorrecta.
+	 * @throws EmptyUpNeederException 
 	 */
-	public void actualizar (final int X, final int Y) throws PosicionIncorrectaException
+	public void actualizar (final int X, final int Y) throws EmptyUpNeederException
 	{
 		if ((X < 0) || (Y < 0))
-			throw new PosicionIncorrectaException ("Posición ingresada incorrecta." + "\n"
-					                             + "No existe posición (" + X + "," + Y +").");
+			throw new PosicionIncorrectaException ("SpriteManager.actualizar()" + "\n" +
+                                                   "Posición ingresada incorrecta." + "\n" +
+					                               "No existe posición (" + X + "," + Y +").");
 		
 		if ((posX == -1) && (posY == -1))
 		{//Posición Inicial.
@@ -270,6 +283,9 @@ public class SpriteManager implements ImageObserver
 							public void work() throws Exception
 							{
 								actualizacion();
+								
+								if ((! upNeeder.isEmpty()) && (upNeeder.hayWorkerPrioridad(1)) && (upNeeder.prioridadNextWorker() == 1))
+									upNeeder.getNextWorker().work();
 							}
 						});
 		}
@@ -379,34 +395,31 @@ public class SpriteManager implements ImageObserver
 		isAgif = false;
 	}
 	
+	/**
+	 * Limpia el SpriteManager.
+	 */
+	public void limpiar ()
+	{
+		bloqueGrafico = null;
+		spriteActual = null;
+		sprites = null;
+		upNeeder.notUpdate();
+		upNeeder = null;
+	}
+	
 	/*CONSULTAS*/
 	
 	/**
-	 * Devuelve el CargadorSprite usado por este SpriteManager.
+	 * Devuelve el Sprite Actual (imagen actual).
 	 * 
-	 * @return CargadorSprite usado por este SpriteManager.
-	 */
-	public CargadorSprite getCargadorSprite ()
-	{
-		return cargadorSprite;
-	}
-	
-	/**
-	 * Devuelve el UpNeeder del SpriteManager.
+	 * Si el spriteActual esta siendo tomado como una gif, entonces con cada llamada a este método,
+	 * se cambia el spriteActual por el siguiente del que corresponda en el gif.
+	 * Pero siempre se devuelve el sprite anterior al cambio.
 	 * 
-	 * @return UpNeeder del SpriteManager.
+	 * @return Sprite Actual.
+	 * @throws SpriteException Si se produce un error al obtener el spriteActual cuando está siendo tratado como un gif.
 	 */
-	public UpNeeder getUpNeeder ()
-	{
-		return upNeeder;
-	}
-	
-	/**
-	 * Devuelve el Sprite (imagen actual).
-	 * 
-	 * @return Sprite.
-	 */
-	public BufferedImage getSpriteActual ()
+	public BufferedImage getSpriteActual () throws SpriteException
 	{
 		BufferedImage r = spriteActual;
 		if (isAgif)
@@ -418,7 +431,21 @@ public class SpriteManager implements ImageObserver
 				else
 					frameGifActual--;
 				framesGif--;
-				cambioSprite(frameGifActual);
+				
+				if (Math.abs(frameGifActual) < sprites.length)
+				{
+					try
+					{
+						cambioSprite(frameGifActual);
+					}
+					catch (SpriteException e)
+					{
+						throw new SpriteException ("SpriteManager.getSpriteActual()" + "\n" +
+								                   "Error al obtener un Sprite." + "\n" +
+								                   "Detalles del error:" + "\n" +
+								                   e.getMessage());
+					}
+				}
 			}
 		}
 		return r;
@@ -434,23 +461,24 @@ public class SpriteManager implements ImageObserver
 	public double[] posicion () throws PosicionIncorrectaException
 	{
 		if ((posX == -1) && (posY == -1))
-			throw new PosicionIncorrectaException ("No se ha asignado posición." + "\n" +
+			throw new PosicionIncorrectaException ("SpriteManager.posicion()" + "\n" +
+                                                   "No se ha asignado posición." + "\n" +
 					                               "Detalles del Error:" + "\n" +
 					                               "Error al llamar SpriteManager.posicion(), donde posX y posY del SpriteManager son iguales a -1.");
 		
 		double X = posY; //Intercambio entre posY Columnas y posición en eje X
 		double Y = posX; //Intercambio entre posX filas y posición en eje Y
 		
-		//Si el Srite es mayor a 32x32, entonces se lo ubica 32 pixeles mas arriba.
-		if (spriteActual.getWidth() > 32)
+		//Si el Srite es mayor a medidaPixelCelda X medidaPixelCelda, entonces se lo ubica medidaPixelCelda pixeles mas arriba.
+		if (spriteActual.getWidth() > medidaPixelCelda)
 		{
-			X -= ((spriteActual.getWidth()/32.0) - 1);
+			X -= ((spriteActual.getWidth()/(double) medidaPixelCelda) - 1);
 			if ((X % (int) X) <= 0.25)
 				X = (int) X;
 		}
-		if (spriteActual.getHeight() > 32)
+		if (spriteActual.getHeight() > medidaPixelCelda)
 		{
-			Y -= ((spriteActual.getHeight()/32.0) - 1);
+			Y -= ((spriteActual.getHeight()/(double) medidaPixelCelda) - 1);
 			if ((Y % (int) Y) <= 0.25)
 				Y = (int) Y;
 		}
@@ -478,6 +506,7 @@ public class SpriteManager implements ImageObserver
 	 */
 	public void printNextMe (SpriteManager sp)
 	{
+		sp.bloqueGrafico = bloqueGrafico;
 		bloqueGrafico.agregarSprite(sp);
 	}
 	

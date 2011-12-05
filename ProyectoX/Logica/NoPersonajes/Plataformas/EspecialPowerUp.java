@@ -1,13 +1,14 @@
 package ProyectoX.Logica.NoPersonajes.Plataformas;
 
+import java.util.Random;
+
 import ProyectoX.Excepciones.ColisionException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
-import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.ControlCentral;
+import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
-import ProyectoX.Logica.ControlCentral;
 
 /**
  * Representa a una Plataforma Especial Power Up en el Juego.
@@ -38,12 +39,10 @@ public class EspecialPowerUp extends Irrompible
 
 	/**
 	 * Crea una Plataforma EspecialPowerUp.
-	 * 
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public EspecialPowerUp(PowerUp pwUp, ControlCentral cc, boolean modificable, CargadorSprite cargadorSprite) 
+	public EspecialPowerUp(PowerUp pwUp, ControlCentral cc, boolean modificable) 
 	{
-		super(cargadorSprite);
+		super();
 		spriteManager.cargarSprites(nombresSprites);		
 		spriteManager.rotarGif(cantFramesMovimiento);
 		powerUp = pwUp;
@@ -70,16 +69,22 @@ public class EspecialPowerUp extends Irrompible
 		{
 			Mario mario = checkActorJugador (pj);	
 			Celda celdaSuperior;
-			if ( (this.celdaActual.getBloque().hayInferior(this.celdaActual)) && (colisionAbajo(mario)) )
+			if (colisionAbajo(mario))
 			{//Si la colisión de Mario es desde abajo, sacar al powerUp, sino, no hacer nada.			
-				if (hayPowerUp())
-				{//Si hay powerUp, sacarlo y agregarlo a la celda superior, sino, no hacer nada.		
+				if (hayPowerUp() && !celdaActual.getSuperior().isOcupada())
+				{//Si hay powerUp y en la celda superior no otra estructura, sacar y agregar al powerUp a la celda superior, sino, no hacer nada.		
 					
-					celdaSuperior = this.celdaActual.getBloque().getSuperior(this.celdaActual);
+					celdaSuperior = this.celdaActual.getSuperior();
 					powerUp.setCeldaActual(celdaSuperior);
-					celdaSuperior.agregarActor(powerUp);
-					controlCentral.agregarPowerUp(powerUp);
+					celdaSuperior.agregarActor(powerUp);					
+					ActualizadorNivel.act().agregarPowerUp(powerUp);					
 					this.getSpriteManager().printNextMe(powerUp.getSpriteManager());					
+					{//Agrega movimiento (izquierda o derecha) inicial Random al PowerUp saliente.
+						if ((new Random().nextInt() % 2) == 0)
+							powerUp.moverseAizquierda();
+						else
+							powerUp.moverseAderecha();
+					}					
 					cambiable = false;
 					powerUp = null;
 					spriteManager.cambiarSprite(vacio);
@@ -115,12 +120,14 @@ public class EspecialPowerUp extends Irrompible
 	
 	/**
 	 * Verifica si la colisión con el Actor proviene desde abajo.
-	 * @param a Actor con el que se colisiona.
-	 * @return Verdadero si el Actor a se encuentra abajo, falso, en caso contrario.
+	 * @param mario Mario con el que se colisiona.
+	 * @return Verdadero si Mario a se encuentra abajo, falso, en caso contrario.
 	 */
-	protected boolean colisionAbajo (Actor a)
+	protected boolean colisionAbajo (Mario mario)
 	{
-		return this.celdaActual.getBloque().getInferior(this.celdaActual) == a.getCeldaActual();
+		//Mario se encuentra debajo de la plataforma si y solo si para Mario el vectorDistancia = (0,1).
+		int [] vector = mario.vectorDistancia(this);
+		return (vector[0] == 0 && vector[1] == 1);
 	}
 	
 	/**

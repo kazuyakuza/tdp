@@ -25,7 +25,7 @@ public class Jugador implements Worker
 	protected PjSeleccionable personaje;
 	protected int monedas, puntos, vidas;
 	protected String nombre;
-	protected boolean muerto;
+	protected boolean muerto, actuando;
 	
 	/*CONSTRUCTOR*/
 	
@@ -58,10 +58,28 @@ public class Jugador implements Worker
 		control = c;
 		monedas = puntos = 0;
 		vidas = vidasInicial;
-		muerto = false;
+		muerto = actuando = false;
 	}
 	
 	/*COMANDOS*/
+	
+	/**
+	 * Setea el personaje del jugador con pj.
+	 * @param pj es el PjSeleccionable con el que se setea al Jugador.
+	 */
+	public void setPersonaje (PjSeleccionable pj)
+	{
+		personaje = pj;
+	}
+	
+	/**
+	 * Setea el Control para el Jugador con c.
+	 * @param c es el Control que utilizará el Jugador.
+	 */
+	public void setControl (Control c)
+	{
+		control = c;
+	}
 	
 	/**
 	 * Agrega una Moneda al Jugador.
@@ -71,7 +89,6 @@ public class Jugador implements Worker
 	public void agregarMoneda ()
 	{
 		monedas++;
-		System.out.println("Monedas del jugador: " + monedas);
 		if (monedas == maxMonedas)
 		{
 			monedas = 0;
@@ -114,7 +131,6 @@ public class Jugador implements Worker
 	public void asignarPuntos (int pts)
 	{
 		puntos += pts;
-		System.out.println("Puntos del jugador: " + puntos);
 	}
 	
 	/*CONSULTAS*/
@@ -204,26 +220,47 @@ public class Jugador implements Worker
 	 */
 	private void actuar ()
 	{
+		actuando = false;
+		
 		if (control.arriba())
+		{
+			actuando = true;
 			personaje.arriba();
+		}
 		else
 			if (control.abajo())
+			{
+				actuando = true;
 				personaje.abajo();
+			}
+			else
+				personaje.pararse();
 		
 		if (control.izquierda())
 		{
+			actuando = true;
 			personaje.izquierda();
 		}
 		else
 			if (control.derecha())
 			{
+				actuando = true;
 				personaje.derecha();
 			}
 		
 		if (control.A())
+		{
+			actuando = true;
 			personaje.A();
+		}
 		if (control.B())
+		{
+			actuando = true;
 			personaje.B();
+		}
+		
+		if (! actuando)
+			personaje.quieto();
 		
 		if (control.ESC())
 			control.ESC();

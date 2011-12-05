@@ -1,9 +1,13 @@
 package ProyectoX.Logica.NoPersonajes;
 
 import ProyectoX.Excepciones.ColisionException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
+import ProyectoX.Librerias.Threads.UpNeeder;
+import ProyectoX.Librerias.Threads.Updater;
+import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.Mapa.Celda;
+import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialMonedas;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Responsabilidades.Punteable;
@@ -27,14 +31,20 @@ public class Moneda extends Actor implements Punteable
 		
 	private static int cantFramesMovimiento = 3;
 	
+	//Actualizador
+	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
+	
+	//Prioridades en UpNeeder
+	//0 = morir
+	
 	/**
-	 * Crea una Moneda.
-	 * 	 
-	 * @param cargadorSprite Clase para cargar los sprites.	 
+	 * Crea una Moneda. 
 	 */
-	public Moneda(CargadorSprite cargadorSprite) 
+	public Moneda() 
 	{
-		super(nombresSprites, cargadorSprite);			
+		super(nombresSprites);
+		upNeeder = new UpNeeder (0);
+		Updater.getUpdater().addUpNeeder(upNeeder);
 		spriteManager.rotarGif(cantFramesMovimiento);
 	}
 	
@@ -68,7 +78,13 @@ public class Moneda extends Actor implements Punteable
 			pj.getJugador().agregarMoneda();
 			pj.getJugador().asignarPuntos(5);
 			
-			morir();
+			upNeeder.addWorker(0, new Worker ()
+			{
+				public void work() throws Exception
+				{
+					morir();
+				}
+			});
 		}
 		catch (Exception e)
 		{
@@ -101,10 +117,29 @@ public class Moneda extends Actor implements Punteable
 	/**
 	 * Realiza la acción de morir del Actor.
 	 */
-	public void morir()
+	public void morir ()
 	{
-		celdaActual.getBloque().getMapa().getNivel().eliminarActor(this);
+		ActualizadorNivel.act().eliminarActor(this);
+		
 		super.morir();
+	}
+	
+	/**
+	 * Realiza la acción de morir del Actor.
+	 * 
+	 * @param em Atributo para asegurar q es llamado por un EspecialMonedas.
+	 */
+	public void matate (EspecialMonedas em)
+	{
+		upNeeder.addWorker(0, new Worker ()
+		{
+			public void work() throws Exception
+			{
+				spriteManager.setEliminar();
+				
+				spriteManager = null;
+			}
+		});
 	}
 	
 	/**
@@ -115,6 +150,16 @@ public class Moneda extends Actor implements Punteable
 	public int getPuntos (Mario mario)
 	{
 		return 5;
+	}
+	
+	/**
+	 * Devuelve la cantidad de frames de movimiento.
+	 * 
+	 * @return Cantidad de frames de movimiento.
+	 */
+	public int getCantFramesMovimiento ()
+	{
+		return cantFramesMovimiento;
 	}
 
 }

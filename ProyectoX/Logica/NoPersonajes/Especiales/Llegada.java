@@ -1,7 +1,6 @@
 package ProyectoX.Logica.NoPersonajes.Especiales;
 
 import ProyectoX.Excepciones.ColisionException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.ControlCentral;
 import ProyectoX.Logica.Mapa.Celda;
@@ -34,12 +33,11 @@ public class Llegada extends Actor
 	 * Crea una Llegada.
 	 * 
 	 * @param cc ControlCentral del Juego.
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 * @throws NullPointerException Si cc es null.
 	 */
-	public Llegada (ControlCentral cc, CargadorSprite cargadorSprite) throws NullPointerException
+	public Llegada (ControlCentral cc) throws NullPointerException
 	{
-		super (nombresSprites, cargadorSprite);
+		super (nombresSprites);
 		
 		if (cc == null)
 			throw new NullPointerException ("Llegada." + "\n" +
@@ -102,7 +100,7 @@ public class Llegada extends Actor
 	 */
 	protected void producirColisiones (Celda c)
 	{
-		//Nada ocurre	
+		//Nada ocurre.
 	}
 	
 	/**
