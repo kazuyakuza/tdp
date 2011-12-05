@@ -3,6 +3,8 @@ package ProyectoX.Grafico;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -71,13 +73,16 @@ public class PedirDatosJugador extends JPanel
 			{
 				NombreJugador = new JTextField();
 				this.add(NombreJugador);
+				NombreJugador.setText("Mi Nombre");
 				NombreJugador.setBounds((largo/2+10), (alto/2-50), 200, 30);
+				NombreJugador.addMouseListener(listenerNombreJugador(NombreJugador));
 			}
 			{
 				EmpezarJuego = new JButton();
 				this.add(EmpezarJuego);
 				EmpezarJuego.setText("Empezar Juego");
 				EmpezarJuego.setBounds((largo/2-botonLargo-10), (alto/2-botonAlto+20), botonLargo, botonAlto);
+				EmpezarJuego.setMnemonic('e');				
 				EmpezarJuego.addActionListener(listenerEmpezarJuego());
 			}
 			{
@@ -167,6 +172,29 @@ public class PedirDatosJugador extends JPanel
             	
             }
            };
+	}
+	
+	/**
+	 * Action Listener para el Área de Texto del Nombre del Jugador.
+	 * 
+	 * @panel textField Área de Texto del Nombre del Jugador.
+	 * @return Action Listener para el Área de Texto del Nombre del Jugador.
+	 */
+	private MouseListener listenerNombreJugador (final JTextField textField)
+	{
+		return  new MouseListener()
+        {
+			//Métodos del MouseListener
+            public void mouseClicked (MouseEvent event)
+            {
+            	if (textField.getText().equals("Mi Nombre"))
+            		textField.setText("");
+            }
+            public void mouseExited (MouseEvent event) {}
+            public void mouseEntered (MouseEvent event) {}
+            public void mouseReleased (MouseEvent event) {}
+            public void mousePressed (MouseEvent event) {}
+		};
 	}
 
 }
