@@ -1,9 +1,8 @@
 package ProyectoX.Logica.NoPersonajes.PowerUps;
 
-import ProyectoX.Grafico.Sprite.CargadorSprite;
-import ProyectoX.Logica.Personajes.Mario;
+import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Logica.ControlCentral;
-import ProyectoX.Logica.Mapa.Bloque;
+import ProyectoX.Logica.Personajes.Mario;
 
 /**
  * Representa a los power ups Bomba Nuclear del juego. El efecto sobre Mario es nulo, provoca la muerte de todos sus enemigos en la pantalla.
@@ -19,19 +18,16 @@ public class BombaNuclear extends PowerUp
 	private static final String dirRecursos = "Objetos/";
 	private static final String [] nombresSprites = {dirRecursos + "BombaNuclear.gif"};
 	
-	//Atributos de Instancia
-	//protected IAPowerUp miIA;
 	protected ControlCentral controlCentral; 
 	
 	/*CONSTRUCTORES*/	
 
 	/**
 	 * Crea una Bomba Nuclear del juego.
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public BombaNuclear(ControlCentral cc, CargadorSprite cargadorSprite) 
+	public BombaNuclear(ControlCentral cc) 
 	{
-		super (nombresSprites, cargadorSprite);
+		super (nombresSprites);
 		controlCentral = cc;
 	}
 	
@@ -58,6 +54,26 @@ public class BombaNuclear extends PowerUp
 	public int getPuntos(Mario mario)
 	{
 		return -45;
+	}
+	
+	/**
+	 * Realiza la acción de moverse hacia la izquierda.
+	 * 
+	 * @throws AccionActorException Si se produce algún error al moverse a izquierda.
+	 */
+	public void moverseAizquierda() throws AccionActorException
+	{
+		//Nunca ocurre.
+	}
+	
+	/**
+	 * Realiza la acción de moverse hacia la derecha.
+	 * 
+	 * @throws AccionActorException Si se produce algún error al moverse a derecha.
+	 */
+	public void moverseAderecha() throws AccionActorException
+	{
+		//Nunca ocurre.
 	}
 
 }

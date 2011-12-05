@@ -1,6 +1,7 @@
 package ProyectoX.Logica.Personajes;
 
 import ProyectoX.Excepciones.AccionActorException;
+import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
 
@@ -58,6 +59,14 @@ public class MarioChico extends Caracteristica
 	}
 	
 	/**
+	 * Realiza la acción de pararse.
+	 */
+	public void pararse ()
+	{
+		//Esta Caracteristica no hace nada.
+	}
+	
+	/**
 	 * Mario realiza la acción A.
 	 * 
 	 * @throws AccionActorException Si se produce algún error al realizar la acción A.
@@ -109,8 +118,15 @@ public class MarioChico extends Caracteristica
 	public void serDañado (Actor a)
 	{
 		mario.getSpriteManager().cambiarSprite(muerto);
-		mario.morir();
-	}	
+		if (! mario.getUpNeeder().hayWorkerPrioridad(0))
+			mario.getUpNeeder().addWorker(0, new Worker ()
+            {
+            	public void work() throws Exception
+            	{
+            		mario.morir();
+            	}
+            });	
+	}
 	
 	/**
 	 * Realiza la acción de golpear una plataforma Rompible.
@@ -137,7 +153,7 @@ public class MarioChico extends Caracteristica
 	 */
 	public int multiplicadorBonus ()
 	{
-		return 5;
+		return 1;
 	}
 	
 	

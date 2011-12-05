@@ -32,6 +32,8 @@ public class UpNeeder
 		needUpdate = true;
 		workers = new ColaConPrioridadConHeap<Integer,Worker> ();
 		prioridades = new boolean[maxPrioridad + 1];
+		for (int i=0; i <= maxPrioridad; i++)
+			prioridades[i] = false;
 	}
 	
 	/*COMANDOS*/
@@ -75,11 +77,14 @@ public class UpNeeder
 		else
 			if (prioridadNextWorker != prioridadNextWorker())
 				prioridades[prioridadNextWorker] = false;
+		
 		return r;
 	}
 	
 	/**
 	 * Indica que el UpNeeder ya no necesita ser actualizado.
+	 * 
+	 * Es eliminado en el Updater. Y este mismo lo limpia.
 	 */
 	public void notUpdate ()
 	{

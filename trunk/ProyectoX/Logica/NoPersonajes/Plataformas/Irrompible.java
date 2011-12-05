@@ -1,6 +1,5 @@
 package ProyectoX.Logica.NoPersonajes.Plataformas;
 
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
@@ -23,12 +22,10 @@ public class Irrompible extends Actor implements Plataforma
 
 	/**
 	 * Crea una Plataforma Irrompible.
-	 * 
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public Irrompible(CargadorSprite cargadorSprite)
+	public Irrompible()
 	{
-		super(nombresSprites, cargadorSprite);
+		super(nombresSprites);
 	}	
 	
 	/*COMANDOS IMPLEMENTADOS*/
@@ -70,7 +67,7 @@ public class Irrompible extends Actor implements Plataforma
 	 */
 	protected void producirColisiones (Celda c)
 	{
-		//Nada ocurre	
+		//Nada ocurre.
 	}
 	
 	/**

@@ -1,13 +1,11 @@
 package ProyectoX.Logica.NoPersonajes.Plataformas;
 
 import ProyectoX.Excepciones.ColisionException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
-import ProyectoX.Librerias.TDALista.PositionList;
 import ProyectoX.Librerias.TDALista.ListaPositionSimple;
-import ProyectoX.Logica.Actor;
+import ProyectoX.Librerias.TDALista.PositionList;
+import ProyectoX.Logica.NoPersonajes.Moneda;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
-import ProyectoX.Logica.NoPersonajes.Moneda;
 
 /**
  * Representa a una Plataforma Especial Monedas en el Juego.
@@ -36,27 +34,29 @@ public class EspecialMonedas extends Irrompible
 
 	/**
 	 * Crea una Plataforma EspecialMonedas.
-	 * 
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public EspecialMonedas(int monedas,CargadorSprite cargadorSprite) 
+	public EspecialMonedas(int monedas) 
 	{
-		super(cargadorSprite);
+		super();
 		spriteManager.cargarSprites(nombresSprites);
 		spriteManager.rotarGif(cantFramesMovimiento);
 		this.monedas = new ListaPositionSimple <Moneda> ();
-		inicializar(monedas, cargadorSprite);
+		inicializar(monedas);
 	}
 	
 	/**
 	 * Inicializa al objeto, agregando a la lista de monedas, la cantidad especificada.
 	 * @param cantidad monedas a crear y agregar a la plataforma.
-	 * @param cargadorSprite Clase para cargar los sprites de las monedas.
 	 */
-	private void inicializar (int cantidad, CargadorSprite cargadorSprite)
+	private void inicializar (int cantidad)
 	{
+		Moneda m = null;
 		for (int i=0; i < cantidad; i++)
-			this.monedas.addLast(new Moneda (cargadorSprite));
+		{
+			m = new Moneda ();
+			this.monedas.addLast(m);
+			m.getSpriteManager().setNotGif();
+		}
 	}
 	
 	/**
@@ -78,13 +78,18 @@ public class EspecialMonedas extends Irrompible
 		{
 			Mario mario = checkActorJugador (pj);
 			Moneda moneda;
-			if ( (this.celdaActual.getBloque().hayInferior(this.celdaActual)) && (colisionAbajo(mario)) )
+			if (colisionAbajo(mario))
 			{//Si la colisión de Mario es desde abajo, sacar moneda, sino, no hacer nada.			
 				if (hayMoneda())
 				{//Si hay monedas, sacar la primera y agregarsela al jugador, sino no hacer nada.
 					moneda = monedas.remove(monedas.first());					
+					moneda.getSpriteManager().actualizar(celdaActual.getSuperior().getPosicion());
+					moneda.getSpriteManager().rotarGif(moneda.getCantFramesMovimiento());
+					spriteManager.printNextMe(moneda.getSpriteManager());
 					mario.getJugador().asignarPuntos(moneda.getPuntos(mario));
-					mario.getJugador().agregarMoneda();					
+					mario.getJugador().agregarMoneda();
+					moneda.matate(this);
+					
 					if (!hayMoneda())
 						spriteManager.cambiarSprite(vacio);					
 				}			
@@ -100,12 +105,14 @@ public class EspecialMonedas extends Irrompible
 	
 	/**
 	 * Verifica si la colisión con el Actor proviene desde abajo.
-	 * @param a Actor con el que se colisiona.
-	 * @return Verdadero si el Actor a se encuentra abajo, falso, en caso contrario.
+	 * @param mario Mario con el que se colisiona.
+	 * @return Verdadero si Mario a se encuentra abajo, falso, en caso contrario.
 	 */
-	protected boolean colisionAbajo (Actor a)
+	protected boolean colisionAbajo (Mario mario)
 	{
-		return this.celdaActual.getBloque().getInferior(this.celdaActual) == a.getCeldaActual();
+		//Mario se encuentra debajo de la plataforma si y solo si para Mario el vectorDistancia = (0,1).
+		int [] vector = mario.vectorDistancia(this);		
+		return (vector[0] == 0 && vector[1] == 1);
 	}
 	
 	/**

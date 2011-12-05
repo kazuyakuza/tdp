@@ -5,9 +5,11 @@ import java.util.Iterator;
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Excepciones.IAexception;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
+import ProyectoX.Librerias.Threads.UpNeeder;
+import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.Personajes.Mario;
@@ -17,7 +19,7 @@ import ProyectoX.Logica.Personajes.Enemigo.IA.IAKT;
 import ProyectoX.Logica.Responsabilidades.Movible;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
-public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectableXgravedad
+public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgravedad
 {	
 	//Atributos de Instancia
 	protected CaracteristicaKT miCaracteristica;
@@ -27,7 +29,10 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectable
                      //Si PG=0, el Actor no es afectado por la Gravedad (está sobre un lugar sólido).
                      //Si PG<0, el Actor es afectado por la Gravedad, y se produce la acción de caer.
 
+	protected boolean mov; //Mejora del moviemiento.
 	
+	//Actualizador
+	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
 	
 	//Prioridades para el UpNeeder
 	//0 = morir
@@ -39,17 +44,19 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectable
 	/**
 	 * Crea un Personaje Seleccionable Mario con la Caracteristica pasada por parámetro.
 	 * 
-	 * @param c Caracteristica de Mario con la que se inicializa.
-	 * @param cargadorSprite Clase para cargar los sprites.
+	 * @param c Caracteristica de KoopaTroopa con la que se inicializa.
 	 */
-	public KoopaTroopa (CaracteristicaKT c, CargadorSprite cargadorSprite)
+	public KoopaTroopa (CaracteristicaKT c)
 	{
-		super (c.getNombresSprites(), cargadorSprite);
+		super (c.getNombresSprites());
+		upNeeder = new UpNeeder (3);
+		Updater.getUpdater().addUpNeeder(upNeeder);
 		miCaracteristica = c;
 		c.setKoopaTroopa(this);
 		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
 		miIA = new IAKT (this);
 		PG = 0;
+		mov = true;
 	}
 	
 	/*COMANDOS IMPLEMENTADOS*/
@@ -57,7 +64,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectable
 	/**
 	 * Especifica la acción "izquierda".
 	 */
-	public synchronized void izquierda ()
+	public void izquierda ()
 	{
 		miCaracteristica.moverseAizquierda();
 	}
@@ -65,7 +72,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectable
 	/**
 	 * Especifica la acción "derecha".
 	 */
-	public synchronized void derecha ()
+	public void derecha ()
 	{
 		miCaracteristica.moverseAderecha();
 	}
@@ -75,17 +82,20 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectable
 	 * 
 	 * @throws AccionActorException Si se produce un error al caer.
 	 */
-	public synchronized void caer () throws AccionActorException
+	public void caer () throws AccionActorException
 	{
+		if (upNeeder.hayWorkerPrioridad(0))//KoopaTroopa se va a morir en la proximá actualización.
+			return;
+		
 		Celda celdaInferior = celdaActual;
 		try 
 		{
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (celdaActual.getBloque().hayInferior(celdaActual))
+			if (celdaActual.hayInferior())
 			{
-				celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
+				celdaInferior = celdaActual.getInferior();
 				if (!celdaInferior.isOcupada())
 					moverseAcelda(celdaInferior);
 				else
@@ -114,11 +124,18 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectable
 	public void morir ()
 	{
 		miIA.meMori(this);
-		celdaActual.getBloque().getMapa().getNivel().eliminarCaible(this);		
-		celdaActual.getBloque().getMapa().getNivel().eliminarEnemigo(this);
+		
+		ActualizadorNivel.act().eliminarCaible(this);		
+		ActualizadorNivel.act().eliminarEnemigo(this);
+		
 		miCaracteristica.setKoopaTroopa(null);
 		miCaracteristica = null;
+		
 		super.morir();
+		
+		upNeeder.notUpdate();
+		upNeeder = null;
+		miIA = null;
 	}
 	
 	/**
@@ -184,7 +201,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectable
 	 */
 	public void efectoGravedad (int efecto)
 	{
-		if (celdaActual.getBloque().getInferior(celdaActual).isOcupada())
+		if (celdaActual.getInferior().isOcupada())
 			PG = 0;
 		else
 			if (!(PG < 0))
@@ -239,6 +256,30 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectable
 	{
 		return 90;
 	}
+	
+	/**
+	 * Devuelve el UpNeeder del Actor.
+	 * 
+	 * @return UpNeeder del Actor.
+	 */
+	public UpNeeder getUpNeeder ()
+	{
+		return upNeeder;
+	}
+	
+	/**
+	 * Verifica si la colisión con el Actor proviene desde arriba.
+	 * @param mario Mario con el que se colisiona.
+	 * @return Verdadero si Mario se encuentra arriba, falso, en caso contrario.
+	 */
+	protected boolean colisionArriba (Mario mario)
+	{
+		//Mario se encuentra arriba del KoopaTroopa si y solo si para Mario el vectorDistancia = (0,1).
+		int [] vector = mario.vectorDistancia(this);
+		return (vector[0] == 0 && vector[1] == -1);
+	}
+	
+	/*Métodos en Ejecución*/
 	
 	/**
 	 * Efecto provocado por el Actor a que colisiona con el Actor actual.
@@ -321,7 +362,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectable
 	protected void producirColisiones (Celda c) throws NullPointerException
 	{
 		if (c == null)
-			throw new NullPointerException ("BolaFuego.producirColisiones()" + "\n" +
+			throw new NullPointerException ("KoopaTroopa.producirColisiones()" + "\n" +
 					                        "Imposible realizar colisiones. La celda indicada es null.");
 		
 		Iterator <Actor> actores = c.getActores();
